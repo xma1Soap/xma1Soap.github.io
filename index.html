@@ -31,21 +31,13 @@
 
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-        html {
-            scroll-behavior: smooth;
-            scroll-padding-top: calc(var(--nav-height) + 20px);
-        }
+        html { scroll-behavior: smooth; scroll-padding-top: calc(var(--nav-height) + 20px); }
 
         body {
             font-family: 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            line-height: 1.7;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
+            background: var(--bg); color: var(--text); line-height: 1.7;
+            -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
+            min-height: 100vh; display: flex; flex-direction: column;
         }
 
         a { color: var(--accent); text-decoration: none; transition: color 0.2s ease; }
@@ -72,46 +64,11 @@
         .hero h1 { font-size: 2.2rem; font-weight: 680; letter-spacing: -0.02em; margin-bottom: 12px; color: var(--text); }
         .hero p { font-size: 1.08rem; color: var(--text-muted); line-height: 1.75; max-width: 480px; margin: 0 auto; }
 
-        /* Category Bar */
-        .category-bar {
-            max-width: var(--max-width);
-            margin: 0 auto 36px;
-            padding: 0 24px;
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            gap: 8px;
-        }
-        .category-bar-label {
-            font-size: 0.85rem;
-            color: var(--text-faint);
-            margin-right: 4px;
-            user-select: none;
-        }
-        .category-btn {
-            display: inline-block;
-            padding: 5px 16px;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: 500;
-            color: var(--tag-text);
-            background: var(--tag-bg);
-            border: 1px solid transparent;
-            cursor: pointer;
-            transition: all 0.22s ease;
-            user-select: none;
-            white-space: nowrap;
-            text-decoration: none;
-        }
-        .category-btn:hover {
-            background: #e8e2d8;
-            color: #6b523a;
-        }
-        .category-btn.active {
-            background: var(--accent);
-            color: #fff;
-            border-color: var(--accent);
-        }
+        .category-bar { max-width: var(--max-width); margin: 0 auto 36px; padding: 0 24px; display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+        .category-bar-label { font-size: 0.85rem; color: var(--text-faint); margin-right: 4px; user-select: none; }
+        .category-btn { display: inline-block; padding: 5px 16px; border-radius: 20px; font-size: 0.85rem; font-weight: 500; color: var(--tag-text); background: var(--tag-bg); border: 1px solid transparent; cursor: pointer; transition: all 0.22s ease; user-select: none; white-space: nowrap; text-decoration: none; }
+        .category-btn:hover { background: #e8e2d8; color: #6b523a; }
+        .category-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
 
         .posts { max-width: var(--max-width); margin: 0 auto; padding: 0 24px 64px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 22px; }
 
@@ -207,6 +164,16 @@
                 </div>
                 <span class="card-read">Read more <span class="arrow">→</span></span>
             </a>
+            <a href="patch-0.106.1.html" class="card" data-category="杀戮尖塔2">
+                <time class="card-date">2026-05-23</time>
+                <h2 class="card-title">0.106.1小更新</h2>
+                <p class="card-excerpt">快速热修！修了几个永世沙漏的毛病，顺便更了一波各语言翻译。修复了玩家可以升级凋萎状态牌的问题，凋萎状态牌也不会再赖在手里不走了。</p>
+                <div class="card-tags">
+                    <span class="card-tag">杀戮尖塔2</span>
+                    <span class="card-tag">热修</span>
+                </div>
+                <span class="card-read">Read more <span class="arrow">→</span></span>
+            </a>
         </section>
     </main>
 
@@ -238,11 +205,8 @@
                 btn.classList.add('active');
                 var cat = btn.dataset.category;
                 cards.forEach(function (card) {
-                    if (cat === 'all' || card.dataset.category === cat) {
-                        card.style.display = '';
-                    } else {
-                        card.style.display = 'none';
-                    }
+                    if (cat === 'all' || card.dataset.category === cat) { card.style.display = ''; }
+                    else { card.style.display = 'none'; }
                 });
             });
         });

@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="杀戮尖塔2 v0.106.1 热修更新">
+    <title>0.106.1小更新 · xma1Soap</title>
+    <style>
+        :root {
+            --bg:            #fafaf7;
+            --card-bg:       #ffffff;
+            --text:          #1f1f1f;
+            --text-muted:    #6e6e6e;
+            --text-faint:    #a0a0a0;
+            --accent:        #b8754c;
+            --accent-soft:   #d9b896;
+            --accent-bg:     #fdf3ea;
+            --border:        #e8e5df;
+            --border-light:  #f0ede8;
+            --tag-bg:        #f3efe9;
+            --tag-text:      #8b6f55;
+            --shadow-sm:     0 1px 2px rgba(0,0,0,0.04);
+            --shadow-md:     0 4px 16px rgba(0,0,0,0.06);
+            --shadow-lg:     0 8px 32px rgba(0,0,0,0.08);
+            --radius:        10px;
+            --radius-sm:     6px;
+            --max-width:     720px;
+            --nav-height:    60px;
+        }
+
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; scroll-padding-top: calc(var(--nav-height) + 20px); }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            background: var(--bg); color: var(--text); line-height: 1.8;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            min-height: 100vh; display: flex; flex-direction: column;
+        }
+        a { color: var(--accent); text-decoration: none; transition: color 0.2s ease; }
+        a:hover { color: #9a5f3a; }
+
+        .nav { position: sticky; top: 0; z-index: 100; height: var(--nav-height); background: rgba(250,250,247,0.82); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border-bottom: 1px solid transparent; transition: border-color 0.3s ease, box-shadow 0.3s ease; }
+        .nav.scrolled { border-bottom-color: var(--border); box-shadow: var(--shadow-sm); }
+        .nav-inner { max-width: var(--max-width); margin: 0 auto; padding: 0 24px; height: 100%; display: flex; align-items: center; justify-content: space-between; }
+        .nav-back { font-size: 0.9rem; color: var(--text-muted); padding: 6px 12px; border-radius: var(--radius-sm); transition: color 0.2s ease, background 0.2s ease; }
+        .nav-back:hover { color: var(--accent); background: var(--accent-bg); }
+        .nav-brand { font-size: 1rem; font-weight: 600; color: var(--text); }
+        .nav-brand:hover { color: var(--accent); }
+
+        .hero { padding: 64px 24px 40px; text-align: center; max-width: 640px; margin: 0 auto; }
+        .hero-tag { display: inline-block; font-size: 0.8rem; font-weight: 550; padding: 4px 14px; border-radius: 20px; background: var(--accent-bg); color: var(--accent); margin-bottom: 20px; letter-spacing: 0.04em; }
+        .hero h1 { font-size: 2.2rem; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 12px; line-height: 1.25; background: linear-gradient(135deg, #a78bfa, #6ee7b7); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .hero .subtitle { font-size: 1rem; color: var(--text-muted); line-height: 1.6; }
+        .hero .meta { margin-top: 16px; font-size: 0.85rem; color: var(--text-faint); }
+        .hero .meta span { margin: 0 6px; }
+
+        .article { max-width: var(--max-width); margin: 0 auto; padding: 0 24px 64px; }
+
+        .article h2 { font-size: 1.5rem; font-weight: 680; margin-top: 48px; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 2px solid var(--border-light); color: var(--text); letter-spacing: -0.01em; }
+        .article h3 { font-size: 1.15rem; font-weight: 640; margin-top: 32px; margin-bottom: 14px; color: var(--accent); }
+        .article p { margin-bottom: 16px; color: var(--text); line-height: 1.85; }
+
+        .article .intro { font-size: 1.05rem; color: var(--text-muted); padding: 20px 24px; background: var(--accent-bg); border-radius: var(--radius); margin-bottom: 32px; border-left: 3px solid var(--accent); }
+        .article ul, .article ol { margin-bottom: 20px; padding-left: 24px; }
+        .article li { margin-bottom: 8px; line-height: 1.75; color: var(--text); }
+        .article li ul { margin-top: 6px; margin-bottom: 6px; }
+        .article strong { font-weight: 650; }
+
+        .article hr { border: none; border-top: 1px solid var(--border-light); margin: 40px 0; }
+
+        .footer { margin-top: auto; border-top: 1px solid var(--border-light); padding: 28px 24px; text-align: center; font-size: 0.85rem; color: var(--text-faint); }
+        .footer a { color: var(--text-muted); }
+        .footer a:hover { color: var(--accent); }
+        .footer-inner { max-width: var(--max-width); margin: 0 auto; display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 16px; }
+        .footer-dot { display: inline-block; width: 4px; height: 4px; border-radius: 50%; background: var(--text-faint); opacity: 0.5; }
+
+        .back-to-top { position: fixed; bottom: 28px; right: 28px; width: 42px; height: 42px; border-radius: 50%; background: var(--card-bg); border: 1px solid var(--border); box-shadow: var(--shadow-md); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; opacity: 0; transform: translateY(16px); pointer-events: none; transition: opacity 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease; z-index: 90; }
+        .back-to-top.visible { opacity: 1; transform: translateY(0); pointer-events: auto; }
+        .back-to-top:hover { box-shadow: var(--shadow-lg); border-color: var(--accent-soft); }
+
+        @media (max-width: 768px) {
+            .hero { padding: 44px 20px 32px; }
+            .hero h1 { font-size: 1.7rem; }
+            .hero .subtitle { font-size: 0.9rem; }
+            .article { padding: 0 16px 48px; }
+            .article h2 { font-size: 1.3rem; margin-top: 36px; }
+            .article h3 { font-size: 1.05rem; }
+            .article .intro { padding: 16px 18px; font-size: 0.95rem; }
+            .back-to-top { bottom: 20px; right: 20px; width: 38px; height: 38px; }
+        }
+        @media (max-width: 480px) {
+            .hero h1 { font-size: 1.4rem; }
+            .article h2 { font-size: 1.15rem; }
+            .article h3 { font-size: 1rem; }
+            .article p, .article li { font-size: 0.92rem; }
+        }
+
+        @keyframes fadeUpIn { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+        .hero, .article { animation: fadeUpIn 0.5s ease both; }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="nav" id="navbar">
+            <div class="nav-inner">
+                <a href="https://xma1soap.github.io" class="nav-back">&larr; 返回首页</a>
+                <a href="https://xma1soap.github.io" class="nav-brand">xma1Soap</a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="hero-tag">Slay the Spire 2</div>
+            <h1>0.106.1小更新</h1>
+            <p class="subtitle">快速热修！修了几个永世沙漏的毛病，顺便更了一波各语言翻译。</p>
+            <div class="meta">
+                <span>2026-05-23</span>
+                <span>·</span>
+                <span>翻译 · 星薄荷</span>
+            </div>
+        </section>
+
+        <article class="article">
+            <div class="intro">
+                快速热修！修了几个永世沙漏的毛病，顺便更了一波各语言翻译。
+            </div>
+
+            <h2 id="writing">文本</h2>
+            <ul>
+                <li>多语言翻译更新</li>
+            </ul>
+
+            <h2 id="bugfix">Bug 修复</h2>
+            <h3>敌人相关</h3>
+            <ul>
+                <li>修复了玩家可以升级凋萎状态牌的问题</li>
+                <li>凋萎状态牌就算靠符文金字塔之类的遗物拿到了保留，也不会再赖在手里不走了</li>
+            </ul>
+
+            <hr>
+            <p style="text-align:center; color: var(--text-faint); font-size: 0.9rem;">
+                翻译 · 星薄荷 &nbsp;|&nbsp; 数据来源 &nbsp;<a href="https://steamcommunity.com/games/2868840/announcements/detail/670617878982033686" target="_blank" rel="noopener">Steam 官方更新公告</a>
+            </p>
+        </article>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-inner">
+            <span>&copy; 2026 xma1Soap</span>
+            <span class="footer-dot"></span>
+            <a href="https://xma1soap.github.io">Back to home</a>
+        </div>
+    </footer>
+
+    <button class="back-to-top" id="backToTop" aria-label="Back to top" title="Back to top">↑</button>
+
+    <script>
+    (function () {
+        'use strict';
+        const navbar = document.getElementById('navbar');
+        const backToTop = document.getElementById('backToTop');
+        var ticking = false;
+        function onScroll() {
+            if (!ticking) {
+                requestAnimationFrame(function () {
+                    var y = window.scrollY;
+                    if (y > 8) navbar.classList.add('scrolled'); else navbar.classList.remove('scrolled');
+                    if (y > 500) backToTop.classList.add('visible'); else backToTop.classList.remove('visible');
+                    ticking = false;
+                });
+                ticking = true;
+            }
+        }
+        window.addEventListener('scroll', onScroll, { passive: true });
+        onScroll();
+        backToTop.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    })();
+    </script>
+</body>
+</html>
