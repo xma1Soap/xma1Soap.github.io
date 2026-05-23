@@ -72,6 +72,47 @@
         .hero h1 { font-size: 2.2rem; font-weight: 680; letter-spacing: -0.02em; margin-bottom: 12px; color: var(--text); }
         .hero p { font-size: 1.08rem; color: var(--text-muted); line-height: 1.75; max-width: 480px; margin: 0 auto; }
 
+        /* Category Bar */
+        .category-bar {
+            max-width: var(--max-width);
+            margin: 0 auto 36px;
+            padding: 0 24px;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 8px;
+        }
+        .category-bar-label {
+            font-size: 0.85rem;
+            color: var(--text-faint);
+            margin-right: 4px;
+            user-select: none;
+        }
+        .category-btn {
+            display: inline-block;
+            padding: 5px 16px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--tag-text);
+            background: var(--tag-bg);
+            border: 1px solid transparent;
+            cursor: pointer;
+            transition: all 0.22s ease;
+            user-select: none;
+            white-space: nowrap;
+            text-decoration: none;
+        }
+        .category-btn:hover {
+            background: #e8e2d8;
+            color: #6b523a;
+        }
+        .category-btn.active {
+            background: var(--accent);
+            color: #fff;
+            border-color: var(--accent);
+        }
+
         .posts { max-width: var(--max-width); margin: 0 auto; padding: 0 24px 64px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 22px; }
 
         .card { background: var(--card-bg); border: 1px solid var(--border-light); border-radius: var(--radius); padding: 26px 28px 22px; display: block; box-shadow: var(--shadow-sm); transition: transform 0.28s ease, box-shadow 0.28s ease, border-color 0.28s ease; cursor: pointer; color: inherit; }
@@ -102,6 +143,7 @@
             .hero { padding: 52px 20px 40px; }
             .hero h1 { font-size: 1.7rem; }
             .hero p  { font-size: 0.98rem; }
+            .category-bar { padding: 0 16px; }
             .posts { grid-template-columns: 1fr; gap: 16px; padding: 0 16px 48px; }
             .card { padding: 20px 20px 18px; }
             .nav-links { position: fixed; top: 0; right: -100%; width: 260px; height: 100vh; flex-direction: column; background: rgba(255,255,255,0.96); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); padding: 80px 24px 32px; gap: 4px; box-shadow: -4px 0 24px rgba(0,0,0,0.08); transition: right 0.35s cubic-bezier(0.4, 0, 0.2, 1); align-items: stretch; }
@@ -148,8 +190,14 @@
             <p>一些没什么意义的文字，凑凑数，显得这个blog好像有人写过一样。</p>
         </section>
 
+        <div class="category-bar">
+            <span class="category-bar-label">分类</span>
+            <a href="#" class="category-btn active" data-category="all">全部</a>
+            <a href="#" class="category-btn" data-category="杀戮尖塔2">杀戮尖塔2</a>
+        </div>
+
         <section class="posts">
-            <a href="patch-0.106.html" class="card">
+            <a href="patch-0.106.html" class="card" data-category="杀戮尖塔2">
                 <time class="card-date">2026-05-23</time>
                 <h2 class="card-title">安东尼干的好事,a8fq</h2>
                 <p class="card-excerpt">杀戮尖塔2 Beta v0.106.0 完整汉化更新日志。感染棱柱重做、永世沙漏调整、鬼祟珊瑚群再改动、铁甲/静猎/储君/亡灵/故障机器人平衡调整，以及大量 Bug 修复。</p>
@@ -180,6 +228,24 @@
         const navLinks = document.getElementById('navLinks');
         const navOverlay = document.getElementById('navOverlay');
         const backToTop = document.getElementById('backToTop');
+
+        const categoryBtns = document.querySelectorAll('.category-btn');
+        const cards = document.querySelectorAll('.card[data-category]');
+        categoryBtns.forEach(function (btn) {
+            btn.addEventListener('click', function (e) {
+                e.preventDefault();
+                categoryBtns.forEach(function (b) { b.classList.remove('active'); });
+                btn.classList.add('active');
+                var cat = btn.dataset.category;
+                cards.forEach(function (card) {
+                    if (cat === 'all' || card.dataset.category === cat) {
+                        card.style.display = '';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        });
 
         function openNav() { navLinks.classList.add('open'); navToggle.classList.add('open'); navOverlay.classList.add('visible'); document.body.style.overflow = 'hidden'; }
         function closeNav() { navLinks.classList.remove('open'); navToggle.classList.remove('open'); navOverlay.classList.remove('visible'); document.body.style.overflow = ''; }
