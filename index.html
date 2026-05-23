@@ -1,79 +1,850 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>mint's page</title>
+    <meta name="description" content="xma1Soap — thoughts, notes, and stories on software and beyond.">
+    <title>xma1Soap</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🫧</text></svg>">
     <style>
-        * {
+        /* ==========================================
+             CSS Variables
+           ========================================== */
+        :root {
+            --bg:            #fafaf7;
+            --card-bg:       #ffffff;
+            --text:          #1f1f1f;
+            --text-muted:    #6e6e6e;
+            --text-faint:    #a0a0a0;
+            --accent:        #b8754c;
+            --accent-soft:   #d9b896;
+            --accent-bg:     #fdf3ea;
+            --border:        #e8e5df;
+            --border-light:  #f0ede8;
+            --tag-bg:        #f3efe9;
+            --tag-text:      #8b6f55;
+            --shadow-sm:     0 1px 2px rgba(0,0,0,0.04);
+            --shadow-md:     0 4px 16px rgba(0,0,0,0.06);
+            --shadow-lg:     0 8px 32px rgba(0,0,0,0.08);
+            --radius:        10px;
+            --radius-sm:     6px;
+            --max-width:     1060px;
+            --nav-height:    60px;
+        }
+
+        /* ==========================================
+             Reset & Base
+           ========================================== */
+        *, *::before, *::after {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
         }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: calc(var(--nav-height) + 20px);
+        }
+
         body {
-            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-            background: #0f0f1a;
-            color: #e0e0e0;
+            font-family: 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
+        }
+
+        a {
+            color: var(--accent);
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+        a:hover { color: #9a5f3a; }
+
+        img { max-width: 100%; display: block; }
+
+        /* ==========================================
+             Navigation
+           ========================================== */
+        .nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            height: var(--nav-height);
+            background: rgba(250,250,247,0.82);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border-bottom: 1px solid transparent;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        .nav.scrolled {
+            border-bottom-color: var(--border);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .nav-inner {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 0 24px;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .nav-brand {
+            font-size: 1.25rem;
+            font-weight: 650;
+            color: var(--text);
+            letter-spacing: -0.01em;
+        }
+        .nav-brand:hover { color: var(--accent); }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            display: inline-block;
+            padding: 6px 14px;
+            border-radius: var(--radius-sm);
+            color: var(--text-muted);
+            font-size: 0.925rem;
+            font-weight: 480;
+            transition: color 0.2s ease, background 0.2s ease;
+            position: relative;
+        }
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 2px;
+            left: 14px;
+            right: 14px;
+            height: 2px;
+            background: var(--accent);
+            border-radius: 2px;
+            transform: scaleX(0);
+            transition: transform 0.25s ease;
+            transform-origin: center;
+        }
+        .nav-links a:hover {
+            color: var(--accent);
+            background: var(--accent-bg);
+        }
+        .nav-links a:hover::after {
+            transform: scaleX(1);
+        }
+        .nav-links a.active {
+            color: var(--accent);
+            font-weight: 560;
+        }
+
+        /* hamburger */
+        .nav-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 8px 4px;
+            z-index: 101;
+        }
+        .nav-toggle span {
+            display: block;
+            width: 22px;
+            height: 2px;
+            background: var(--text);
+            border-radius: 2px;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+        .nav-toggle.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+        .nav-toggle.open span:nth-child(2) { opacity: 0; }
+        .nav-toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+        /* ==========================================
+             Hero
+           ========================================== */
+        .hero {
+            padding: 72px 24px 56px;
+            text-align: center;
+            max-width: 640px;
+            margin: 0 auto;
+        }
+        .hero-avatar {
+            width: 72px;
+            height: 72px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #e8d5c4 0%, #d4b896 100%);
+            margin: 0 auto 24px;
+            display: flex;
             align-items: center;
             justify-content: center;
+            font-size: 1.8rem;
+            color: #fff;
+            font-weight: 600;
+            box-shadow: 0 2px 12px rgba(184,117,76,0.18);
         }
-        .container {
-            text-align: center;
-            padding: 2rem;
+        .hero h1 {
+            font-size: 2.2rem;
+            font-weight: 680;
+            letter-spacing: -0.02em;
+            margin-bottom: 12px;
+            color: var(--text);
         }
-        h1 {
-            font-size: 3rem;
-            font-weight: 300;
-            letter-spacing: 0.1em;
-            margin-bottom: 0.5rem;
-            background: linear-gradient(135deg, #a78bfa, #6ee7b7);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+        .hero p {
+            font-size: 1.08rem;
+            color: var(--text-muted);
+            line-height: 1.75;
+            max-width: 480px;
+            margin: 0 auto;
         }
-        p {
-            font-size: 1.1rem;
-            color: #888;
-            margin-bottom: 2rem;
+        .hero .hero-accent {
+            color: var(--accent);
         }
-        .wave {
-            font-size: 2rem;
-            margin-bottom: 1rem;
-        }
-        .dots {
+
+        /* ==========================================
+             Tag Filter Bar
+           ========================================== */
+        .tag-bar {
+            max-width: var(--max-width);
+            margin: 0 auto 36px;
+            padding: 0 24px;
             display: flex;
-            gap: 0.8rem;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 8px;
+        }
+        .tag-bar-label {
+            font-size: 0.85rem;
+            color: var(--text-faint);
+            margin-right: 4px;
+            user-select: none;
+        }
+        .tag-btn {
+            display: inline-block;
+            padding: 5px 14px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 480;
+            color: var(--tag-text);
+            background: var(--tag-bg);
+            border: 1px solid transparent;
+            cursor: pointer;
+            transition: all 0.22s ease;
+            user-select: none;
+            white-space: nowrap;
+        }
+        .tag-btn:hover {
+            background: #e8e2d8;
+            color: #6b523a;
+        }
+        .tag-btn.active {
+            background: var(--accent);
+            color: #fff;
+            border-color: var(--accent);
+        }
+        .tag-btn .count {
+            font-size: 0.75rem;
+            margin-left: 3px;
+            opacity: 0.7;
+        }
+
+        /* ==========================================
+             Post List
+           ========================================== */
+        .posts {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 0 24px 64px;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 22px;
+        }
+        .empty-state-msg {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 48px 0;
+            color: var(--text-faint);
+            font-size: 0.95rem;
+            animation: fadeUpIn 0.4s ease both;
+        }
+
+        /* ==========================================
+             Post Card
+           ========================================== */
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius);
+            padding: 26px 28px 22px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            box-shadow: var(--shadow-sm);
+            transition: transform 0.28s ease, box-shadow 0.28s ease, border-color 0.28s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent-soft), var(--accent), var(--accent-soft));
+            opacity: 0;
+            transition: opacity 0.28s ease;
+        }
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--border);
+        }
+        .card:hover::before {
+            opacity: 1;
+        }
+        .card.hidden {
+            display: none;
+        }
+
+        .card-date {
+            font-size: 0.8rem;
+            color: var(--text-faint);
+            letter-spacing: 0.02em;
+            font-weight: 460;
+        }
+        .card-title {
+            font-size: 1.18rem;
+            font-weight: 640;
+            line-height: 1.4;
+            color: var(--text);
+            letter-spacing: -0.01em;
+            transition: color 0.2s ease;
+        }
+        .card:hover .card-title {
+            color: var(--accent);
+        }
+        .card-excerpt {
+            font-size: 0.925rem;
+            color: var(--text-muted);
+            line-height: 1.65;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        .card-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: 4px;
+        }
+        .card-tag {
+            font-size: 0.75rem;
+            padding: 3px 10px;
+            border-radius: 14px;
+            background: var(--tag-bg);
+            color: var(--tag-text);
+            font-weight: 460;
+            white-space: nowrap;
+            transition: background 0.2s ease, color 0.2s ease;
+        }
+        .card-tag:hover {
+            background: #e0d9cd;
+            color: #6b523a;
+        }
+        .card-read {
+            font-size: 0.85rem;
+            font-weight: 540;
+            color: var(--accent);
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            align-self: flex-start;
+            transition: gap 0.25s ease;
+        }
+        .card-read .arrow {
+            display: inline-block;
+            transition: transform 0.25s ease;
+            font-size: 0.85rem;
+        }
+        .card:hover .card-read {
+            gap: 8px;
+        }
+        .card:hover .card-read .arrow {
+            transform: translateX(2px);
+        }
+
+        /* ==========================================
+             Footer
+           ========================================== */
+        .footer {
+            margin-top: auto;
+            border-top: 1px solid var(--border-light);
+            padding: 28px 24px;
+            text-align: center;
+            font-size: 0.85rem;
+            color: var(--text-faint);
+        }
+        .footer a {
+            color: var(--text-muted);
+        }
+        .footer a:hover {
+            color: var(--accent);
+        }
+        .footer-inner {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
             justify-content: center;
-            margin-top: 2rem;
+            align-items: center;
+            gap: 16px;
         }
-        .dot {
-            width: 10px;
-            height: 10px;
+        .footer-dot {
+            display: inline-block;
+            width: 4px;
+            height: 4px;
             border-radius: 50%;
-            background: #a78bfa;
-            animation: bounce 1.4s infinite ease-in-out both;
+            background: var(--text-faint);
+            opacity: 0.5;
         }
-        .dot:nth-child(1) { animation-delay: -0.32s; background: #a78bfa; }
-        .dot:nth-child(2) { animation-delay: -0.16s; background: #6ee7b7; }
-        .dot:nth-child(3) { animation-delay: 0s; background: #fbbf24; }
-        @keyframes bounce {
-            0%, 80%, 100% { transform: scale(0); }
-            40% { transform: scale(1); }
+
+        /* ==========================================
+             Back to Top
+           ========================================== */
+        .back-to-top {
+            position: fixed;
+            bottom: 28px;
+            right: 28px;
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow-md);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            opacity: 0;
+            transform: translateY(16px);
+            pointer-events: none;
+            transition: opacity 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+            z-index: 90;
         }
+        .back-to-top.visible {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+        .back-to-top:hover {
+            box-shadow: var(--shadow-lg);
+            border-color: var(--accent-soft);
+        }
+
+        /* ==========================================
+             Responsive
+           ========================================== */
+        @media (max-width: 768px) {
+            .hero {
+                padding: 52px 20px 40px;
+            }
+            .hero h1 { font-size: 1.7rem; }
+            .hero p  { font-size: 0.98rem; }
+
+            .posts {
+                grid-template-columns: 1fr;
+                gap: 16px;
+                padding: 0 16px 48px;
+            }
+
+            .card {
+                padding: 20px 20px 18px;
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 260px;
+                height: 100vh;
+                flex-direction: column;
+                background: rgba(255,255,255,0.96);
+                backdrop-filter: blur(20px);
+                -webkit-backdrop-filter: blur(20px);
+                padding: 80px 24px 32px;
+                gap: 4px;
+                box-shadow: -4px 0 24px rgba(0,0,0,0.08);
+                transition: right 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+                align-items: stretch;
+            }
+            .nav-links.open {
+                right: 0;
+            }
+            .nav-links a {
+                font-size: 1.05rem;
+                padding: 10px 16px;
+                border-radius: var(--radius-sm);
+            }
+            .nav-links a::after { display: none; }
+
+            .nav-toggle { display: flex; }
+
+            /* overlay */
+            .nav-overlay {
+                position: fixed;
+                inset: 0;
+                background: rgba(0,0,0,0.12);
+                z-index: 99;
+                opacity: 0;
+                pointer-events: none;
+                transition: opacity 0.35s ease;
+            }
+            .nav-overlay.visible {
+                opacity: 1;
+                pointer-events: auto;
+            }
+
+            .tag-bar {
+                padding: 0 16px;
+                margin-bottom: 24px;
+            }
+
+            .back-to-top {
+                bottom: 20px;
+                right: 20px;
+                width: 38px;
+                height: 38px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 { font-size: 1.5rem; }
+            .hero p  { font-size: 0.9rem; }
+            .card-title { font-size: 1.05rem; }
+            .card-excerpt { font-size: 0.875rem; }
+            .card { padding: 18px 16px 16px; }
+        }
+
+        /* ==========================================
+             Animations — staggered entrance
+           ========================================== */
+        @keyframes fadeUpIn {
+            from {
+                opacity: 0;
+                transform: translateY(18px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .card {
+            animation: fadeUpIn 0.5s ease both;
+        }
+        .card:nth-child(1) { animation-delay: 0.05s; }
+        .card:nth-child(2) { animation-delay: 0.10s; }
+        .card:nth-child(3) { animation-delay: 0.15s; }
+        .card:nth-child(4) { animation-delay: 0.20s; }
+        .card:nth-child(5) { animation-delay: 0.25s; }
+        .card:nth-child(6) { animation-delay: 0.30s; }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="wave">👋</div>
-        <h1>Hi</h1>
-        <p>This page is under construction. Something cool is coming.</p>
-        <div class="dots">
-            <div class="dot"></div>
-            <div class="dot"></div>
-            <div class="dot"></div>
+
+    <!-- ==========================================
+    Navigation
+    ========================================== -->
+    <header>
+        <nav class="nav" id="navbar">
+            <div class="nav-inner">
+                <a href="#" class="nav-brand">xma1Soap</a>
+                <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+                    <span></span><span></span><span></span>
+                </button>
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="#" class="active">Home</a></li>
+                    <li><a href="#">Blog</a></li>
+                    <li><a href="#">About</a></li>
+                    <li><a href="#">Archive</a></li>
+                </ul>
+            </div>
+        </nav>
+        <div class="nav-overlay" id="navOverlay"></div>
+    </header>
+
+    <!-- ==========================================
+    Hero
+    ========================================== -->
+    <main>
+        <section class="hero">
+            <div class="hero-avatar" aria-hidden="true">x</div>
+            <h1>Hello, I'm <span class="hero-accent">xma1Soap</span></h1>
+            <p>I write about software engineering, tools I enjoy, and things I learn along the way. This is my little corner of the internet.</p>
+        </section>
+
+        <!-- ==========================================
+        Tag Filter
+        ========================================== -->
+        <div class="tag-bar" id="tagBar">
+            <span class="tag-bar-label">Filter:</span>
+            <button class="tag-btn active" data-tag="all">All</button>
+            <!-- more tag buttons injected by JS -->
         </div>
-    </div>
+
+        <!-- ==========================================
+        Post Cards
+        ========================================== -->
+        <section class="posts" id="postList">
+            <article class="card" data-tags="web,tutorial">
+                <time class="card-date" datetime="2026-05-18">May 18, 2026</time>
+                <h2 class="card-title">Building a Minimalist Blog with GitHub Pages</h2>
+                <p class="card-excerpt">A step-by-step walkthrough on setting up a clean, fast, and fully static blog using nothing but GitHub Pages and a single HTML file. No frameworks, no build steps, just the web as it was meant to be.</p>
+                <div class="card-tags">
+                    <span class="card-tag">web</span>
+                    <span class="card-tag">tutorial</span>
+                </div>
+                <span class="card-read">Read more <span class="arrow">→</span></span>
+            </article>
+
+            <article class="card" data-tags="rust,systems">
+                <time class="card-date" datetime="2026-05-03">May 3, 2026</time>
+                <h2 class="card-title">Owning Your Memory: What Rust's Ownership Model Actually Means</h2>
+                <p class="card-excerpt">Ownership, borrowing, and lifetimes are not just Rust's way of being difficult. They encode a deep insight about how programs manage resources. Let's unpack the mental model behind them.</p>
+                <div class="card-tags">
+                    <span class="card-tag">rust</span>
+                    <span class="card-tag">systems</span>
+                </div>
+                <span class="card-read">Read more <span class="arrow">→</span></span>
+            </article>
+
+            <article class="card" data-tags="web,wasm">
+                <time class="card-date" datetime="2026-04-22">April 22, 2026</time>
+                <h2 class="card-title">A Gentle Introduction to WebAssembly</h2>
+                <p class="card-excerpt">WebAssembly is often presented as a complex, low-level technology. But at its core, it is a remarkably simple idea. Here is how to think about it from first principles, with practical examples.</p>
+                <div class="card-tags">
+                    <span class="card-tag">web</span>
+                    <span class="card-tag">wasm</span>
+                </div>
+                <span class="card-read">Read more <span class="arrow">→</span></span>
+            </article>
+
+            <article class="card" data-tags="cli,tools">
+                <time class="card-date" datetime="2026-04-10">April 10, 2026</time>
+                <h2 class="card-title">Why I Keep Coming Back to the Command Line</h2>
+                <p class="card-excerpt">In a world of polished GUIs and AI assistants, the terminal still holds a strange power. It is not nostalgia. It is about composability, clarity, and the feeling of direct control over your machine.</p>
+                <div class="card-tags">
+                    <span class="card-tag">cli</span>
+                    <span class="card-tag">tools</span>
+                </div>
+                <span class="card-read">Read more <span class="arrow">→</span></span>
+            </article>
+
+            <article class="card" data-tags="api,design">
+                <time class="card-date" datetime="2026-03-28">March 28, 2026</time>
+                <h2 class="card-title">Designing REST APIs: Small Decisions That Compound</h2>
+                <p class="card-excerpt">Naming resources, choosing status codes, structuring error responses. Each decision seems trivial on its own, but together they shape the experience of every developer who will ever use your API.</p>
+                <div class="card-tags">
+                    <span class="card-tag">api</span>
+                    <span class="card-tag">design</span>
+                </div>
+                <span class="card-read">Read more <span class="arrow">→</span></span>
+            </article>
+
+            <article class="card" data-tags="tools,editor">
+                <time class="card-date" datetime="2026-03-12">March 12, 2026</time>
+                <h2 class="card-title">Six Months of Neovim: From Skeptic to Daily Driver</h2>
+                <p class="card-excerpt">I did not expect to switch editors at this point in my career. But after giving Neovim a serious try, something clicked. Here is what the journey looked like and what I learned about muscle memory.</p>
+                <div class="card-tags">
+                    <span class="card-tag">tools</span>
+                    <span class="card-tag">editor</span>
+                </div>
+                <span class="card-read">Read more <span class="arrow">→</span></span>
+            </article>
+        </section>
+    </main>
+
+    <!-- ==========================================
+    Footer
+    ========================================== -->
+    <footer class="footer">
+        <div class="footer-inner">
+            <span>&copy; 2026 xma1Soap</span>
+            <span class="footer-dot"></span>
+            <span>Built with plain HTML &amp; care</span>
+            <span class="footer-dot"></span>
+            <a href="https://github.com/xma1Soap" target="_blank" rel="noopener">GitHub</a>
+        </div>
+    </footer>
+
+    <!-- ==========================================
+    Back to Top
+    ========================================== -->
+    <button class="back-to-top" id="backToTop" aria-label="Back to top" title="Back to top">↑</button>
+
+    <!-- ==========================================
+    Inline JavaScript
+    ========================================== -->
+    <script>
+    (function () {
+        'use strict';
+
+        // ── Elements ──────────────────────────────
+        const navbar    = document.getElementById('navbar');
+        const navToggle = document.getElementById('navToggle');
+        const navLinks  = document.getElementById('navLinks');
+        const navOverlay = document.getElementById('navOverlay');
+        const backToTop = document.getElementById('backToTop');
+        const postList  = document.getElementById('postList');
+        const tagBar    = document.getElementById('tagBar');
+        const cards     = Array.from(postList.querySelectorAll('.card'));
+
+        // ── Build tag buttons dynamically ────────
+        const tagCounts = new Map();
+        cards.forEach(function (card) {
+            var tags = (card.dataset.tags || '').split(',').map(function (t) { return t.trim(); }).filter(Boolean);
+            tags.forEach(function (t) {
+                tagCounts.set(t, (tagCounts.get(t) || 0) + 1);
+            });
+        });
+
+        var sortedTags = Array.from(tagCounts.entries()).sort(function (a, b) {
+            return a[0].localeCompare(b[0]);
+        });
+
+        sortedTags.forEach(function (entry) {
+            var tag = entry[0];
+            var count = entry[1];
+            var btn = document.createElement('button');
+            btn.className = 'tag-btn';
+            btn.dataset.tag = tag;
+            btn.innerHTML = tag + '<span class="count">' + count + '</span>';
+            btn.addEventListener('click', function () { filterByTag(tag, btn); });
+            tagBar.appendChild(btn);
+        });
+
+        // ── Filter logic ─────────────────────────
+        var activeTagBtn = tagBar.querySelector('[data-tag="all"]');
+
+        function filterByTag(tag, clickedBtn) {
+            if (activeTagBtn) activeTagBtn.classList.remove('active');
+            clickedBtn.classList.add('active');
+            activeTagBtn = clickedBtn;
+
+            if (tag === 'all') {
+                cards.forEach(function (c) { c.classList.remove('hidden'); });
+                postList.classList.remove('empty-state');
+                return;
+            }
+
+            var anyVisible = false;
+            cards.forEach(function (card) {
+                var cardTags = (card.dataset.tags || '').split(',').map(function (t) { return t.trim(); });
+                if (cardTags.indexOf(tag) !== -1) {
+                    card.classList.remove('hidden');
+                    anyVisible = true;
+                } else {
+                    card.classList.add('hidden');
+                }
+            });
+
+            // remove any existing empty-state message
+            var oldMsg = postList.querySelector('.empty-state-msg');
+            if (oldMsg) oldMsg.remove();
+
+            if (!anyVisible) {
+                var msg = document.createElement('p');
+                msg.className = 'empty-state-msg';
+                msg.textContent = 'No posts match this tag yet.';
+                postList.appendChild(msg);
+            }
+        }
+
+        // "All" button
+        var allBtn = tagBar.querySelector('[data-tag="all"]');
+        if (allBtn) {
+            allBtn.addEventListener('click', function () {
+                if (activeTagBtn) activeTagBtn.classList.remove('active');
+                allBtn.classList.add('active');
+                activeTagBtn = allBtn;
+                cards.forEach(function (c) { c.classList.remove('hidden'); });
+                var oldMsg = postList.querySelector('.empty-state-msg');
+                if (oldMsg) oldMsg.remove();
+            });
+        }
+
+        // ── Mobile nav toggle ────────────────────
+        function openNav() {
+            navLinks.classList.add('open');
+            navToggle.classList.add('open');
+            navOverlay.classList.add('visible');
+            document.body.style.overflow = 'hidden';
+        }
+        function closeNav() {
+            navLinks.classList.remove('open');
+            navToggle.classList.remove('open');
+            navOverlay.classList.remove('visible');
+            document.body.style.overflow = '';
+        }
+
+        navToggle.addEventListener('click', function () {
+            if (navLinks.classList.contains('open')) { closeNav(); } else { openNav(); }
+        });
+        navOverlay.addEventListener('click', closeNav);
+
+        // Close on Escape
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape' && navLinks.classList.contains('open')) { closeNav(); }
+        });
+
+        // Close when a nav link is clicked
+        navLinks.querySelectorAll('a').forEach(function (link) {
+            link.addEventListener('click', function () {
+                if (navLinks.classList.contains('open')) { closeNav(); }
+            });
+        });
+
+        // ── Scroll effects ───────────────────────
+        var ticking = false;
+        function onScroll() {
+            if (!ticking) {
+                requestAnimationFrame(function () {
+                    var y = window.scrollY;
+
+                    // navbar shadow
+                    if (y > 8) { navbar.classList.add('scrolled'); }
+                    else       { navbar.classList.remove('scrolled'); }
+
+                    // back-to-top
+                    if (y > 500) { backToTop.classList.add('visible'); }
+                    else         { backToTop.classList.remove('visible'); }
+
+                    ticking = false;
+                });
+                ticking = true;
+            }
+        }
+        window.addEventListener('scroll', onScroll, { passive: true });
+        onScroll(); // init
+
+        // back-to-top click
+        backToTop.addEventListener('click', function () {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+    })();
+    </script>
+
 </body>
 </html>
