@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="杀戮尖塔2 v0.106.0 完整汉化更新日志">
-    <title>a8fq干的好事0.106版</title>
+    <meta name="description" content="a8fq 的个人小站">
+    <title>xma1Soap</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🫧</text></svg>">
     <style>
         :root {
             --bg:            #fafaf7;
@@ -24,15 +25,11 @@
             --shadow-lg:     0 8px 32px rgba(0,0,0,0.08);
             --radius:        10px;
             --radius-sm:     6px;
-            --max-width:     720px;
+            --max-width:     1060px;
             --nav-height:    60px;
         }
 
-        *, *::before, *::after {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
         html {
             scroll-behavior: smooth;
@@ -43,7 +40,7 @@
             font-family: 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
             background: var(--bg);
             color: var(--text);
-            line-height: 1.8;
+            line-height: 1.7;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
             min-height: 100vh;
@@ -51,12 +48,9 @@
             flex-direction: column;
         }
 
-        a {
-            color: var(--accent);
-            text-decoration: none;
-            transition: color 0.2s ease;
-        }
+        a { color: var(--accent); text-decoration: none; transition: color 0.2s ease; }
         a:hover { color: #9a5f3a; }
+        img { max-width: 100%; display: block; }
 
         .nav {
             position: sticky;
@@ -73,7 +67,6 @@
             border-bottom-color: var(--border);
             box-shadow: var(--shadow-sm);
         }
-
         .nav-inner {
             max-width: var(--max-width);
             margin: 0 auto;
@@ -83,191 +76,170 @@
             align-items: center;
             justify-content: space-between;
         }
-
         .nav-brand {
-            font-size: 1.05rem;
+            font-size: 1.25rem;
             font-weight: 650;
             color: var(--text);
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
+            letter-spacing: -0.01em;
         }
         .nav-brand:hover { color: var(--accent); }
-
-        .nav-github {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            padding: 6px 12px;
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            list-style: none;
+        }
+        .nav-links a {
+            display: inline-block;
+            padding: 6px 14px;
             border-radius: var(--radius-sm);
+            color: var(--text-muted);
+            font-size: 0.925rem;
+            font-weight: 480;
             transition: color 0.2s ease, background 0.2s ease;
         }
-        .nav-github:hover {
-            color: var(--accent);
-            background: var(--accent-bg);
+        .nav-links a:hover { color: var(--accent); background: var(--accent-bg); }
+        .nav-links a.active { color: var(--accent); font-weight: 560; }
+
+        .nav-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 8px 4px;
+            z-index: 101;
         }
+        .nav-toggle span {
+            display: block;
+            width: 22px;
+            height: 2px;
+            background: var(--text);
+            border-radius: 2px;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+        .nav-toggle.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+        .nav-toggle.open span:nth-child(2) { opacity: 0; }
+        .nav-toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
         .hero {
-            padding: 64px 24px 40px;
+            padding: 72px 24px 48px;
             text-align: center;
             max-width: 640px;
             margin: 0 auto;
         }
-        .hero-tag {
-            display: inline-block;
-            font-size: 0.8rem;
-            font-weight: 550;
-            padding: 4px 14px;
-            border-radius: 20px;
-            background: var(--accent-bg);
-            color: var(--accent);
-            margin-bottom: 20px;
-            letter-spacing: 0.04em;
+        .hero-avatar {
+            width: 72px;
+            height: 72px;
+            border-radius: 50%;
+            margin: 0 auto 24px;
+            display: block;
+            object-fit: cover;
+            box-shadow: 0 2px 12px rgba(184,117,76,0.18);
         }
         .hero h1 {
-            font-size: 2.4rem;
-            font-weight: 700;
+            font-size: 2.2rem;
+            font-weight: 680;
             letter-spacing: -0.02em;
             margin-bottom: 12px;
-            line-height: 1.25;
-            background: linear-gradient(135deg, #a78bfa, #6ee7b7);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: var(--text);
         }
-        .hero .subtitle {
-            font-size: 1rem;
+        .hero p {
+            font-size: 1.08rem;
             color: var(--text-muted);
-            line-height: 1.6;
-        }
-        .hero .meta {
-            margin-top: 16px;
-            font-size: 0.85rem;
-            color: var(--text-faint);
-        }
-        .hero .meta span {
-            margin: 0 6px;
+            line-height: 1.75;
+            max-width: 480px;
+            margin: 0 auto;
         }
 
-        .article {
+        .posts {
             max-width: var(--max-width);
             margin: 0 auto;
             padding: 0 24px 64px;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 22px;
         }
 
-        .article h2 {
-            font-size: 1.5rem;
-            font-weight: 680;
-            margin-top: 48px;
-            margin-bottom: 20px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid var(--border-light);
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius);
+            padding: 26px 28px 22px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            box-shadow: var(--shadow-sm);
+            transition: transform 0.28s ease, box-shadow 0.28s ease, border-color 0.28s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            display: block;
+            color: inherit;
+        }
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--border);
+        }
+        .card:hover .card-title { color: var(--accent); }
+        .card:hover .card-read { gap: 8px; }
+        .card:hover .card-read .arrow { transform: translateX(2px); }
+
+        .card-date {
+            font-size: 0.8rem;
+            color: var(--text-faint);
+            letter-spacing: 0.02em;
+            font-weight: 460;
+            margin-bottom: 8px;
+        }
+        .card-title {
+            font-size: 1.18rem;
+            font-weight: 640;
+            line-height: 1.4;
             color: var(--text);
             letter-spacing: -0.01em;
-        }
-
-        .article h3 {
-            font-size: 1.15rem;
-            font-weight: 640;
-            margin-top: 32px;
-            margin-bottom: 14px;
-            color: var(--accent);
-        }
-
-        .article h4 {
-            font-size: 1rem;
-            font-weight: 600;
-            margin-top: 24px;
-            margin-bottom: 10px;
-            color: var(--text);
-        }
-
-        .article p {
-            margin-bottom: 16px;
-            color: var(--text);
-            line-height: 1.85;
-        }
-
-        .article .intro {
-            font-size: 1.05rem;
-            color: var(--text-muted);
-            padding: 20px 24px;
-            background: var(--accent-bg);
-            border-radius: var(--radius);
-            margin-bottom: 32px;
-            border-left: 3px solid var(--accent);
-        }
-
-        .article ul, .article ol {
-            margin-bottom: 20px;
-            padding-left: 24px;
-        }
-        .article li {
+            transition: color 0.2s ease;
             margin-bottom: 8px;
-            line-height: 1.75;
-            color: var(--text);
         }
-        .article li ul {
-            margin-top: 6px;
-            margin-bottom: 6px;
+        .card-excerpt {
+            font-size: 0.925rem;
+            color: var(--text-muted);
+            line-height: 1.65;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            margin-bottom: 10px;
         }
-
-        .article strong {
-            font-weight: 650;
+        .card-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-bottom: 8px;
         }
-
-        .tag-buff {
-            display: inline-block;
+        .card-tag {
             font-size: 0.75rem;
-            font-weight: 600;
-            padding: 1px 8px;
-            border-radius: 4px;
-            background: #e6f7e6;
-            color: #2d7d2d;
-            margin-right: 4px;
-        }
-        .tag-nerf {
-            display: inline-block;
-            font-size: 0.75rem;
-            font-weight: 600;
-            padding: 1px 8px;
-            border-radius: 4px;
-            background: #fde8e8;
-            color: #b33a3a;
-            margin-right: 4px;
-        }
-        .tag-rework {
-            display: inline-block;
-            font-size: 0.75rem;
-            font-weight: 600;
-            padding: 1px 8px;
-            border-radius: 4px;
-            background: #e8eaff;
-            color: #4a56b3;
-            margin-right: 4px;
-        }
-        .tag-change {
-            display: inline-block;
-            font-size: 0.75rem;
-            font-weight: 600;
-            padding: 1px 8px;
-            border-radius: 4px;
-            background: #fff3e0;
-            color: #b8754c;
-            margin-right: 4px;
-        }
-
-        .article code {
-            font-family: 'JetBrains Mono', 'Cascadia Code', 'Consolas', monospace;
-            font-size: 0.9em;
+            padding: 3px 10px;
+            border-radius: 14px;
             background: var(--tag-bg);
-            padding: 2px 6px;
-            border-radius: 4px;
             color: var(--tag-text);
+            font-weight: 460;
+            white-space: nowrap;
         }
-
-        .article hr {
-            border: none;
-            border-top: 1px solid var(--border-light);
-            margin: 40px 0;
+        .card-read {
+            font-size: 0.85rem;
+            font-weight: 540;
+            color: var(--accent);
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            transition: gap 0.25s ease;
+        }
+        .card-read .arrow {
+            display: inline-block;
+            transition: transform 0.25s ease;
         }
 
         .footer {
@@ -319,357 +291,109 @@
             transition: opacity 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
             z-index: 90;
         }
-        .back-to-top.visible {
-            opacity: 1;
-            transform: translateY(0);
-            pointer-events: auto;
-        }
-        .back-to-top:hover {
-            box-shadow: var(--shadow-lg);
-            border-color: var(--accent-soft);
-        }
-
-        .toc {
-            background: var(--card-bg);
-            border: 1px solid var(--border-light);
-            border-radius: var(--radius);
-            padding: 20px 24px;
-            margin-bottom: 36px;
-        }
-        .toc-title {
-            font-size: 0.85rem;
-            font-weight: 600;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            letter-spacing: 0.06em;
-            margin-bottom: 12px;
-        }
-        .toc-list {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-        .toc-list li {
-            margin-bottom: 6px;
-            font-size: 0.92rem;
-        }
-        .toc-list a {
-            color: var(--text-muted);
-            display: block;
-            padding: 4px 0;
-            border-bottom: 1px solid transparent;
-            transition: color 0.2s ease;
-        }
-        .toc-list a:hover {
-            color: var(--accent);
-        }
+        .back-to-top.visible { opacity: 1; transform: translateY(0); pointer-events: auto; }
+        .back-to-top:hover { box-shadow: var(--shadow-lg); border-color: var(--accent-soft); }
 
         @media (max-width: 768px) {
-            .hero { padding: 44px 20px 32px; }
+            .hero { padding: 52px 20px 40px; }
             .hero h1 { font-size: 1.7rem; }
-            .hero .subtitle { font-size: 0.9rem; }
-            .article { padding: 0 16px 48px; }
-            .article h2 { font-size: 1.3rem; margin-top: 36px; }
-            .article h3 { font-size: 1.05rem; }
-            .article .intro { padding: 16px 18px; font-size: 0.95rem; }
+            .hero p  { font-size: 0.98rem; }
+            .posts {
+                grid-template-columns: 1fr;
+                gap: 16px;
+                padding: 0 16px 48px;
+            }
+            .card { padding: 20px 20px 18px; }
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 260px;
+                height: 100vh;
+                flex-direction: column;
+                background: rgba(255,255,255,0.96);
+                backdrop-filter: blur(20px);
+                -webkit-backdrop-filter: blur(20px);
+                padding: 80px 24px 32px;
+                gap: 4px;
+                box-shadow: -4px 0 24px rgba(0,0,0,0.08);
+                transition: right 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+                align-items: stretch;
+            }
+            .nav-links.open { right: 0; }
+            .nav-links a { font-size: 1.05rem; padding: 10px 16px; border-radius: var(--radius-sm); }
+            .nav-toggle { display: flex; }
+            .nav-overlay {
+                position: fixed;
+                inset: 0;
+                background: rgba(0,0,0,0.12);
+                z-index: 99;
+                opacity: 0;
+                pointer-events: none;
+                transition: opacity 0.35s ease;
+            }
+            .nav-overlay.visible { opacity: 1; pointer-events: auto; }
             .back-to-top { bottom: 20px; right: 20px; width: 38px; height: 38px; }
         }
 
         @media (max-width: 480px) {
-            .hero h1 { font-size: 1.4rem; }
-            .article h2 { font-size: 1.15rem; }
-            .article h3 { font-size: 1rem; }
-            .article p, .article li { font-size: 0.92rem; }
-            .toc { padding: 16px 18px; }
+            .hero h1 { font-size: 1.5rem; }
+            .hero p  { font-size: 0.9rem; }
+            .card-title { font-size: 1.05rem; }
+            .card-excerpt { font-size: 0.875rem; }
+            .card { padding: 18px 16px 16px; }
         }
 
         @keyframes fadeUpIn {
-            from { opacity: 0; transform: translateY(16px); }
+            from { opacity: 0; transform: translateY(18px); }
             to { opacity: 1; transform: translateY(0); }
         }
-        .hero, .article {
-            animation: fadeUpIn 0.5s ease both;
-        }
+        .card { animation: fadeUpIn 0.5s ease both; }
     </style>
 </head>
 <body>
     <header>
         <nav class="nav" id="navbar">
             <div class="nav-inner">
-                <a href="#" class="nav-brand">a8fq干的好事</a>
-                <a href="https://github.com/xma1Soap" target="_blank" rel="noopener" class="nav-github">GitHub</a>
+                <a href="https://xma1soap.github.io" class="nav-brand">xma1Soap</a>
+                <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+                    <span></span><span></span><span></span>
+                </button>
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="https://xma1soap.github.io" class="active">Home</a></li>
+                    <li><a href="https://github.com/xma1Soap" target="_blank" rel="noopener">GitHub</a></li>
+                </ul>
             </div>
         </nav>
+        <div class="nav-overlay" id="navOverlay"></div>
     </header>
 
     <main>
         <section class="hero">
-            <div class="hero-tag">Slay the Spire 2</div>
-            <h1>a8fq干的好事 0.106版</h1>
-            <p class="subtitle">杀戮尖塔2 Beta 更新说明 · 完整汉化版</p>
-            <div class="meta">
-                <span>2026-05-23</span>
-                <span>·</span>
-                <span>翻译 / 整理 · a8fq</span>
-            </div>
+            <img class="hero-avatar" src="https://avatars.githubusercontent.com/u/21073890?v=4" alt="avatar">
+            <h1>不知道有什么意义的blog</h1>
+            <p>一些没什么意义的文字，凑凑数，显得这个blog好像有人写过一样。</p>
         </section>
 
-        <article class="article">
-            <div class="intro">
-                又到了新一期的 Beta 补丁时间！本次更新主要聚焦于敌人的平衡调整，包括重做感染棱柱、对鬼祟珊瑚群进行更多调整，以及对新 BOSS 永世沙漏的一些改动。此外还新增了不少纪元画作，以及一些角色更酷的战斗动画！下面来看看详细内容。
-            </div>
-
-            <div class="toc">
-                <div class="toc-title">目录</div>
-                <ul class="toc-list">
-                    <li><a href="#balance">内容与平衡性</a></li>
-                    <li><a href="#art">美术</a></li>
-                    <li><a href="#ui">界面与体验</a></li>
-                    <li><a href="#audio">音频</a></li>
-                    <li><a href="#writing">文本</a></li>
-                    <li><a href="#bugfix">Bug 修复</a></li>
-                </ul>
-            </div>
-
-            <h2 id="balance">内容与平衡性</h2>
-
-            <h3>通用</h3>
-            <ul>
-                <li>如果一名敌人带有易伤，且玩家通过佩尔之眼遗物获得额外回合，敌人的易伤层数将不再在玩家的额外回合开始前减少<br>此改动同样适用于其他在敌人回合结束时减少层数的状态（脆弱、无实体、虚弱等）</li>
-            </ul>
-
-            <h3>先古之民</h3>
-            <ul>
-                <li>调整了涅奥的卷轴箱与丝滑长鬃遗物：互换了负面效果与所属卡池</li>
-            </ul>
-
-            <h3>铁甲战士</h3>
-            <ul>
-                <li><span class="tag-buff">增强</span> <strong>战鼓</strong>：消耗时获得的能量现在会正确响应重复打出以及药水复制等效果</li>
-                <li><span class="tag-buff">增强</span> <strong>彼岸咆哮</strong>：触发时机从回合开始时移至回合结束时</li>
-                <li><span class="tag-buff">增强</span> <strong>巩固</strong>：现在可以从灵动等附魔中获得额外格挡</li>
-                <li><span class="tag-buff">增强</span> <strong>无情猛攻</strong>：伤害从 12(18) 提升至 14(20)</li>
-            </ul>
-
-            <h3>静默猎手</h3>
-            <ul>
-                <li><span class="tag-rework">重做</span> <strong>跟进</strong> 并更名为 <strong>惊骇</strong><br>稀有度从普通提升至罕见</li>
-                <li><span class="tag-change">调整</span> <strong>猎杀者</strong>：稀有度从罕见降低至普通</li>
-                <li><span class="tag-buff">增强</span> <strong>猛扑</strong>：伤害从 12(18) 提升至 14(20)</li>
-            </ul>
-
-            <h3>储君</h3>
-            <ul>
-                <li><span class="tag-buff">增强</span> <strong>熔炉</strong>：锻造层数从 4(6) 提升至 5(7)</li>
-                <li><span class="tag-nerf">削弱</span> <strong>仆从捐躯</strong>：格挡从 9(12) 降低至 8(11)</li>
-                <li><span class="tag-change">调整</span> <strong>封印王座</strong>：升级效果从固有改为能量费用降低 1 点</li>
-                <li><span class="tag-change">调整</span> <strong>星界脉冲</strong>：伤害从 14(18) 改为 6×2(8×2)</li>
-            </ul>
-
-            <h3>亡灵契约师</h3>
-            <ul>
-                <li><span class="tag-buff">增强</span> <strong>死亡行军</strong>：额外伤害从 3(4) 提升至 4(6)</li>
-                <li><span class="tag-nerf">削弱</span> <strong>摧残</strong>：减益持续时间从 3(4) 回合降低至 2(3) 回合</li>
-            </ul>
-
-            <h3>故障机器人</h3>
-            <ul>
-                <li><span class="tag-change">调整</span> <strong>聚变</strong>：能量费用从 2(1) 降低至 1，现在带消耗词条，升级后移除消耗</li>
-                <li><span class="tag-buff">增强</span> <strong>人工合成</strong>：伤害从 12(18) 提升至 14(20)</li>
-                <li><span class="tag-nerf">削弱</span> <strong>打碎</strong>：伤害从 11(15) 降低至 7(11)</li>
-            </ul>
-
-            <h3>无色卡牌</h3>
-            <ul>
-                <li><span class="tag-nerf">削弱</span> <strong>紧勒</strong>：额外格挡从 5(7) 降低至 4(6)</li>
-            </ul>
-
-            <h3>药水与遗物</h3>
-            <ul>
-                <li><span class="tag-buff">增强</span> <strong>干瘪之手</strong>：现在以对玩家更有利的方式随机选择卡牌
-                    <ul>
-                        <li>优先级 1：当前费用 ≥ 1 且基础费用 ≥ 1 的卡牌</li>
-                        <li>优先级 2：当前费用 ≥ 1 的卡牌</li>
-                        <li>优先级 3：基础费用 ≥ 1 但被临时降至 0 费的卡牌</li>
-                        <li>若以上条件均不满足，则完全随机选择一张手牌</li>
-                    </ul>
-                </li>
-            </ul>
-
-            <h3>敌人</h3>
-            <ul>
-                <li><span class="tag-rework">重做</span> <strong>感染棱柱</strong></li>
-                <li><span class="tag-change">调整</span> <strong>永世沙漏</strong>：调整了招式列表，重做了凋零状态与凋零领域能力</li>
-                <li><span class="tag-change">调整</span> <strong>幽灵船</strong>：移除了冲撞招式，现在改为横扫与践踏交替（鬼魂化后始终以横扫起手）</li>
-                <li><span class="tag-change">调整</span> <strong>拳击构装体</strong>：
-                    <ul>
-                        <li>出招顺序调整：现在快拳先出，随后接重拳</li>
-                        <li>预备招式现在改为接快拳</li>
-                        <li>现在施加脆弱而非虚弱</li>
-                    </ul>
-                </li>
-                <li><span class="tag-change">调整</span> <strong>鬼祟珊瑚群</strong>：
-                    <ul>
-                        <li>生命值从 70(75) 提升至 75(80)</li>
-                        <li>硬化外壳层数从 15 提升至 20</li>
-                        <li>移除了粉碎招式，第 1、2 回合改为使用对焦</li>
-                        <li>不再获得格挡</li>
-                    </ul>
-                </li>
-            </ul>
-
-            <h2 id="art">美术</h2>
-            <ul>
-                <li>新增了铁甲战士的重击动画</li>
-                <li>新增了亡灵契约师的施法动画</li>
-                <li>新增了储君的君王之剑动画</li>
-                <li>为以下事件新增了纪元画作：启动中、鲜汤、用毒者、涂鸦、平静</li>
-                <li>更新了以下事件的纪元画作：喂喂！、友谊</li>
-                <li>新增了以下敌人的恐惧模式替换美术：化石追踪者、幽灵船、鬼祟珊瑚群、胧光怪、树枝史莱姆（中）</li>
-            </ul>
-
-            <h2 id="ui">界面与体验</h2>
-            <ul>
-                <li>优化了多尼斯异鸟的交互体验
-                    <ul>
-                        <li>领地能力的悬停提示现在会提到多尼斯异鸟</li>
-                        <li>悬停在多尼斯异鸟身上时同时显示力量的悬停提示</li>
-                    </ul>
-                </li>
-                <li>更新了永世沙漏的 BOSS 节点图标</li>
-                <li>以下敌人现已加入怪物图鉴：帝皇蟹的钳臂、残杀千足虫、怯光怪</li>
-                <li>为排行榜新增了全局排名分页器，并调整了箭头位置</li>
-                <li>游戏结束界面的排行榜位置上移，为切换按钮腾出空间</li>
-                <li>现在可以在排行榜中查看自己分数附近的其他玩家分数</li>
-                <li>为顶栏的修改器图标添加了手柄导航支持</li>
-            </ul>
-
-            <h2 id="audio">音频</h2>
-            <ul>
-                <li>新增了鬼祟珊瑚群的音效</li>
-                <li>新增了卡牌移入牌堆时的音效</li>
-            </ul>
-
-            <h2 id="writing">文本</h2>
-            <ul>
-                <li>修复了宝石面具遗物描述中的部分用词不一致问题</li>
-                <li>修复了杀灭卡牌的描述，使其与焚烧卡牌的描述更加一致</li>
-                <li>迷失鬼火遗物描述中的"能力"一词不再被标记为关键词</li>
-                <li>为多种语言新增了翻译文本</li>
-                <li>修复了多种语言的格式、数值与标点符号问题</li>
-            </ul>
-
-            <h2 id="bugfix">Bug 修复</h2>
-
-            <h3>通用</h3>
-            <ul>
-                <li>修复了每日挑战界面在尚无分数提交时仍然显示分隔线的问题</li>
-                <li>修复了在两种语言间切换并继续已保存对局后，顶栏部分物品的悬停提示可能显示为错误语言的问题</li>
-                <li>修复了击败精英并获取药水奖励后，下一场战斗获得药水奖励的概率有时反而会上升的问题</li>
-                <li>修复了在卡牌检视界面可以用同一按键同时打开界面和切换查看升级的问题</li>
-                <li>修复了清空顶部奖励选项后，从遗物到手柄导航到奖励界面失灵的问题</li>
-                <li>修复了卡牌正在被转化时尝试打出导致的卡牌卡住问题</li>
-                <li>修复了鼠标位于屏幕过低位置时数字键选择卡牌无效的问题</li>
-                <li>加载含有已废弃 BOSS 的存档时，不会再遇到相同的双重 BOSS</li>
-                <li>游戏窗口失去焦点时，手柄输入现在被忽略</li>
-                <li>提升了启动时设置保存的可靠性</li>
-                <li>重复打出的卡牌现在会正确显示能力在重复期间消失后的伤害数值</li>
-                <li>停止云同步 settings.save 文件以防止 Steam 云冲突</li>
-                <li>将移除卡牌作为最后的奖励领取时，背景不再保持暗化状态</li>
-            </ul>
-
-            <h3>先古之民</h3>
-            <ul>
-                <li>修复了选择先古遗物选项时的崩溃问题</li>
-                <li>修复了涅奥的万花镜遗物消耗掉白银熔炉遗物所有充能层数的问题</li>
-                <li>修复了涅奥的丝滑长鬃遗物在多人模式中仅影响房主的卡牌奖励的问题</li>
-            </ul>
-
-            <h3>亡灵契约师</h3>
-            <ul>
-                <li>葬礼面具遗物现在会在抽牌之前将灵魂牌洗入抽牌堆</li>
-            </ul>
-
-            <h3>静默猎手</h3>
-            <ul>
-                <li>无法再在必备工具触发前打出卡牌</li>
-            </ul>
-
-            <h3>故障机器人</h3>
-            <ul>
-                <li>修复了吞噬暗影能力悬停提示中的间距问题</li>
-                <li>刮削不再丢弃费用为 0 但带有星辰费用的卡牌</li>
-            </ul>
-
-            <h3>无色卡牌</h3>
-            <ul>
-                <li>修复了当抽牌堆中的卡牌数量超过手牌上限时，打出天选卡牌导致的软锁定</li>
-                <li>修复了净化卡牌选择界面打开时仍可高亮生物的问题</li>
-            </ul>
-
-            <h3>药水与遗物</h3>
-            <ul>
-                <li>修复了通过浮木遗物重掷后，从遗物到手牌奖励的手柄导航失灵的问题</li>
-                <li>修复了在商店中通过手柄完成星系仪遗物的卡牌选择时，同时购买了商店物品的问题</li>
-            </ul>
-
-            <h3>敌人</h3>
-            <ul>
-                <li>修复了永世沙漏首动意图显示为增益而非减益的问题</li>
-                <li>修复了永世沙漏的背景音乐</li>
-                <li>修复了仪式兽的背景音乐切换与眩晕时机不匹配的问题</li>
-                <li>修复了活雾缺少烟雾效果的问题</li>
-                <li>修复了帝皇蟹的火箭钳蓄力音效无限循环的问题</li>
-                <li>修复了实验体被衰弱之触施加的血肉戏法击杀后，第二阶段会带着额外力量开始的问题</li>
-                <li>修复了偷窃草蜢在无卡牌可偷时的软锁定</li>
-                <li>修复了闪光贾克斯果死于反射能力时的视觉效果异常</li>
-                <li>修复了瀑布巨兽被击杀后不在怪物图鉴中重新出现的问题</li>
-                <li>墨宝与墨影幻灵的滑溜能力层数不再因完全格挡一次攻击的所有伤害而减少</li>
-                <li>鬼祟珊瑚群的每回合伤害上限现在会在玩家回合和敌人回合开始时正确重置，修复了中毒伤害计入玩家下一回合伤害上限的问题</li>
-                <li>修复了击败感染棱柱后的软锁定</li>
-                <li>电球头的高压电能力悬停提示现在正确说明其在回合结束时获得力量而非开始时</li>
-                <li>在怪物图鉴中补充了缺失的招式名称</li>
-                <li>被召唤的怪物现在会在怪物图鉴中显现（需击败一次后解锁）</li>
-                <li>乐加维林族母在怪物图鉴中没有睡觉时，不再显示 zzz 粒子效果</li>
-                <li>瀑布巨兽的蒸汽喷口在怪物图鉴中的死亡动画后不再表现异常</li>
-                <li>修复了实验体在怪物图鉴中的若干问题</li>
-            </ul>
-
-            <h3>事件</h3>
-            <ul>
-                <li>修复了水晶球事件中，药水奖励给予错误稀有度药水的问题</li>
-                <li>战痕累累的训练假人事件在保存退出后不再重复获得奖励</li>
-            </ul>
-
-            <h3>多人模式</h3>
-            <ul>
-                <li>如果药水目标已被其他玩家击杀，药水现在会被取消</li>
-                <li>修正了实验体在多人模式中的生命值缩放</li>
-                <li>修复了与事件战斗相关的状态分歧</li>
-                <li>修复了水晶球事件后可能发生的状态分歧</li>
-                <li>修复了事件选项解析耗时过长时可能发生的状态分歧</li>
-                <li>带有回合数触发条件的遗物（如烛台）在另一名玩家触发佩尔之眼获得额外回合时，不再跳过其触发</li>
-                <li>修复了鬼祟珊瑚群在多人模式中生成额外 buff 的问题</li>
-                <li>修复了胜利时间线中多人游戏以"已放弃"标记而非"已完成"的错误</li>
-                <li>修复了玩家在战斗结算后从多人游戏断开连接时的软锁定</li>
-                <li>离开商店房间不再跳过其余玩家的历史记录</li>
-                <li>星系仪遗物的卡牌奖励不再向其他玩家上报错误的卡牌</li>
-            </ul>
-
-            <hr>
-            <p style="text-align:center; color: var(--text-faint); font-size: 0.9rem;">
-                翻译 · a8fq &nbsp;|&nbsp; 数据来源 &nbsp;<a href="https://store.steampowered.com/news/app/2868840/view/670617878982033685" target="_blank" rel="noopener">Steam 官方更新公告</a>
-            </p>
-        </article>
+        <section class="posts">
+            <a href="patch-0.106.html" class="card">
+                <time class="card-date">2026-05-23</time>
+                <h2 class="card-title">安东尼干的好事,a8fq</h2>
+                <p class="card-excerpt">杀戮尖塔2 Beta v0.106.0 完整汉化更新日志。感染棱柱重做、永世沙漏调整、鬼祟珊瑚群再改动、铁甲/静猎/储君/亡灵/故障机器人平衡调整，以及大量 Bug 修复。</p>
+                <div class="card-tags">
+                    <span class="card-tag">杀戮尖塔2</span>
+                    <span class="card-tag">更新日志</span>
+                </div>
+                <span class="card-read">Read more <span class="arrow">→</span></span>
+            </a>
+        </section>
     </main>
 
     <footer class="footer">
         <div class="footer-inner">
-            <span>&copy; 2026 a8fq</span>
+            <span>&copy; 2026 xma1Soap</span>
             <span class="footer-dot"></span>
             <span>Built with plain HTML &amp; care</span>
-            <span class="footer-dot"></span>
-            <a href="https://github.com/xma1Soap" target="_blank" rel="noopener">GitHub</a>
         </div>
     </footer>
 
@@ -679,17 +403,25 @@
     (function () {
         'use strict';
         const navbar = document.getElementById('navbar');
+        const navToggle = document.getElementById('navToggle');
+        const navLinks = document.getElementById('navLinks');
+        const navOverlay = document.getElementById('navOverlay');
         const backToTop = document.getElementById('backToTop');
+
+        function openNav() { navLinks.classList.add('open'); navToggle.classList.add('open'); navOverlay.classList.add('visible'); document.body.style.overflow = 'hidden'; }
+        function closeNav() { navLinks.classList.remove('open'); navToggle.classList.remove('open'); navOverlay.classList.remove('visible'); document.body.style.overflow = ''; }
+        navToggle.addEventListener('click', function () { if (navLinks.classList.contains('open')) closeNav(); else openNav(); });
+        navOverlay.addEventListener('click', closeNav);
+        document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && navLinks.classList.contains('open')) closeNav(); });
+        navLinks.querySelectorAll('a').forEach(function (l) { l.addEventListener('click', function () { if (navLinks.classList.contains('open')) closeNav(); }); });
 
         var ticking = false;
         function onScroll() {
             if (!ticking) {
                 requestAnimationFrame(function () {
                     var y = window.scrollY;
-                    if (y > 8) navbar.classList.add('scrolled');
-                    else navbar.classList.remove('scrolled');
-                    if (y > 500) backToTop.classList.add('visible');
-                    else backToTop.classList.remove('visible');
+                    if (y > 8) navbar.classList.add('scrolled'); else navbar.classList.remove('scrolled');
+                    if (y > 500) backToTop.classList.add('visible'); else backToTop.classList.remove('visible');
                     ticking = false;
                 });
                 ticking = true;
@@ -697,9 +429,7 @@
         }
         window.addEventListener('scroll', onScroll, { passive: true });
         onScroll();
-        backToTop.addEventListener('click', function () {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        });
+        backToTop.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
     })();
     </script>
 </body>
