@@ -80,6 +80,73 @@
         .back-to-top.visible { opacity: 1; transform: translateY(0); pointer-events: auto; }
         .back-to-top:hover { box-shadow: var(--shadow-lg); border-color: var(--accent-soft); }
 
+        .content-wrapper {
+            max-width: calc(220px + 48px + var(--max-width));
+            margin: 0 auto;
+            padding: 0 24px;
+            display: flex;
+            align-items: flex-start;
+            gap: 48px;
+        }
+
+        .content-wrapper > .article {
+            flex: 1;
+            min-width: 0;
+            max-width: none;
+            margin: 0;
+            padding: 0 0 64px;
+        }
+
+        .sidebar {
+            width: 220px;
+            flex-shrink: 0;
+            position: sticky;
+            top: calc(var(--nav-height) + 24px);
+            padding: 20px;
+            background: var(--card-bg);
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .sidebar-title {
+            font-size: 0.85rem; font-weight: 600; color: var(--text-muted);
+            text-transform: uppercase; letter-spacing: 0.06em;
+            margin-bottom: 16px; padding-bottom: 10px;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .sidebar-section { margin-bottom: 16px; }
+
+        .sidebar-section-title {
+            font-size: 0.82rem; font-weight: 600; color: var(--text-faint);
+            margin-bottom: 6px;
+        }
+
+        .sidebar-link {
+            display: block; padding: 6px 10px;
+            border-radius: 4px; font-size: 0.88rem;
+            color: var(--text-muted);
+            transition: all 0.2s ease;
+        }
+
+        .sidebar-link:hover {
+            color: var(--accent);
+            background: var(--accent-bg);
+        }
+
+        .sidebar-link.active {
+            color: var(--accent);
+            font-weight: 550;
+            background: var(--accent-bg);
+        }
+
+        @media (max-width: 1024px) {
+            .sidebar { display: none; }
+            .content-wrapper { max-width: var(--max-width); display: block; padding: 0 16px; }
+            .content-wrapper > .article { max-width: none; margin: 0; padding: 0 8px 48px; }
+        }
+
         @media (max-width: 768px) {
             .hero { padding: 44px 20px 32px; }
             .hero h1 { font-size: 1.7rem; }
@@ -98,7 +165,7 @@
         }
 
         @keyframes fadeUpIn { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
-        .hero, .article { animation: fadeUpIn 0.5s ease both; }
+        .hero, .content-wrapper { animation: fadeUpIn 0.5s ease both; }
     </style>
 </head>
 <body>
@@ -123,7 +190,19 @@
             </div>
         </section>
 
-        <article class="article">
+        <div class="content-wrapper">
+            <aside class="sidebar">
+                <div class="sidebar-title">全局目录</div>
+                <div class="sidebar-section">
+                    <a href="https://xma1soap.github.io" class="sidebar-link">🏠 首页</a>
+                </div>
+                <div class="sidebar-section">
+                    <div class="sidebar-section-title">杀戮尖塔2</div>
+                    <a href="patch-0.106.1.html" class="sidebar-link active">0.106.1小更新</a>
+                    <a href="patch-0.106.html" class="sidebar-link">安东尼干的好事,a8fq</a>
+                </div>
+            </aside>
+            <article class="article">
             <div class="intro">
                 快速热修！修了几个永世沙漏的毛病，顺便更了一波各语言翻译。
             </div>
@@ -145,6 +224,7 @@
                 翻译 · 星薄荷 &nbsp;|&nbsp; 数据来源 &nbsp;<a href="https://steamcommunity.com/games/2868840/announcements/detail/670617878982034086" target="_blank" rel="noopener">Steam 官方更新公告</a>
             </p>
         </article>
+        </div>
     </main>
 
     <footer class="footer">
