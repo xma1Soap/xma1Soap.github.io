@@ -275,9 +275,25 @@
 
         @keyframes fadeUpIn { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
         .hero, .content-wrapper { animation: fadeUpIn 0.5s ease both; }
+
+        /* == Starfield == */
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.1; transform: scale(0.4); }
+            50% { opacity: 1; transform: scale(1.1); }
+        }
+        #starfield {
+            position: fixed; inset: 0;
+            z-index: 0; pointer-events: none;
+            overflow: hidden;
+        }
+        body > :not(#starfield):not(script) {
+            position: relative;
+            z-index: 1;
+        }
     </style>
 </head>
 <body>
+<div id="starfield"></div>
     <header>
         <nav class="nav" id="navbar">
             <div class="nav-inner">
@@ -596,6 +612,33 @@
         window.addEventListener('scroll', onScroll, { passive: true });
         onScroll();
         backToTop.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    })();
+    </script>
+
+    <script>
+    (function(){
+        var f = document.getElementById('starfield');
+        if (!f) return;
+        for (var i = 0; i < 100; i++) {
+            var s = document.createElement('div');
+            var sz = Math.random() * 2.5 + 0.5;
+            var x = Math.random() * 100;
+            var y = Math.random() * 100;
+            var op = Math.random() * 0.5 + 0.4;
+            var dur = Math.random() * 3 + 2;
+            var del = Math.random() * 4;
+            s.style.cssText = [
+                'position:absolute',
+                'left:' + x + '%',
+                'top:' + y + '%',
+                'width:' + sz + 'px',
+                'height:' + sz + 'px',
+                'background:rgba(255,255,255,' + op + ')',
+                'border-radius:50%',
+                'animation:twinkle ' + dur + 's ease-in-out ' + del + 's infinite'
+            ].join(';');
+            f.appendChild(s);
+        }
     })();
     </script>
 </body>
