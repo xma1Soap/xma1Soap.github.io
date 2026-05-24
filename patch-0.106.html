@@ -99,10 +99,8 @@
         .article p { margin-bottom: 16px; color: var(--text); line-height: 1.85; }
 
         .article .intro {
-            font-size: 1.05rem; color: var(--text-muted); padding: 20px 24px;
-            background: rgba(253, 243, 234, 0.7);
-            backdrop-filter: blur(14px);
-            -webkit-backdrop-filter: blur(14px);
+            font-size: 1.05rem; color: var(--text); padding: 20px 24px;
+            background: rgba(253, 243, 234, 0.35);
             border-radius: var(--radius);
             margin-bottom: 32px; border-left: 3px solid var(--accent);
         }
@@ -170,11 +168,9 @@
         .back-to-top:hover { box-shadow: var(--shadow-lg); border-color: var(--accent-soft); }
 
         .toc {
-            background: var(--glass-bg);
-            backdrop-filter: blur(14px);
-            -webkit-backdrop-filter: blur(14px);
-            border: 1px solid rgba(232, 229, 223, 0.5);
+            background: rgba(255, 255, 255, 0.3);
             border-radius: var(--radius); padding: 20px 24px; margin-bottom: 36px;
+            border: 1px solid rgba(232, 229, 223, 0.4);
         }
         .toc-title {
             font-size: 0.85rem; font-weight: 600; color: var(--text-muted);
@@ -199,7 +195,12 @@
             min-width: 0;
             max-width: none;
             margin: 0;
-            padding: 0 0 64px;
+            padding: 28px 32px 64px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border-radius: var(--radius);
+            border: 1px solid rgba(232, 229, 223, 0.5);
         }
 
         .sidebar {
@@ -251,7 +252,7 @@
         @media (max-width: 1024px) {
             .sidebar { display: none; }
             .content-wrapper { max-width: var(--max-width); display: block; padding: 0 16px; }
-            .content-wrapper > .article { max-width: none; margin: 0; padding: 0 8px 48px; }
+            .content-wrapper > .article { max-width: none; margin: 0; padding: 16px 20px 48px; }
         }
 
         @media (max-width: 768px) {
