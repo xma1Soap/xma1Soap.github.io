@@ -129,7 +129,7 @@
         .article hr { border: none; border-top: 1px solid var(--border-light); margin: 40px 0; }
 
         .footer {
-            margin-top: auto; border-top: 1px solid rgba(232, 229, 223, 0.5);
+            flex-shrink: 0; border-top: 1px solid rgba(232, 229, 223, 0.5);
             padding: 28px 24px; text-align: center; font-size: 0.85rem; color: var(--text-faint);
             background: var(--glass-bg);
             backdrop-filter: blur(14px);
@@ -182,6 +182,7 @@
         .toc-list a:hover { color: var(--accent); }
 
         .content-wrapper {
+            flex: 1;
             max-width: calc(220px + 48px + var(--max-width));
             margin: 0 auto;
             padding: 0 24px;
