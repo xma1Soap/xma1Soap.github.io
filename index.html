@@ -35,6 +35,7 @@
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
         html { scroll-behavior: smooth; scroll-padding-top: calc(var(--nav-height) + 20px); }
 
+        main { flex: 1; }
         body {
             font-family: 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
             background-color: var(--bg);
@@ -94,7 +95,7 @@
         .card-read { font-size: 0.85rem; font-weight: 540; color: var(--accent); display: inline-flex; align-items: center; gap: 4px; transition: gap 0.25s ease; }
         .card-read .arrow { display: inline-block; transition: transform 0.25s ease; }
 
-        .footer { margin-top: auto; border-top: 1px solid rgba(232, 229, 223, 0.5); padding: 28px 24px; text-align: center; font-size: 0.85rem; color: var(--text-faint); background: var(--glass-bg); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); }
+        .footer { flex-shrink: 0; border-top: 1px solid rgba(232, 229, 223, 0.5); padding: 28px 24px; text-align: center; font-size: 0.85rem; color: var(--text-faint); background: var(--glass-bg); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); }
         .footer a { color: var(--text-muted); }
         .footer a:hover { color: var(--accent); }
         .footer-inner { max-width: var(--max-width); margin: 0 auto; display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 16px; }
