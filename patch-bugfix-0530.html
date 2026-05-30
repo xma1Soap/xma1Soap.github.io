@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="杀戮尖塔2 0.106.1 Bug Fix 更新日志">
+    <title>0.106.1 Bug Fix · xma1Soap</title>
+    <style>
+        :root {
+            --bg:            #fafaf7;
+            --card-bg:       #ffffff;
+            --text:          #1f1f1f;
+            --text-muted:    #6e6e6e;
+            --text-faint:    #a0a0a0;
+            --accent:        #b8754c;
+            --accent-soft:   #d9b896;
+            --accent-bg:     #fdf3ea;
+            --border:        #e8e5df;
+            --border-light:  #f0ede8;
+            --tag-bg:        #f3efe9;
+            --tag-text:      #8b6f55;
+            --shadow-sm:     0 1px 2px rgba(0,0,0,0.04);
+            --shadow-md:     0 4px 16px rgba(0,0,0,0.06);
+            --shadow-lg:     0 8px 32px rgba(0,0,0,0.08);
+            --radius:        10px;
+            --radius-sm:     6px;
+            --max-width:     720px;
+            --nav-height:    60px;
+            --bg-img:        url('bg.png');
+            --glass-bg:      rgba(255, 255, 255, 0.68);
+        }
+
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; scroll-padding-top: calc(var(--nav-height) + 20px); }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            background-color: var(--bg);
+            background-image: var(--bg-img);
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            color: var(--text); line-height: 1.8;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            min-height: 100vh; display: flex; flex-direction: column;
+        }
+        a { color: var(--accent); text-decoration: none; transition: color 0.2s ease; }
+        a:hover { color: #9a5f3a; }
+
+        .nav { position: sticky; top: 0; z-index: 100; height: var(--nav-height); background: var(--glass-bg); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border-bottom: 1px solid rgba(232, 229, 223, 0.5); transition: border-color 0.3s ease, box-shadow 0.3s ease; }
+        .nav.scrolled { border-bottom-color: var(--border); box-shadow: var(--shadow-sm); }
+        .nav-inner { max-width: var(--max-width); margin: 0 auto; padding: 0 24px; height: 100%; display: flex; align-items: center; justify-content: space-between; }
+        .nav-back { font-size: 0.9rem; color: var(--text-muted); padding: 6px 12px; border-radius: var(--radius-sm); transition: color 0.2s ease, background 0.2s ease; }
+        .nav-back:hover { color: var(--accent); background: var(--accent-bg); }
+        .nav-brand { font-size: 1rem; font-weight: 600; color: var(--text); }
+        .nav-brand:hover { color: var(--accent); }
+
+        .hero { padding: 64px 24px 40px; text-align: center; max-width: 640px; margin: 0 auto; }
+        .hero-tag { display: inline-block; font-size: 0.8rem; font-weight: 550; padding: 4px 14px; border-radius: 20px; background: var(--accent-bg); color: var(--accent); margin-bottom: 20px; letter-spacing: 0.04em; }
+        .hero h1 { font-size: 2.2rem; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 12px; line-height: 1.25; background: linear-gradient(135deg, #a78bfa, #6ee7b7); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-shadow: 0 2px 16px rgba(0,0,0,0.08); }
+        .hero .subtitle { font-size: 1rem; color: var(--text-muted); line-height: 1.6; }
+        .hero .meta { margin-top: 16px; font-size: 0.85rem; color: var(--text-faint); }
+        .hero .meta span { margin: 0 6px; }
+
+        .article { max-width: var(--max-width); margin: 0 auto; padding: 0 24px 64px; }
+
+        .article h2 { font-size: 1.5rem; font-weight: 680; margin-top: 48px; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 2px solid var(--border-light); color: var(--text); letter-spacing: -0.01em; }
+        .article h3 { font-size: 1.15rem; font-weight: 640; margin-top: 32px; margin-bottom: 14px; color: var(--accent); }
+        .article p { margin-bottom: 16px; color: var(--text); line-height: 1.85; }
+
+        .article .intro { font-size: 1.05rem; color: var(--text); padding: 20px 24px; background: rgba(253, 243, 234, 0.35); border-radius: var(--radius); margin-bottom: 32px; border-left: 3px solid var(--accent); }
+        .article ul, .article ol { margin-bottom: 20px; padding-left: 24px; }
+        .article li { margin-bottom: 8px; line-height: 1.75; color: var(--text); }
+        .article li ul { margin-top: 6px; margin-bottom: 6px; }
+        .article strong { font-weight: 650; }
+
+        .tag-change { display: inline-block; font-size: 0.75rem; font-weight: 600; padding: 1px 8px; border-radius: 4px; background: #fff3e0; color: #b8754c; margin-right: 4px; }
+
+        .article hr { border: none; border-top: 1px solid var(--border-light); margin: 40px 0; }
+
+        .footer { flex-shrink: 0; border-top: 1px solid rgba(232, 229, 223, 0.5); padding: 28px 24px; text-align: center; font-size: 0.85rem; color: var(--text-faint); background: var(--glass-bg); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); }
+        .footer a { color: var(--text-muted); }
+        .footer a:hover { color: var(--accent); }
+        .footer-inner { max-width: var(--max-width); margin: 0 auto; display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 16px; }
+        .footer-dot { display: inline-block; width: 4px; height: 4px; border-radius: 50%; background: var(--text-faint); opacity: 0.5; }
+
+        .back-to-top { position: fixed; bottom: 28px; right: 28px; width: 42px; height: 42px; border-radius: 50%; background: var(--glass-bg); border: 1px solid rgba(232, 229, 223, 0.5); box-shadow: var(--shadow-md); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; opacity: 0; transform: translateY(16px); pointer-events: none; transition: opacity 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease; backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); z-index: 90; }
+        .back-to-top.visible { opacity: 1; transform: translateY(0); pointer-events: auto; }
+        .back-to-top:hover { box-shadow: var(--shadow-lg); border-color: var(--accent-soft); }
+
+        .content-wrapper {
+            flex: 1;
+            max-width: calc(220px + 48px + var(--max-width));
+            margin: 0 auto;
+            padding: 0 24px;
+            display: flex;
+            align-items: flex-start;
+            gap: 48px;
+        }
+
+        .content-wrapper > .article {
+            flex: 1;
+            min-width: 0;
+            max-width: none;
+            margin: 0;
+            padding: 28px 32px 64px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border-radius: var(--radius);
+            border: 1px solid rgba(232, 229, 223, 0.5);
+        }
+
+        .sidebar {
+            width: 220px;
+            flex-shrink: 0;
+            position: sticky;
+            top: calc(var(--nav-height) + 24px);
+            padding: 20px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border: 1px solid rgba(232, 229, 223, 0.5);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-md);
+        }
+
+        .sidebar-title { font-size: 0.85rem; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 16px; padding-bottom: 10px; border-bottom: 1px solid var(--border-light); }
+        .sidebar-section { margin-bottom: 16px; }
+        .sidebar-section-title { font-size: 0.82rem; font-weight: 600; color: var(--text-faint); margin-bottom: 6px; }
+        .sidebar-link { display: block; padding: 6px 10px; border-radius: 4px; font-size: 0.88rem; color: var(--text-muted); transition: all 0.2s ease; }
+        .sidebar-link:hover { color: var(--accent); background: var(--accent-bg); }
+        .sidebar-link.active { color: var(--accent); font-weight: 550; background: var(--accent-bg); }
+
+        @media (max-width: 1024px) {
+            .sidebar { display: none; }
+            .content-wrapper { max-width: var(--max-width); display: block; padding: 0 16px; }
+            .content-wrapper > .article { max-width: none; margin: 0; padding: 16px 20px 48px; }
+        }
+
+        @media (max-width: 768px) {
+            .hero { padding: 44px 20px 32px; }
+            .hero h1 { font-size: 1.7rem; }
+            .hero .subtitle { font-size: 0.9rem; }
+            .article { padding: 0 16px 48px; }
+            .article h2 { font-size: 1.3rem; margin-top: 36px; }
+            .article h3 { font-size: 1.05rem; }
+            .article .intro { padding: 16px 18px; font-size: 0.95rem; }
+            .back-to-top { bottom: 20px; right: 20px; width: 38px; height: 38px; }
+        }
+        @media (max-width: 480px) {
+            .hero h1 { font-size: 1.4rem; }
+            .article h2 { font-size: 1.15rem; }
+            .article h3 { font-size: 1rem; }
+            .article p, .article li { font-size: 0.92rem; }
+        }
+
+        @keyframes fadeUpIn { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+        .hero, .content-wrapper { animation: fadeUpIn 0.5s ease both; }
+
+        /* == Starfield == */
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.1; transform: scale(0.4); }
+            50% { opacity: 1; transform: scale(1.1); }
+        }
+        #starfield { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+        body > :not(#starfield):not(script):not(#backToTop) { position: relative; z-index: 1; }
+    </style>
+</head>
+<body>
+<div id="starfield"></div>
+    <header>
+        <nav class="nav" id="navbar">
+            <div class="nav-inner">
+                <a href="https://xma1soap.github.io" class="nav-back">&larr; 返回首页</a>
+                <a href="https://xma1soap.github.io" class="nav-brand">xma1Soap</a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="hero-tag">Slay the Spire 2</div>
+            <h1>0.106.1 Bug Fix</h1>
+            <div class="meta">
+                <span>2026-05-30</span>
+                <span>·</span>
+                <span>翻译 · 星薄荷</span>
+            </div>
+        </section>
+
+        <div class="content-wrapper">
+            <aside class="sidebar">
+                <div class="sidebar-title">全局目录</div>
+                <div class="sidebar-section">
+                    <a href="https://xma1soap.github.io" class="sidebar-link">🏠 首页</a>
+                </div>
+                <div class="sidebar-section">
+                    <div class="sidebar-section-title">杀戮尖塔2</div>
+                    <a href="patch-bugfix-0530.html" class="sidebar-link active">0.106.1 Bug Fix</a>
+                    <a href="patch-0.106.1.html" class="sidebar-link">0.106.1小更新</a>
+                    <a href="patch-0.106.html" class="sidebar-link">0.106.0 beta更新</a>
+                </div>
+            </aside>
+            <article class="article">
+
+            <h2 id="general">通用</h2>
+            <ul>
+                <li>提升了启动时设置保存的可靠性</li>
+                <li>修复了向濒死生物施加能力时的崩溃问题</li>
+                <li>修复了手柄上瞄准敌人时打开卡堆界面的崩溃问题</li>
+                <li>修复了 Linux 上战斗中 UI 元素在帧中移除时的崩溃问题</li>
+                <li>修复了 Linux 上 ICU 库不可用时的崩溃问题</li>
+                <li>修复了 Linux 上按下音量键或 Alt+Tab 切换窗口后音频保持静音的问题</li>
+                <li>将 Intel 620 GPU 的默认渲染后端恢复为 D3D12</li>
+                <li>修复了鼠标光标在屏幕过低位置时数字键无法选择卡牌的问题</li>
+                <li>修复了同一按钮按下时同时打开卡牌查看界面和切换"查看强化"的问题</li>
+                <li>修复了卡牌查看界面中无法使用"查看强化"快捷键的问题</li>
+                <li>修复了潘多拉魔盒卡牌查看界面中卡牌查看按钮阻挡"确认"快捷键的问题</li>
+                <li>修复了手柄上使用许愿卡牌时同一按钮按下立即选择网格中卡牌的问题</li>
+                <li>修复了清除顶部奖励选项后从遗物到奖励界面的手柄导航中断问题</li>
+                <li>修复了使用手柄时游戏在"检测到手柄"和"检测到鼠标"之间快速切换的问题</li>
+                <li>修复了手柄上可以瞄准已死亡敌人的问题</li>
+                <li>修复了商店中无法从顶部栏导航离开的问题</li>
+                <li>修复了买完所有遗物和无色卡牌后商店中的手柄导航问题</li>
+                <li>修复了拥有两行遗物时手柄上无法导航休息站选项的问题</li>
+                <li>修复了进阶教程打开时手柄上可以开始单人游戏的问题</li>
+                <li>修复了设置保存后新增键位绑定的输入设置错误</li>
+                <li>修复了移除药水时取消药水槽聚焦的错误</li>
+                <li>修复了时间线界面上纪元指示器超出屏幕导致的错误</li>
+                <li>修复了每日挑战排行榜界面在无成绩提交、成绩加载中或加载失败时出现分隔线的问题</li>
+                <li>修复了能力在重放之间消退时重放卡牌不显示正确伤害的问题</li>
+                <li>修复了夜魇修改器可能导致死亡的问题</li>
+                <li>修复了加载包含已弃用首领的存档时双首领战中可能重复出现同一首领的问题</li>
+                <li>修复了完成战利品地图任务且持有多张时未全部移除的问题</li>
+                <li>修复了与写入调试文件相关的罕见软锁定问题</li>
+                <li>修复了精英战斗获胜获得药水后，再次获得药水奖励的概率有时不降反升的问题</li>
+            </ul>
+
+            <h2 id="ironclad">铁甲战士</h2>
+            <ul>
+                <li>修复了慷慨+将卡牌加入手牌后可以用武装选择已强化卡牌的问题</li>
+            </ul>
+
+            <h2 id="silent">静默猎手</h2>
+            <ul>
+                <li>修复了可以使用窥视按钮跳过幸存者卡牌弃牌选择的问题</li>
+            </ul>
+
+            <h2 id="defect">故障机器人</h2>
+            <ul>
+                <li>修复了刮削卡牌弃掉能量费用为零但有星辰费用的卡牌的问题</li>
+                <li>修复了吞噬暗影能力悬停提示中的间距问题</li>
+            </ul>
+
+            <h2 id="regent">储君</h2>
+            <ul>
+                <li>修复了征召上前卡牌，现在会在锻造前而非锻造后将已有的君王之剑放入手牌</li>
+            </ul>
+
+            <h2 id="potions-relics">药水 &amp; 遗物</h2>
+            <ul>
+                <li>修复了鬼魂化状态下铁靴因厄运诅咒造成 5 点而非 1 点伤害的问题</li>
+                <li>修复了自成型黏土遗物被晚期修改器的最大生命值损失触发的问题</li>
+                <li>修复了低语耳环遗物重放星尘时消耗 0 星辰而非正确数量的问题</li>
+            </ul>
+
+            <h2 id="enemies">敌人</h2>
+            <ul>
+                <li>修复了乐加维林族母不再睡眠时怪物图鉴中"zzz"睡眠粒子不消失的问题</li>
+                <li>修复了闪光贾克斯果死于反射能力时的视觉特效异常</li>
+                <li>修复了电球头的高压电能力悬停提示，现在正确显示其在回合结束时而非开始时获得力量</li>
+                <li>修复了活雾缺失烟雾的问题</li>
+                <li>修复了仪式兽音乐过渡与其被击晕时机不匹配的问题</li>
+                <li>修复了衰弱之触能力导致仪式兽在被击晕后仍获得力量的问题</li>
+                <li>修复了偷窃草蜢无可偷卡牌时的软锁定问题</li>
+                <li>修复了墨影幻灵幻象在当前回合被击杀后仍保留黑暗镣铐负力量的问题</li>
+            </ul>
+
+            <h2 id="events">事件</h2>
+            <ul>
+                <li>修复了感染自动机事件中出现其他角色卡牌的问题</li>
+                <li>修复了拳击对决事件中无法弃置药水的问题</li>
+                <li>修复了无法将污浊药水给予商人的问题</li>
+            </ul>
+
+            <h2 id="ancients">先古之民</h2>
+            <ul>
+                <li>修复了选择先古之民遗物选项时的崩溃问题</li>
+                <li>修复了查看卡牌库时可以导航回涅奥选项的问题</li>
+                <li>修复了先古之民界面中下一个对话气泡动画进入前略微可见顶部的问题</li>
+                <li>修复了从涅奥的骨殖同时获得涅奥的护符时，叶敷剂遗物转化了护符给予的已升级打击和防御的问题</li>
+                <li>修复了没有打击卡牌时营养汤选项仍出现在特斯卡塔拉界面的问题</li>
+            </ul>
+
+            <h2 id="multiplayer">多人模式</h2>
+            <ul>
+                <li>修复了佩尔军团和臂甲遗物在其拥有者向其他玩家施加格挡时不触发的问题</li>
+                <li>修复了茂密植被事件在任意玩家生命值 ≤8 时仍可出现的问题</li>
+                <li>修复了仅有一名玩家时可开始已加载多人游戏的问题</li>
+                <li>修复了设置界面中调整窗口大小时其他玩家生命值条超出屏幕的问题</li>
+                <li>修复了玩家名包含方括号时的错误</li>
+                <li>修复了"显示多人绘图"复选框未使用本地化文本的问题</li>
+                <li>Steam 多人连接超时（错误 5008）现在会显示正确的错误信息</li>
+                <li>改进了特定罕见连接错误的错误报告</li>
+                <li>修复了首次游戏中使用浮木遗物相关的软锁定问题</li>
+            </ul>
+
+            <hr>
+            <p style="text-align:center; color: var(--text-faint); font-size: 0.9rem;">
+                翻译 · 星薄荷 &nbsp;|&nbsp; 数据来源 &nbsp;<a href="https://steamcommunity.com/games/2868840/announcements/detail/1833334318573078" target="_blank" rel="noopener">Steam 官方更新公告</a>
+            </p>
+        </article>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-inner">
+            <span>&copy; 2026 xma1Soap</span>
+            <span class="footer-dot"></span>
+            <a href="https://xma1soap.github.io">Back to home</a>
+        </div>
+    </footer>
+
+    <button class="back-to-top" id="backToTop" aria-label="Back to top" title="Back to top">↑</button>
+
+    <script>
+    (function () {
+        'use strict';
+        const navbar = document.getElementById('navbar');
+        const backToTop = document.getElementById('backToTop');
+        var ticking = false;
+        function onScroll() {
+            if (!ticking) {
+                requestAnimationFrame(function () {
+                    var y = window.scrollY;
+                    if (y > 8) navbar.classList.add('scrolled'); else navbar.classList.remove('scrolled');
+                    if (y > 500) backToTop.classList.add('visible'); else backToTop.classList.remove('visible');
+                    ticking = false;
+                });
+                ticking = true;
+            }
+        }
+        window.addEventListener('scroll', onScroll, { passive: true });
+        onScroll();
+        backToTop.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    })();
+    </script>
+
+    <script>
+    (function(){
+        var f = document.getElementById('starfield');
+        if (!f) return;
+        for (var i = 0; i < 250; i++) {
+            var s = document.createElement('div');
+            var sz = Math.random() * 3.5 + 1;
+            var x = Math.random() * 100;
+            var y = Math.random() * 100;
+            var op = Math.random() * 0.4 + 0.5;
+            var dur = Math.random() * 3 + 2;
+            var del = Math.random() * 4;
+            s.style.cssText = [
+                'position:absolute',
+                'left:' + x + '%',
+                'top:' + y + '%',
+                'width:' + sz + 'px',
+                'height:' + sz + 'px',
+                'background:rgba(255,255,255,' + op + ')',
+                'border-radius:50%',
+                'animation:twinkle ' + dur + 's ease-in-out ' + del + 's infinite'
+            ].join(';');
+            f.appendChild(s);
+        }
+    })();
+    </script>
+</body>
+</html>
