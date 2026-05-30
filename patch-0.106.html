@@ -148,14 +148,6 @@
 
         .back-to-top {
             position: fixed; bottom: 28px; right: 28px; width: 42px; height: 42px;
-            border-radius: 50%; background: var(--card-bg); border: 1px solid var(--border);
-            box-shadow: var(--shadow-md); cursor: pointer; display: flex; align-items: center;
-            justify-content: center; font-size: 1.1rem; opacity: 0; transform: translateY(16px);
-            pointer-events: none; transition: opacity 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease; z-index: 90;
-        }
-        .back-to-top.visible { opacity: 1; transform: translateY(0); pointer-events: auto; }
-        .back-to-top {
-            position: fixed; bottom: 28px; right: 28px; width: 42px; height: 42px;
             border-radius: 50%; background: var(--glass-bg); border: 1px solid rgba(232, 229, 223, 0.5);
             box-shadow: var(--shadow-md); cursor: pointer; display: flex; align-items: center;
             justify-content: center; font-size: 1.1rem; opacity: 0; transform: translateY(16px);
@@ -271,7 +263,6 @@
             .article h2 { font-size: 1.15rem; }
             .article h3 { font-size: 1rem; }
             .article p, .article li { font-size: 0.92rem; }
-            .toc { padding: 16px 18px; }
         }
 
         @keyframes fadeUpIn { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
@@ -324,19 +315,20 @@
                 </div>
                 <div class="sidebar-section">
                     <div class="sidebar-section-title">杀戮尖塔2</div>
+                    <a href="patch-bugfix-0530.html" class="sidebar-link">0.106.1 Bug Fix</a>
                     <a href="patch-0.106.1.html" class="sidebar-link">0.106.1小更新</a>
                     <a href="patch-0.106.html" class="sidebar-link active">0.106.0 beta更新</a>
                 </div>
             </aside>
             <article class="article">
             <div class="intro">
-                又到了新一期的 Beta 补丁时间！本次更新主要聚焦于敌人的平衡调整，包括重做感染棱柱、对鬼祟珊瑚群进行更多调整，以及对新 BOSS 永世沙漏的一些改动。此外还新增了不少纪元画作，以及一些角色更酷的战斗动画！下面来看看详细内容。
+                又到了新一期的 Beta 补丁时间！本次更新主要聚焦于敌人的平衡调整，包括重做感染棱柱、对鬼祟珊瑚群进行更多调整，以及对新 BOSS 永世沙漏的一些改动。
             </div>
 
             <div class="toc">
                 <div class="toc-title">目录</div>
                 <ul class="toc-list">
-                    <li><a href="#balance">内容与平衡性</a></li>
+                    <li><a href="#content">内容与平衡性</a></li>
                     <li><a href="#art">美术</a></li>
                     <li><a href="#ui">界面与体验</a></li>
                     <li><a href="#audio">音频</a></li>
@@ -345,21 +337,24 @@
                 </ul>
             </div>
 
-            <h2 id="balance">内容与平衡性</h2>
-
+            <h2 id="content">内容与平衡性</h2>
             <h3>通用</h3>
             <ul>
-                <li>如果一名敌人带有易伤，且玩家通过佩尔之眼遗物获得额外回合，敌人的易伤层数将不再在玩家的额外回合开始前减少<br>此改动同样适用于其他在敌人回合结束时减少层数的状态（脆弱、无实体、虚弱等）</li>
+                <li>如果一名敌人带有易伤，且玩家通过佩尔之眼遗物获得额外回合，敌人的易伤层数将不再在玩家的额外回合开始前减少
+                    <ul>
+                        <li>此改动同样适用于其他在敌人回合结束时减少层数的状态（脆弱、鬼魂化、虚弱等）</li>
+                    </ul>
+                </li>
             </ul>
 
             <h3>先古之民</h3>
             <ul>
-                <li>调整了涅奥的卷轴箱与丝滑长鬃遗物：互换了负面效果与所属卡池</li>
+                <li><span class="tag-change">调整</span> <strong>涅奥的卷轴箱</strong> 与 <strong>丝滑长鬃</strong> 遗物：互换了负面效果与所属卡池</li>
             </ul>
 
             <h3>铁甲战士</h3>
             <ul>
-                <li><span class="tag-buff">增强</span> <strong>战鼓</strong>：消耗时获得的能量现在会正确响应重复打出以及药水复制等效果</li>
+                <li><span class="tag-buff">增强</span> <strong>战鼓</strong>：消耗时获得的能量现在会正确受到重复打出以及药水复制等效果的影响</li>
                 <li><span class="tag-buff">增强</span> <strong>彼岸咆哮</strong>：触发时机从回合开始时移至回合结束时</li>
                 <li><span class="tag-buff">增强</span> <strong>巩固</strong>：现在可以从灵动等附魔中获得额外格挡</li>
                 <li><span class="tag-buff">增强</span> <strong>无情猛攻</strong>：伤害从 12(18) 提升至 14(20)</li>
@@ -367,7 +362,12 @@
 
             <h3>静默猎手</h3>
             <ul>
-                <li><span class="tag-rework">重做</span> <strong>跟进</strong> 并更名为 <strong>惊骇</strong><br>稀有度从普通提升至罕见</li>
+                <li><span class="tag-rework">重做</span> <strong>跟进</strong> 并更名：
+                    <ul>
+                        <li>稀有度从普通提升至罕见</li>
+                        <li>卡牌名称变更为 <strong>惊骇</strong></li>
+                    </ul>
+                </li>
                 <li><span class="tag-change">调整</span> <strong>猎杀者</strong>：稀有度从罕见降低至普通</li>
                 <li><span class="tag-buff">增强</span> <strong>猛扑</strong>：伤害从 12(18) 提升至 14(20)</li>
             </ul>
@@ -377,7 +377,6 @@
                 <li><span class="tag-buff">增强</span> <strong>熔炉</strong>：锻造层数从 4(6) 提升至 5(7)</li>
                 <li><span class="tag-nerf">削弱</span> <strong>仆从捐躯</strong>：格挡从 9(12) 降低至 8(11)</li>
                 <li><span class="tag-change">调整</span> <strong>封印王座</strong>：升级效果从固有改为能量费用降低 1 点</li>
-                <li><span class="tag-change">调整</span> <strong>星界脉冲</strong>：伤害从 14(18) 改为 6×2(8×2)</li>
             </ul>
 
             <h3>亡灵契约师</h3>
@@ -388,7 +387,12 @@
 
             <h3>故障机器人</h3>
             <ul>
-                <li><span class="tag-change">调整</span> <strong>聚变</strong>：能量费用从 2(1) 降低至 1，现在带消耗词条，升级后移除消耗</li>
+                <li><span class="tag-change">调整</span> <strong>聚变</strong>：
+                    <ul>
+                        <li>能量费用从 2(1) 降低至 1</li>
+                        <li>现在带消耗词条，升级后移除消耗</li>
+                    </ul>
+                </li>
                 <li><span class="tag-buff">增强</span> <strong>人工合成</strong>：伤害从 12(18) 提升至 14(20)</li>
                 <li><span class="tag-nerf">削弱</span> <strong>打碎</strong>：伤害从 11(15) 降低至 7(11)</li>
             </ul>
@@ -400,20 +404,18 @@
 
             <h3>药水与遗物</h3>
             <ul>
-                <li><span class="tag-buff">增强</span> <strong>干瘪之手</strong>：现在以对玩家更有利的方式随机选择卡牌
-                    <ul>
-                        <li>优先级 1：当前费用 ≥ 1 且基础费用 ≥ 1 的卡牌</li>
-                        <li>优先级 2：当前费用 ≥ 1 的卡牌</li>
-                        <li>优先级 3：基础费用 ≥ 1 但被临时降至 0 费的卡牌</li>
-                        <li>若以上条件均不满足，则完全随机选择一张手牌</li>
-                    </ul>
-                </li>
+                <li><span class="tag-buff">增强</span> <strong>干瘪之手</strong>：现在在选择卡牌时会采用对玩家更有利的优先级</li>
             </ul>
 
             <h3>敌人</h3>
             <ul>
                 <li><span class="tag-rework">重做</span> <strong>感染棱柱</strong></li>
-                <li><span class="tag-change">调整</span> <strong>永世沙漏</strong>：调整了招式列表，重做了凋零状态与凋零领域能力</li>
+                <li><span class="tag-change">调整</span> <strong>永世沙漏</strong>：
+                    <ul>
+                        <li>调整了招式列表</li>
+                        <li>重做了凋萎状态与凋萎领域能力</li>
+                    </ul>
+                </li>
                 <li><span class="tag-change">调整</span> <strong>幽灵船</strong>：移除了冲撞招式，现在改为横扫与践踏交替（鬼魂化后始终以横扫起手）</li>
                 <li><span class="tag-change">调整</span> <strong>拳击构装体</strong>：
                     <ul>
