@@ -137,15 +137,8 @@
             0%, 100% { opacity: 0.1; transform: scale(0.4); }
             50% { opacity: 1; transform: scale(1.1); }
         }
-        #starfield {
-            position: fixed; inset: 0;
-            z-index: 0; pointer-events: none;
-            overflow: hidden;
-        }
-        body > :not(#starfield):not(script):not(#backToTop) {
-            position: relative;
-            z-index: 1;
-        }
+        #starfield { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+        body > :not(#starfield):not(script):not(#backToTop) { position: relative; z-index: 1; }
     </style>
 </head>
 <body>
@@ -180,6 +173,16 @@
         </div>
 
         <section class="posts">
+            <a href="patch-bugfix-0523.html" class="card" data-category="杀戮尖塔2">
+                <time class="card-date">2026-05-23</time>
+                <h2 class="card-title">0.106.1 Bug Fix</h2>
+                <p class="card-excerpt">修复了大量手柄相关、Linux 平台的特殊问题、各类崩溃与软锁定问题。许愿卡牌、征召上前、自成型黏土等名词按 wiki 标准更新。</p>
+                <div class="card-tags">
+                    <span class="card-tag">杀戮尖塔2</span>
+                    <span class="card-tag">Bug修复</span>
+                </div>
+                <span class="card-read">Read more <span class="arrow">→</span></span>
+            </a>
             <a href="patch-0.106.1.html" class="card" data-category="杀戮尖塔2">
                 <time class="card-date">2026-05-23</time>
                 <h2 class="card-title">0.106.1小更新</h2>
