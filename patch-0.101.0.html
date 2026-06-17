@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<meta name="description" content="杀戮尖塔2 v0.106.1 热修更新">
-<title>0.106.1小更新 · xma1Soap</title>
+<meta name="description" content="杀戮尖塔2 0.101.0 beta更新 中文整理">
+<title>0.101.0 beta更新 · xma1Soap</title>
 <style>
 :root{--bg:#fafaf7;--card-bg:#fff;--text:#1f1f1f;--text-muted:#6e6e6e;--text-faint:#a0a0a0;--accent:#b8754c;--accent-soft:#d9b896;--accent-bg:#fdf3ea;--border:#e8e5df;--border-light:#f0ede8;--tag-bg:#f3efe9;--tag-text:#8b6f55;--shadow-sm:0 1px 2px rgba(0,0,0,.04);--shadow-md:0 4px 16px rgba(0,0,0,.06);--shadow-lg:0 8px 32px rgba(0,0,0,.08);--radius:10px;--radius-sm:6px;--max-width:720px;--nav-height:60px;--bg-img:url(bg.png);--glass-bg:rgba(255,255,255,.68)}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -34,6 +34,15 @@ a:hover{color:#9a5f3a}
 .article li{margin-bottom:8px;line-height:1.75;color:var(--text)}
 .article li ul{margin-top:6px;margin-bottom:6px}
 .article strong{font-weight:650}
+.tag-buff{display:inline-block;font-size:.75rem;font-weight:600;padding:1px 8px;border-radius:4px;background:#e6f7e6;color:#2d7d2d;margin-right:4px}
+.tag-nerf{display:inline-block;font-size:.75rem;font-weight:600;padding:1px 8px;border-radius:4px;background:#fde8e8;color:#b33a3a;margin-right:4px}
+.tag-change{display:inline-block;font-size:.75rem;font-weight:600;padding:1px 8px;border-radius:4px;background:#fff3e0;color:#b8754c;margin-right:4px}
+.toc{background:rgba(255,255,255,.3);border-radius:var(--radius);padding:20px 24px;margin-bottom:36px;border:1px solid rgba(232,229,223,.4)}
+.toc-title{font-size:.85rem;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px}
+.toc-list{list-style:none;padding:0;margin:0}
+.toc-list li{margin-bottom:6px;font-size:.92rem}
+.toc-list a{color:var(--text-muted);display:block;padding:4px 0;transition:color .2s}
+.toc-list a:hover{color:var(--accent)}
 .article hr{border:none;border-top:1px solid var(--border-light);margin:40px 0}
 .footer{flex-shrink:0;border-top:1px solid rgba(232,229,223,.5);padding:28px 24px;text-align:center;font-size:.85rem;color:var(--text-faint);background:var(--glass-bg);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
 .footer a{color:var(--text-muted)}
@@ -65,16 +74,27 @@ body>:not(#starfield):not(script):not(#backToTop){position:relative;z-index:1}
 <body>
 <div id="starfield"></div>
 <header><nav class="nav" id="navbar"><div class="nav-inner"><a href="https://xma1soap.github.io" class="nav-back">&larr; 返回首页</a><a href="https://xma1soap.github.io" class="nav-brand">xma1Soap</a></div></nav></header>
-<main><section class="hero"><div class="hero-tag">Slay the Spire 2</div><h1>0.106.1小更新</h1><p class="subtitle">快速热修！修了几个永世沙漏的毛病，顺便更了一波各语言翻译。</p><div class="meta"><span>2026-05-23</span><span>·</span><span>翻译 · 星薄荷</span></div></section>
-<div class="content-wrapper"><aside class="sidebar"><div class="sidebar-title">全局目录</div><div class="sidebar-section"><a href="https://xma1soap.github.io" class="sidebar-link">🏠 首页</a></div><div class="sidebar-section"><div class="sidebar-section-title">杀戮尖塔2</div><a href="patch-0.107.0.html" class="sidebar-link">0.107.0 beta更新</a><a href="patch-bugfix-0530.html" class="sidebar-link">5月 Bug 修复</a><a href="patch-0.106.1.html" class="sidebar-link active">0.106.1小更新</a><a href="patch-0.106.html" class="sidebar-link">0.106.0 beta更新</a><a href="patch-0.105.1.html" class="sidebar-link">0.105.1 beta热修</a><a href="patch-0.105.0.html" class="sidebar-link">0.105.0 beta更新</a><a href="patch-0.104.0.html" class="sidebar-link">0.104.0 beta更新</a><a href="patch-0.103.2.html" class="sidebar-link">0.103.2重大更新</a><a href="patch-0.103.1.html" class="sidebar-link">0.103.1 beta热修</a><a href="patch-0.103.0.html" class="sidebar-link">0.103.0 beta更新</a><a href="patch-0.102.0.html" class="sidebar-link">0.102.0 beta更新</a><a href="patch-0.101.0.html" class="sidebar-link">0.101.0 beta更新</a><a href="patch-0.100.0.html" class="sidebar-link">0.100.0 beta更新</a><a href="patch-0.99.1.html" class="sidebar-link">0.99.1主线更新</a><a href="patch-0.99.1-beta-hotfix.html" class="sidebar-link">0.99.1 beta热修</a><a href="patch-0.99.html" class="sidebar-link">0.99 beta更新</a><a href="patch-0.98.3.html" class="sidebar-link">0.98.3热修</a><a href="patch-0.98.2.html" class="sidebar-link">0.98.2热修</a><a href="patch-0.98.1.html" class="sidebar-link">0.98.1热修</a></div></aside>
-<article class="article"><div class="intro">快速热修！修了几个永世沙漏的毛病，顺便更了一波各语言翻译。</div>
-<h2 id="writing">文本</h2><ul><li>多语言翻译更新</li></ul>
-<h2 id="bugfix">Bug 修复</h2><h3>敌人相关</h3><ul><li>修复了凋萎无限升级的问题</li><li>凋萎状态牌就算靠符文金字塔之类的遗物拿到了保留，也不会再赖在手里不走了</li></ul>
-<hr><p style="text-align:center;color:var(--text-faint);font-size:.9rem">翻译 · 星薄荷 | 数据来源 <a href="https://steamcommunity.com/games/2868840/announcements/detail/670617878982034086" target="_blank" rel="noopener">Steam 官方更新公告</a></p>
+<main><section class="hero"><div class="hero-tag">Slay the Spire 2</div><h1>0.101.0 beta更新</h1><p class="subtitle">实验性 beta 调整</p><div class="meta"><span>2026-03-27</span><span>·</span><span>中文整理 · 星薄荷</span></div></section>
+<div class="content-wrapper"><aside class="sidebar"><div class="sidebar-title">全局目录</div><div class="sidebar-section"><a href="https://xma1soap.github.io" class="sidebar-link">🏠 首页</a></div><div class="sidebar-section"><div class="sidebar-section-title">杀戮尖塔2</div><a href="patch-0.107.0.html" class="sidebar-link">0.107.0 beta更新</a><a href="patch-bugfix-0530.html" class="sidebar-link">5月 Bug 修复</a><a href="patch-0.106.1.html" class="sidebar-link">0.106.1小更新</a><a href="patch-0.106.html" class="sidebar-link">0.106.0 beta更新</a><a href="patch-0.105.1.html" class="sidebar-link">0.105.1 beta热修</a><a href="patch-0.105.0.html" class="sidebar-link">0.105.0 beta更新</a><a href="patch-0.104.0.html" class="sidebar-link">0.104.0 beta更新</a><a href="patch-0.103.2.html" class="sidebar-link">0.103.2重大更新</a><a href="patch-0.103.1.html" class="sidebar-link">0.103.1 beta热修</a><a href="patch-0.103.0.html" class="sidebar-link">0.103.0 beta更新</a><a href="patch-0.102.0.html" class="sidebar-link">0.102.0 beta更新</a><a href="patch-0.101.0.html" class="sidebar-link active">0.101.0 beta更新</a><a href="patch-0.100.0.html" class="sidebar-link">0.100.0 beta更新</a><a href="patch-0.99.1.html" class="sidebar-link">0.99.1主线更新</a><a href="patch-0.99.1-beta-hotfix.html" class="sidebar-link">0.99.1 beta热修</a><a href="patch-0.99.html" class="sidebar-link">0.99 beta更新</a><a href="patch-0.98.3.html" class="sidebar-link">0.98.3热修</a><a href="patch-0.98.2.html" class="sidebar-link">0.98.2热修</a><a href="patch-0.98.1.html" class="sidebar-link">0.98.1热修</a></div></aside>
+<article class="article">
+<div class="intro">0.101.0 是带开发者说明的一版实验更新：一部分 0.100.0 的改动被回调，门扉缔造者再次重做，地图生成和早期精英节奏也被调整。</div>
+<div class="toc"><div class="toc-title">目录</div><ul class="toc-list"><li><a href="#reworks">回调与重做</a></li><li><a href="#balance">地图与平衡</a></li><li><a href="#fixes">修复</a></li></ul></div>
+
+<h2 id="reworks">回调与重做</h2>
+<ul><li>回调静默猎手、亡灵契约师中几项争议较大的改动，让核心打法先回到更熟悉的状态。</li><li>储君和部分遗物继续重做，目标是让造牌、锻造和回合规划更清晰。</li><li>门扉缔造者再次重做，每个视觉阶段对应不同干扰能力，降低随机性但保留决策压力。</li></ul>
+
+<h2 id="balance">地图与平衡</h2>
+<ul><li>精英不再出现在第 6 层，地图生成一致性得到改善，商店数量不足的问题也被修复。</li><li>鬼祟珊瑚群、幽灵船、瀑布巨兽等敌人进行了数值或机制调整。</li><li>多件遗物、药水和角色卡牌调整稀有度或效果，重点是让常见遗物更通用，高稀有度承载更复杂效果。</li></ul>
+
+<h2 id="fixes">修复</h2>
+<ul><li>修复部分 Boss 血量缩放、恐惧模式素材、多人模式地图同步和怪物图鉴展示问题。</li><li>继续补充翻译文本，并修复简体中文等语言里的格式与数值问题。</li></ul>
+
+<hr>
+<p style="text-align:center;color:var(--text-faint);font-size:.9rem">中文整理 · 星薄荷 | 数据来源 <a href="https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1828441623103381" target="_blank" rel="noopener">Steam 官方更新公告</a></p>
 </article></div></main>
 <footer class="footer"><div class="footer-inner"><span>&copy; 2026 xma1Soap</span><span class="footer-dot"></span><a href="https://xma1soap.github.io">Back to home</a></div></footer>
 <button class="back-to-top" id="backToTop" aria-label="Back to top">↑</button>
-<script>(function(){var n=document.getElementById('navbar'),t=document.getElementById('backToTop'),e=false;function o(){if(!e){requestAnimationFrame(function(){var y=window.scrollY;if(y>8)n.classList.add('scrolled');else n.classList.remove('scrolled');if(y>500)t.classList.add('visible');else t.classList.remove('visible');e=false});e=true}}window.addEventListener('scroll',o,{passive:true});o();t.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'})})})();</script>
-<script>(function(){var f=document.getElementById('starfield');if(!f)return;for(var i=0;i<250;i++){var s=document.createElement('div'),sz=Math.random()*3.5+1,x=Math.random()*100,y=Math.random()*100,op=Math.random()*0.4+0.5,dur=Math.random()*3+2,del=Math.random()*4;s.style.cssText=['position:absolute','left:'+x+'%','top:'+y+'%','width:'+sz+'px','height:'+sz+'px','background:rgba(255,255,255,'+op+')','border-radius:50%','animation:twinkle '+dur+'s ease-in-out '+del+'s infinite'].join(';');f.appendChild(s)}})();</script>
+<script>(function(){'use strict';const n=document.getElementById('navbar'),t=document.getElementById('backToTop');var e=false;function o(){if(!e){requestAnimationFrame(function(){var y=window.scrollY;if(y>8)n.classList.add('scrolled');else n.classList.remove('scrolled');if(y>500)t.classList.add('visible');else t.classList.remove('visible');e=false});e=true}}window.addEventListener('scroll',o,{passive:true});o();t.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'})})})();</script>
+<script>(function(){var f=document.getElementById('starfield');if(!f)return;for(var i=0;i<250;i++){var s=document.createElement('div');var sz=Math.random()*3.5+1;var x=Math.random()*100;var y=Math.random()*100;var op=Math.random()*0.4+0.5;var dur=Math.random()*3+2;var del=Math.random()*4;s.style.cssText=['position:absolute','left:'+x+'%','top:'+y+'%','width:'+sz+'px','height:'+sz+'px','background:rgba(255,255,255,'+op+')','border-radius:50%','animation:twinkle '+dur+'s ease-in-out '+del+'s infinite'].join(';');f.appendChild(s)}})();</script>
 </body>
 </html>

@@ -48,6 +48,7 @@
 | 机甲骑士 | - |
 | 劫掠者团伙 | - |
 | 旧日雕像 | - |
+| 建筑师 | Architect |
 | 巨斧机器人 | - |
 | 啃咬机 | - |
 | 乐加维林族母 | Lagavulin Matriarch |
@@ -68,6 +69,7 @@
 | 骑士团伙 | - |
 | 虔诚雕刻师 | - |
 | 青蛙骑士 | - |
+| 红宝石劫掠者 | Ruby Raiders |
 | 拳击构装体 | Punch Construct |
 | 闪光贾克斯果 | Snapping Jaxfruit |
 | 蛇行扼杀者 | - |
@@ -100,6 +102,7 @@
 | 佩尔军团 | Pael's Legion |
 | 佩尔之眼 | Pael's Eye |
 | 佩尔之肉 | Pael's Flesh |
+| 佩尔之翼 | Pael's Wing |
 | 发条靴 | The Boot |
 | 干瘪之手 | Mummified Hand |
 | 自成型黏土 | Self-Forming Clay |
@@ -111,6 +114,7 @@
 | 迷你帐篷 | Miniature Tent |
 | 受电弓 | Pantograph |
 | 钻石头冠 | Diamond Diadem |
+| 黄金罗盘 | Golden Compass |
 | 宝石面具 | Jeweled Mask |
 | 迷失鬼火 | Lost Wisp |
 | 白银熔炉 | Silver Crucible |
@@ -118,6 +122,7 @@
 | 星系仪 | Orrery |
 | 烛台 | Candelabra |
 | 叶敷剂 | Leafy Poultice |
+| 沉重石板 | Hefty Tablet |
 
 ---
 
@@ -207,6 +212,8 @@
 | 剥夺 | reave |
 | 鞭打 | scourge |
 | 不死 | undeath |
+| 墨之刃 | Blade of Ink |
+| 预借时间 | Borrowed Time |
 | 王之凝视 | Monarch's Gaze |
 | 倒映 | Reflect |
 | 熔炉 | Furnace |
@@ -214,6 +221,7 @@
 | 封印王座 | The Sealed Throne |
 | 星界脉冲 | Astral Pulse |
 | 君王之剑 | Sovereign Blade |
+| 招架 | Parry |
 | 暴涨 | bulk_up |
 | 充电 | charge_battery |
 | 冰寒 | chill |
@@ -289,6 +297,7 @@
 | 弱化之触 | Enfeebling Touch |
 | 血肉戏法 | Sleight of Flesh |
 | 杀灭 | Exterminate |
+| 废弃卡牌 | Deprecated Card |
 
 ---
 
@@ -338,6 +347,9 @@
 | 纪元 | Epoch |
 | 时间线 | Timeline |
 | 晚期修改器 | Terminal modifier |
+| 徽章 | Badges |
+| 恐惧模式 | Phobia Mode |
+| 怪物图鉴 | Bestiary |
 
 ---
 
