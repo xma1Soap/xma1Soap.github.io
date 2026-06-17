@@ -89,7 +89,7 @@
 | 佩尔军团 | Pael's Legion |
 | 佩尔之眼 | Pael's Eye |
 | 佩尔之肉 | Pael's Flesh |
-| 铁靴 | The Boot |
+| 发条靴 | The Boot |
 | 自成型黏土 | Self-Forming Clay |
 | 不休陀螺 | Unceasing Top |
 | 不安油灯 | Unsettling Lamp |
@@ -98,7 +98,7 @@
 | 粗砺之锤 | Gnarled Hammer |
 | 迷你帐篷 | Miniature Tent |
 | 受电弓 | Pantograph |
-| 钻石皇冠 | Diamond Diadem |
+| 钻石头冠 | Diamond Diadem |
 
 ---
 
@@ -129,7 +129,7 @@
 | 力量 | Strength |
 | 敏捷 | Dexterity |
 | 格挡 | Block |
-| 灵体化 | Intangible |
+| 无实体 | Intangible |
 | 虚弱 | Weak |
 | 脆弱 | Frail |
 | 易伤 | Vulnerable |
@@ -222,6 +222,7 @@
 | 征召上前 | summon_forth |
 | 许愿 | wish |
 | 牺牲 | sacrifice |
+| 纠缠 | haunt |
 
 ---
 
@@ -230,7 +231,7 @@
 | 中文 | 英文 |
 |------|------|
 | 瓦库 | Vakuu |
-| 诺妞佩佩 | Nonupeipe |
+| 诺奴佩普 | Nonupeipe |
 | 奥斯提 | Osty |
 
 ---
