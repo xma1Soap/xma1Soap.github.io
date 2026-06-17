@@ -1,7 +1,7 @@
 # 杀戮尖塔2（Slay the Spire 2）中英对照参考表
 
 > 数据来源：sts2.huijiwiki.com
-> 收集时间：2026-06-05
+> 收集时间：2026-06-18
 
 ---
 
@@ -20,25 +20,27 @@
 
 ## 怪物（Enemies）
 
-| 中文 | 英文（推测） |
+| 中文 | 英文 |
 |------|-------------|
-| 残杀千足虫 | - |
+| 残杀千足虫 | Decimillipede |
 | 蟾蜍蝌蚪 | - |
 | 潮湿邪教徒 | - |
 | 地道虫 | - |
-| 帝皇蟹 | - |
-| 地精佣兵 | - |
+| 帝皇蟹 | Kaiser Crab |
+| 帝皇蟹的钳臂 | Kaiser Crab arms |
+| 地精佣兵 | Gremlin Merc |
+| 肥地精 | Fat Gremlin |
 | 电球头 | Zapbot |
-| 多尼斯异鸟 | - |
-| 飞蝇菌子 | - |
+| 多尼斯异鸟 | Byrdonis |
+| 飞蝇菌子 | Flyconid |
 | 蜂群术士 | - |
 | 钙化邪教徒 | - |
-| 感染棱柱 | - |
+| 感染棱柱 | Infested Prism |
 | 高塔炮手 | - |
-| 鬼祟珊瑚群 | - |
+| 鬼祟珊瑚群 | Skulking Colony |
 | 骇鳗 | - |
 | 海洋混混 | - |
-| 化石追踪者 | - |
+| 化石追踪者 | Fossil Stalker |
 | 花园幽灵鳗 | - |
 | 活体盾 | - |
 | 活雾 | Living Fog |
@@ -51,45 +53,55 @@
 | 乐加维林族母 | Lagavulin Matriarch |
 | 立柱构造体 | - |
 | 猎人杀手 | - |
-| 灵魂枢纽 | - |
+| 灵魂枢纽 | Soul Nexus |
 | 灵魂异鱼 | - |
-| 胧光怪 | - |
+| 胧光怪 | The Obscura |
 | 蛮兽 | - |
 | 毛绒伏地虫 | - |
 | 猫头鹰法官 | - |
 | 门扉缔造者 | - |
-| 墨宝 | - |
+| 墨宝 | Inklet |
+| 墨影幻灵 | Vantom |
 | 陇光怪 | Parafright |
 | 女王 | - |
-| 瀑布巨兽 | - |
+| 瀑布巨兽 | Waterfall Giant |
 | 骑士团伙 | - |
 | 虔诚雕刻师 | - |
 | 青蛙骑士 | - |
-| 拳击构装体 | - |
+| 拳击构装体 | Punch Construct |
 | 闪光贾克斯果 | Snapping Jaxfruit |
 | 蛇行扼杀者 | - |
-| 实验体 | - |
+| 实验体 | Test Subject |
 | 偷窃草蜢 | Thieving Hopper |
 | 仪式兽 | Ceremonial Beast |
 | 永世沙漏 | Aeonglass |
-| 幽灵船 | - |
+| 幽灵船 | Haunted Ship |
+| 幽灵骑士 | Spectral Knight |
+| 树枝史莱姆（中） | Twig Slime M |
 
 ---
 
 ## 遗物（Relics）
 
-| 中文 | 英文（推测） |
+| 中文 | 英文 |
 |------|-------------|
 | 臂甲 | Vambrace |
 | 低语耳环 | Whispering Earring |
 | 浮木 | Driftwood |
+| 潘多拉魔盒 | Pandora's Box |
+| 多尼斯异鸟蛋 | Byrdonis Egg |
 | 符文金字塔 | Runic Pyramid |
 | 涅奥的骨殖 | Neow's Bones |
 | 涅奥的护符 | Neow's Talisman |
+| 涅奥的卷轴箱 | Neow's Scroll Boxes |
+| 涅奥的万花镜 | Neow's Kaleidescope |
+| 涅奥的丝滑长鬃 | Neow's Silken Tress |
+| 丝滑长鬃 | Silken Tress |
 | 佩尔军团 | Pael's Legion |
 | 佩尔之眼 | Pael's Eye |
 | 佩尔之肉 | Pael's Flesh |
 | 发条靴 | The Boot |
+| 干瘪之手 | Mummified Hand |
 | 自成型黏土 | Self-Forming Clay |
 | 不休陀螺 | Unceasing Top |
 | 不安油灯 | Unsettling Lamp |
@@ -99,6 +111,13 @@
 | 迷你帐篷 | Miniature Tent |
 | 受电弓 | Pantograph |
 | 钻石头冠 | Diamond Diadem |
+| 宝石面具 | Jeweled Mask |
+| 迷失鬼火 | Lost Wisp |
+| 白银熔炉 | Silver Crucible |
+| 葬礼面具 | Funerary Mask |
+| 星系仪 | Orrery |
+| 烛台 | Candelabra |
+| 叶敷剂 | Leafy Poultice |
 
 ---
 
@@ -119,6 +138,9 @@
 | 固有 | Innate |
 | 消耗 | Exhaust |
 | 虚无 | Ethereal |
+| 重放 | Replay |
+| 锻造 | Forge |
+| 召唤 | Summon |
 
 ---
 
@@ -136,7 +158,9 @@
 | 中毒 | Poison |
 | 凋萎 | Wither |
 | 星辰 | Star(s) |
+| 星尘 | Stardust |
 | 退潮 | Ebb |
+| 霉运 | Bad Luck |
 | 生命值 | HP / Health |
 | 最大生命值 | Max HP |
 
@@ -144,17 +168,22 @@
 
 ## 已确认的卡牌中英对照
 
-| 中文 | 英文 ID |
+| 中文 | 英文 / ID |
 |------|--------|
 | 壁垒 | barricade |
 | 残酷 | cruelty |
 | 拆卸 | dismantle |
 | 被遗忘的仪式 | forgotten_ritual |
 | 彼岸咆哮 | howl_from_beyond |
+| 战鼓 | Drum of Battle |
+| 巩固 | Entrench |
+| 无情猛攻 | Unrelenting |
 | 暴走 | rampage |
 | 踩踏 | stomp |
 | 扯碎 | tear_asunder |
 | 背刺 | backstab |
+| 打击 | Strike |
+| 防御 | Defend |
 | 残影 | blur |
 | 爆发 | burst |
 | 匕首雨 | dagger_spray |
@@ -163,6 +192,10 @@
 | 本能反应 | reflex |
 | 暗影步 | shadow_step |
 | 必备工具 | tools_of_the_trade |
+| 跟进 | Follow Through |
+| 惊骇 | Scare |
+| 猎杀者 | Predator |
+| 猛扑 | Pounce |
 | 冲锋！！ | charge |
 | 霸权 | hegemony |
 | 暗淡蓝点 | pale_blue_dot |
@@ -174,6 +207,13 @@
 | 剥夺 | reave |
 | 鞭打 | scourge |
 | 不死 | undeath |
+| 王之凝视 | Monarch's Gaze |
+| 倒映 | Reflect |
+| 熔炉 | Furnace |
+| 仆从捐躯 | Minion Sacrifice |
+| 封印王座 | The Sealed Throne |
+| 星界脉冲 | Astral Pulse |
+| 君王之剑 | Sovereign Blade |
 | 暴涨 | bulk_up |
 | 充电 | charge_battery |
 | 冰寒 | chill |
@@ -191,6 +231,10 @@
 | 超临界态 | supercritical |
 | 暴风雨 | tempest |
 | 白噪声 | white_noise |
+| 聚变 | Fusion |
+| 人工合成 | Synthesis |
+| 打碎 | Shatter |
+| 刮削 | Scrape |
 | 抱团 | huddle_up |
 | 笨拙 | clumsy |
 | 孢子心灵 | spore_mind |
@@ -199,6 +243,7 @@
 | 好勇斗狠 | aggression |
 | 愤怒 | anger |
 | 武装 | armaments |
+| 生命汲取 | Drain Life |
 | 灰烬打击 | ashen_strike |
 | 痛击 | bash |
 | 血墙 | blood_wall |
@@ -222,7 +267,77 @@
 | 征召上前 | summon_forth |
 | 许愿 | wish |
 | 牺牲 | sacrifice |
-| 纠缠 | haunt |
+| 死亡行军 | Death March |
+| 摧残 | Debilitate |
+| 勒紧 | Fasten |
+| 慷慨捐助 | Largesse |
+| 生存者 | Survivor |
+| 吞噬暗影 | Consuming Shadow |
+| 虚空形态 | Void Form |
+| 地狱狂徒 | Hellraiser |
+| 隐秘匕首 | Hidden Daggers |
+| 狡诈 | Sly |
+| 小刀 | Shiv |
+| 致死性 | Lethality |
+| 夜魇 | Nightmare |
+| 夜魇修改器 | Night Terrors modifier |
+| 重启 | Reboot |
+| 完美契合 | Perfect Fit |
+| 灯火钥匙 | Lantern Key |
+| 异鸟扑击 | Byrd Swoop |
+| 黑暗镣铐 | Dark Shackles |
+| 弱化之触 | Enfeebling Touch |
+| 血肉戏法 | Sleight of Flesh |
+| 杀灭 | Exterminate |
+
+---
+
+## 能力 / 招式 / 机制
+
+| 中文 | 英文 |
+|------|------|
+| 凋萎领域 | Withering Presence |
+| 灵动 | Nimble |
+| 硬化外壳 | Hardened Shell |
+| 纠缠 | Haunt |
+| 冲撞 | Ramming Speed |
+| 横扫 | Swipe |
+| 快拳 | Fast Punch |
+| 重拳 | Strong Punch |
+| 预备 | Ready |
+| 粉碎 | Smash |
+| 对焦 | Zoom |
+| 火箭钳 | Rocket Claw |
+| 高压电 | High Voltage |
+| 滑溜 | Slippery |
+| 蒸汽喷口 | steam spouts |
+
+---
+
+## 事件 / 场景
+
+| 中文 | 英文 |
+|------|------|
+| 启动中 | Booting Up |
+| 鲜汤 | Soup |
+| 用毒者 | Poisoner |
+| 涂鸦 | Scribbles |
+| 平静 | The Calm |
+| 喂喂！ | Hello Hello! |
+| 友谊 | Friendship |
+| 水晶球 | Crystal Sphere |
+| 战痕累累的训练假人 | Battleworn Dummy |
+| 遗物交换商 | Relic Trader |
+| 战史学家付袭 | War Historian Repy |
+| 被寄生的自动机械 | Infested Automaton |
+| 重拳出击 | Punch Off |
+| 茂密的植被 | Dense Vegetation |
+| 营养汤 | Nutritious Soup |
+| 特兹卡塔拉 | Tezcatara |
+| 繁茂章节 | Overgrowth act |
+| 纪元 | Epoch |
+| 时间线 | Timeline |
+| 晚期修改器 | Terminal modifier |
 
 ---
 
@@ -231,8 +346,11 @@
 | 中文 | 英文 |
 |------|------|
 | 瓦库 | Vakuu |
+| 涅奥 | Neow |
 | 诺奴佩普 | Nonupeipe |
 | 奥斯提 | Osty |
+| 商人 | Merchant |
+| 安东尼 | Anthony |
 
 ---
 
