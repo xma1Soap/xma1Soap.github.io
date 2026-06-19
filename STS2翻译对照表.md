@@ -317,7 +317,7 @@
 | 小刀 | Shiv |
 | 致死性 | Lethality |
 | 夜魇 | Nightmare |
-| 夜魇修改器 | Night Terrors modifier |
+| 夜魇自定义选项 | Night Terrors modifier |
 | 重启 | Reboot |
 | 完美契合 | Perfect Fit |
 | 灯火钥匙 | Lantern Key |
@@ -394,7 +394,9 @@
 | 暗港 | Underdocks |
 | 纪元 | Epoch |
 | 时间线 | Timeline |
-| 晚期修改器 | Terminal modifier |
+| 晚期自定义选项 | Terminal modifier |
+| 封印牌组自定义选项 | Sealed Deck modifier |
+| 多角色卡牌自定义选项 | multi-character card modifiers |
 | 徽章 | Badges |
 | 恐惧模式 | Phobia Mode |
 | 怪物图鉴 | Bestiary |
