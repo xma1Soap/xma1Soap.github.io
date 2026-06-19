@@ -2,10 +2,28 @@
   "use strict";
   var root=document.documentElement;
   var storageKey="xma1soap-theme";
+  var bgByTheme={light:"bg.png",dark:"night-bg.png"};
   var saved=null;
   try{saved=localStorage.getItem(storageKey)}catch(_){}
   var current=saved==="dark"||saved==="light"?saved:"light";
   root.setAttribute("data-theme",current);
+
+  function preloadBackground(theme,priority){
+    var href=bgByTheme[theme]||bgByTheme.light;
+    if(document.querySelector('link[data-theme-bg="'+theme+'"]'))return;
+    var link=document.createElement("link");
+    link.rel="preload";
+    link.as="image";
+    link.href=href;
+    link.setAttribute("fetchpriority",priority||"auto");
+    link.setAttribute("data-theme-bg",theme);
+    document.head.appendChild(link);
+    var image=new Image();
+    image.decoding="async";
+    image.src=href;
+  }
+  preloadBackground("light","high");
+  preloadBackground("dark","high");
 
   function setTheme(theme){
     current=theme;

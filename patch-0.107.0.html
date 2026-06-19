@@ -9,7 +9,7 @@
 :root{--bg:#fafaf7;--card-bg:#fff;--text:#1f1f1f;--text-muted:#6e6e6e;--text-faint:#a0a0a0;--accent:#b8754c;--accent-soft:#d9b896;--accent-bg:#fdf3ea;--border:#e8e5df;--border-light:#f0ede8;--tag-bg:#f3efe9;--tag-text:#8b6f55;--shadow-sm:0 1px 2px rgba(0,0,0,.04);--shadow-md:0 4px 16px rgba(0,0,0,.06);--shadow-lg:0 8px 32px rgba(0,0,0,.08);--radius:10px;--radius-sm:6px;--max-width:720px;--nav-height:60px;--bg-img:url(bg.png);--glass-bg:rgba(255,255,255,.68)}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth;scroll-padding-top:calc(var(--nav-height) + 20px)}
-body{font-family:'Segoe UI',system-ui,-apple-system,BlinkMacSystemFont,'Noto Sans SC','PingFang SC','Microsoft YaHei',sans-serif;background-color:var(--bg);background-image:var(--bg-img);background-size:cover;background-attachment:fixed;background-position:center;background-repeat:no-repeat;color:var(--text);line-height:1.8;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;min-height:100vh;display:flex;flex-direction:column}
+body{font-family:'Segoe UI',system-ui,-apple-system,BlinkMacSystemFont,'Noto Sans SC','PingFang SC','Microsoft YaHei',sans-serif;background-color:var(--bg);background-image:none;background-size:cover;background-attachment:fixed;background-position:center;background-repeat:no-repeat;color:var(--text);line-height:1.8;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;min-height:100vh;display:flex;flex-direction:column}
 a{color:var(--accent);text-decoration:none;transition:color .2s}
 a:hover{color:#9a5f3a}
 .nav{position:sticky;top:0;z-index:100;height:var(--nav-height);background:var(--glass-bg);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid rgba(232,229,223,.5);transition:border-color .3s,box-shadow .3s}
@@ -70,7 +70,9 @@ a:hover{color:#9a5f3a}
 #starfield{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
 body>:not(#starfield):not(script):not(#backToTop){position:relative;z-index:1}
 </style>
-<link rel="stylesheet" href="theme.css?v=3">
+<link rel="preload" as="image" href="bg.png" fetchpriority="high" data-theme-bg="light">
+<link rel="preload" as="image" href="night-bg.png" fetchpriority="high" data-theme-bg="dark">
+<link rel="stylesheet" href="theme.css?v=4">
 </head>
 <body>
 <div id="starfield"></div>
@@ -233,6 +235,6 @@ body>:not(#starfield):not(script):not(#backToTop){position:relative;z-index:1}
 <button class="back-to-top" id="backToTop" aria-label="Back to top">↑</button>
 <script>(function(){'use strict';const n=document.getElementById('navbar'),t=document.getElementById('backToTop');var e=false;function o(){if(!e){requestAnimationFrame(function(){var e=window.scrollY;if(e>8)n.classList.add('scrolled');else n.classList.remove('scrolled');if(e>500)t.classList.add('visible');else t.classList.remove('visible');e=false});e=true}}window.addEventListener('scroll',o,{passive:true});o();t.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'})})})();</script>
 <script>(function(){var f=document.getElementById('starfield');if(!f)return;for(var i=0;i<250;i++){var s=document.createElement('div');var sz=Math.random()*3.5+1;var x=Math.random()*100;var y=Math.random()*100;var op=Math.random()*0.4+0.5;var dur=Math.random()*3+2;var del=Math.random()*4;s.style.cssText=['position:absolute','left:'+x+'%','top:'+y+'%','width:'+sz+'px','height:'+sz+'px','background:rgba(255,255,255,'+op+')','border-radius:50%','animation:twinkle '+dur+'s ease-in-out '+del+'s infinite'].join(';');f.appendChild(s)}})();</script>
-<script src="theme.js?v=3"></script>
+<script src="theme.js?v=4"></script>
 </body>
 </html>

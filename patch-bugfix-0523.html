@@ -36,7 +36,7 @@
         body {
             font-family: 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
             background-color: var(--bg);
-            background-image: var(--bg-img);
+            background-image:none;
             background-size: cover;
             background-attachment: fixed;
             background-position: center;
@@ -168,7 +168,9 @@
         #starfield { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
         body > :not(#starfield):not(script):not(#backToTop) { position: relative; z-index: 1; }
     </style>
-<link rel="stylesheet" href="theme.css?v=3">
+<link rel="preload" as="image" href="bg.png" fetchpriority="high" data-theme-bg="light">
+<link rel="preload" as="image" href="night-bg.png" fetchpriority="high" data-theme-bg="dark">
+<link rel="stylesheet" href="theme.css?v=4">
 </head>
 <body>
 <div id="starfield"></div>
@@ -377,6 +379,6 @@
         }
     })();
     </script>
-<script src="theme.js?v=3"></script>
+<script src="theme.js?v=4"></script>
 </body>
 </html>

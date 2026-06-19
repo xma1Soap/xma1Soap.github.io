@@ -20,6 +20,7 @@ html[data-theme="dark"]{
 
 body{
   position:relative;
+  background-image:none!important;
   transition:background-color .65s ease,color .35s ease;
 }
 
@@ -30,23 +31,24 @@ body::after{
   inset:0;
   z-index:0;
   pointer-events:none;
-  opacity:0;
-  transition:opacity .75s ease;
-}
-
-body::before{
-  background-image:url(night-bg.png);
   background-size:cover;
   background-attachment:fixed;
   background-position:center;
   background-repeat:no-repeat;
+  transition:opacity .75s ease;
+}
+
+body::before{
+  background-image:url(bg.png);
+  opacity:1;
 }
 
 body::after{
-  background:rgba(0,0,0,.34);
+  background-image:linear-gradient(rgba(0,0,0,.34),rgba(0,0,0,.34)),url(night-bg.png);
+  opacity:0;
 }
 
-html[data-theme="dark"] body::before,
+html[data-theme="dark"] body::before{opacity:0}
 html[data-theme="dark"] body::after{opacity:1}
 
 .theme-toggle{
