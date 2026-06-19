@@ -394,7 +394,7 @@
 | 暗港 | Underdocks |
 | 纪元 | Epoch |
 | 时间线 | Timeline |
-| 晚期自定义选项 | Terminal modifier |
+| 绝症自定义选项 | Terminal modifier |
 | 封印牌组自定义选项 | Sealed Deck modifier |
 | 多角色卡牌自定义选项 | multi-character card modifiers |
 | 徽章 | Badges |
