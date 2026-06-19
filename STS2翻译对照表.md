@@ -44,9 +44,11 @@
 | 花园幽灵鳗 | - |
 | 活体盾 | - |
 | 活雾 | Living Fog |
+| 咬人卷轴 | Scrolls of Biting |
 | 棘刺蟾蜍 | - |
 | 机甲骑士 | - |
 | 劫掠者团伙 | - |
+| 劫掠者刺客 | Ruby Raider Assassin |
 | 旧日雕像 | - |
 | 建筑师 | Architect |
 | 巨斧机器人 | - |
@@ -71,9 +73,12 @@
 | 青蛙骑士 | - |
 | 红宝石劫掠者 | Ruby Raiders |
 | 拳击构装体 | Punch Construct |
+| 噬尸蛞蝓 | Corpse Slug |
+| 史莱姆狂战士 | Slimed Berserker |
 | 闪光贾克斯果 | Snapping Jaxfruit |
 | 蛇行扼杀者 | - |
 | 实验体 | Test Subject |
+| 淤泥旋螺 | Sludge Spinner |
 | 偷窃草蜢 | Thieving Hopper |
 | 仪式兽 | Ceremonial Beast |
 | 永世沙漏 | Aeonglass |
@@ -93,12 +98,16 @@
 | 潘多拉魔盒 | Pandora's Box |
 | 多尼斯异鸟蛋 | Byrdonis Egg |
 | 符文金字塔 | Runic Pyramid |
-| 涅奥的骨殖 | Neow's Bones |
+| 涅奥骨骰 | Neow's Bones |
 | 涅奥的护符 | Neow's Talisman |
 | 涅奥的卷轴箱 | Neow's Scroll Boxes |
-| 涅奥的万花镜 | Neow's Kaleidescope |
+| 万花筒 | Kaleidoscope |
+| 钓鱼竿 | Fishing Rod |
 | 涅奥的丝滑长鬃 | Neow's Silken Tress |
 | 丝滑长鬃 | Silken Tress |
+| 南瓜蜡烛 | Pumpkin Candle |
+| 轰鸣海螺 | Booming Conch |
+| 黄金印 | Seal of Gold |
 | 佩尔军团 | Pael's Legion |
 | 佩尔之眼 | Pael's Eye |
 | 佩尔之肉 | Pael's Flesh |
@@ -123,6 +132,10 @@
 | 烛台 | Candelabra |
 | 叶敷剂 | Leafy Poultice |
 | 沉重石板 | Hefty Tablet |
+| 艳丽围巾 | Brilliant Scarf |
+| 注能核心 | Infused Core |
+| 书签 | Bookmark |
+| 君王矿石 | Regalite |
 
 ---
 
@@ -146,6 +159,8 @@
 | 重放 | Replay |
 | 锻造 | Forge |
 | 召唤 | Summon |
+| 华彩 | Glam |
+| 永恒 | Eternal |
 
 ---
 
@@ -166,6 +181,9 @@
 | 星尘 | Stardust |
 | 退潮 | Ebb |
 | 霉运 | Bad Luck |
+| 灾厄 | Doom |
+| 人工制品 | Artifact |
+| 胆小 | Skittish |
 | 生命值 | HP / Health |
 | 最大生命值 | Max HP |
 
@@ -201,10 +219,14 @@
 | 惊骇 | Scare |
 | 猎杀者 | Predator |
 | 猛扑 | Pounce |
+| 触不可及 | Untouchable |
 | 冲锋！！ | charge |
 | 霸权 | hegemony |
 | 暗淡蓝点 | pale_blue_dot |
 | 超质量体 | supermassive |
+| 金斧 | Gold Axe |
+| 计策 | Stratagem |
+| 双打组合 | Tag Team |
 | 暴政 | tyranny |
 | 崇拜 | venerate |
 | 捕捉灵魂 | capture_spirit |
@@ -217,6 +239,12 @@
 | 王之凝视 | Monarch's Gaze |
 | 倒映 | Reflect |
 | 熔炉 | Furnace |
+| 剑圣 | Sword Sage |
+| 轰击 | Bombardment |
+| 新月长矛 | Crescent Spear |
+| 王国资产 | Royalties |
+| 铸墙 | Bulwark |
+| 星星点点 | Patter |
 | 仆从捐躯 | Minion Sacrifice |
 | 封印王座 | The Sealed Throne |
 | 星界脉冲 | Astral Pulse |
@@ -243,6 +271,7 @@
 | 人工合成 | Synthesis |
 | 打碎 | Shatter |
 | 刮削 | Scrape |
+| 骚动 | Uproar |
 | 抱团 | huddle_up |
 | 笨拙 | clumsy |
 | 孢子心灵 | spore_mind |
@@ -298,6 +327,23 @@
 | 血肉戏法 | Sleight of Flesh |
 | 杀灭 | Exterminate |
 | 废弃卡牌 | Deprecated Card |
+| 涅奥之怒 | Neow's Fury |
+| 时候未到 | Not Yet |
+| 强撑 | Fight Through |
+| 怨恨 | Spite |
+| 野性 | Feral |
+| 同步 | Synchronize |
+| 迭代 | Iteration |
+| 灵体 | Apparition |
+| 磨蚀 | Abrasive |
+| 死神形态 | Reaper Form |
+| 刀扇 | Fan of Knives |
+| 护驾！！！ | GUARDS!!! |
+| 呼唤 | Beckon |
+| 取回 | Fetch |
+| 紧勒 | Strangle |
+| 创世之柱 | Pillar of Creation |
+| 武器库 | Arsenal |
 
 ---
 
@@ -320,6 +366,7 @@
 | 高压电 | High Voltage |
 | 滑溜 | Slippery |
 | 蒸汽喷口 | steam spouts |
+| 领地意识 | Territorial |
 
 ---
 
@@ -343,7 +390,8 @@
 | 茂密的植被 | Dense Vegetation |
 | 营养汤 | Nutritious Soup |
 | 特兹卡塔拉 | Tezcatara |
-| 繁茂章节 | Overgrowth act |
+| 密林 | Overgrowth |
+| 暗港 | Underdocks |
 | 纪元 | Epoch |
 | 时间线 | Timeline |
 | 晚期修改器 | Terminal modifier |
