@@ -24,14 +24,28 @@
 
   var button=null;
   function init(){
-    if(document.querySelector(".theme-toggle"))return;
-    button=document.createElement("button");
-    button.type="button";
-    button.className="theme-toggle";
-    button.addEventListener("click",function(){
-      setTheme(current==="dark"?"light":"dark");
-    });
-    document.body.appendChild(button);
+    button=document.querySelector(".theme-toggle");
+    var title=document.querySelector(".hero h1");
+    var row=null;
+    if(title){
+      row=title.parentElement&&title.parentElement.classList.contains("hero-title-row")?title.parentElement:null;
+      if(!row){
+        row=document.createElement("div");
+        row.className="hero-title-row";
+        title.parentNode.insertBefore(row,title);
+        row.appendChild(title);
+      }
+    }
+    if(!button){
+      button=document.createElement("button");
+      button.type="button";
+      button.className="theme-toggle";
+      button.addEventListener("click",function(){
+        setTheme(current==="dark"?"light":"dark");
+      });
+    }
+    if(row&&button.parentElement!==row)row.appendChild(button);
+    else if(!row&&!button.parentElement)document.body.appendChild(button);
     updateButton();
   }
 
