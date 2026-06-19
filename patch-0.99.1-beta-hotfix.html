@@ -70,7 +70,7 @@ a:hover{color:#9a5f3a}
 #starfield{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
 body>:not(#starfield):not(script):not(#backToTop){position:relative;z-index:1}
 </style>
-<link rel="stylesheet" href="theme.css?v=2">
+<link rel="stylesheet" href="theme.css?v=3">
 </head>
 <body>
 <div id="starfield"></div>
@@ -91,6 +91,6 @@ body>:not(#starfield):not(script):not(#backToTop){position:relative;z-index:1}
 <button class="back-to-top" id="backToTop" aria-label="Back to top">↑</button>
 <script>(function(){'use strict';const n=document.getElementById('navbar'),t=document.getElementById('backToTop');var e=false;function o(){if(!e){requestAnimationFrame(function(){var y=window.scrollY;if(y>8)n.classList.add('scrolled');else n.classList.remove('scrolled');if(y>500)t.classList.add('visible');else t.classList.remove('visible');e=false});e=true}}window.addEventListener('scroll',o,{passive:true});o();t.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'})})})();</script>
 <script>(function(){var f=document.getElementById('starfield');if(!f)return;for(var i=0;i<250;i++){var s=document.createElement('div');var sz=Math.random()*3.5+1;var x=Math.random()*100;var y=Math.random()*100;var op=Math.random()*0.4+0.5;var dur=Math.random()*3+2;var del=Math.random()*4;s.style.cssText=['position:absolute','left:'+x+'%','top:'+y+'%','width:'+sz+'px','height:'+sz+'px','background:rgba(255,255,255,'+op+')','border-radius:50%','animation:twinkle '+dur+'s ease-in-out '+del+'s infinite'].join(';');f.appendChild(s)}})();</script>
-<script src="theme.js?v=2"></script>
+<script src="theme.js?v=3"></script>
 </body>
 </html>

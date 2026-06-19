@@ -25,16 +25,11 @@
   var button=null;
   function init(){
     button=document.querySelector(".theme-toggle");
-    var title=document.querySelector(".hero h1");
-    var row=null;
-    if(title){
-      row=title.parentElement&&title.parentElement.classList.contains("hero-title-row")?title.parentElement:null;
-      if(!row){
-        row=document.createElement("div");
-        row.className="hero-title-row";
-        title.parentNode.insertBefore(row,title);
-        row.appendChild(title);
-      }
+    var oldRow=document.querySelector(".hero-title-row");
+    if(oldRow){
+      var title=oldRow.querySelector("h1");
+      if(title)oldRow.parentNode.insertBefore(title,oldRow);
+      oldRow.remove();
     }
     if(!button){
       button=document.createElement("button");
@@ -44,8 +39,7 @@
         setTheme(current==="dark"?"light":"dark");
       });
     }
-    if(row&&button.parentElement!==row)row.appendChild(button);
-    else if(!row&&!button.parentElement)document.body.appendChild(button);
+    if(button.parentElement!==document.body)document.body.appendChild(button);
     updateButton();
   }
 

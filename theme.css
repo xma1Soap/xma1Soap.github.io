@@ -50,11 +50,12 @@ html[data-theme="dark"] body::before,
 html[data-theme="dark"] body::after{opacity:1}
 
 .theme-toggle{
-  position:relative!important;
-  z-index:2!important;
+  position:fixed!important;
+  top:50%;
+  left:clamp(16px,calc(50% + 518px),calc(100vw - 76px));
+  z-index:160!important;
   width:38px;
   height:38px;
-  flex:0 0 38px;
   display:flex;
   align-items:center;
   justify-content:center;
@@ -69,24 +70,11 @@ html[data-theme="dark"] body::after{opacity:1}
   font-size:18px;
   line-height:1;
   transition:background .24s,border-color .24s,color .24s,box-shadow .24s,transform .24s;
+  transform:translateY(-50%);
 }
 
-.theme-toggle:hover{transform:translateY(-1px);box-shadow:0 10px 26px rgba(0,0,0,.16)}
+.theme-toggle:hover{transform:translateY(calc(-50% - 1px));box-shadow:0 10px 26px rgba(0,0,0,.16)}
 .theme-toggle:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
-
-.hero-title-row{
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  gap:12px;
-  max-width:100%;
-  margin:0 auto 12px;
-}
-
-.hero-title-row h1{
-  min-width:0;
-  margin-bottom:0!important;
-}
 
 html[data-theme="dark"] .theme-toggle{
   border-color:rgba(205,216,234,.24);
@@ -155,8 +143,16 @@ html[data-theme="dark"] .category-btn.active{
 html[data-theme="dark"] #starfield{opacity:.58}
 
 @media(max-width:768px){
-  .hero-title-row{gap:10px}
-  .theme-toggle{width:36px;height:36px;flex-basis:36px;font-size:17px}
+  .theme-toggle{
+    top:76px;
+    left:auto;
+    right:16px;
+    width:36px;
+    height:36px;
+    font-size:17px;
+    transform:none;
+  }
+  .theme-toggle:hover{transform:translateY(-1px)}
 }
 
 @media(prefers-reduced-motion:reduce){
