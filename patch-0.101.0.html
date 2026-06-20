@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <meta name="description" content="杀戮尖塔2 0.101.0 beta更新 中文整理">
 <title>0.101.0 beta更新 · xma1Soap</title>
+<script id="theme-boot">(function(){try{var t=localStorage.getItem("xma1soap-theme");if(t==="dark"||t==="light")document.documentElement.setAttribute("data-theme",t)}catch(_){}})();</script>
+<style id="theme-boot-css">html[data-theme="dark"]{color-scheme:dark;--bg:#06070b;--card-bg:rgba(12,14,20,.78);--text:#eceff6;--text-muted:#b8bfce;--text-faint:#848da2;--accent:#d7a277;--accent-soft:#805a43;--accent-bg:rgba(215,162,119,.18);--border:rgba(205,216,234,.22);--border-light:rgba(205,216,234,.14);--tag-bg:rgba(215,162,119,.16);--tag-text:#e7c0a1;--shadow-sm:0 1px 2px rgba(0,0,0,.32);--shadow-md:0 8px 28px rgba(0,0,0,.34);--shadow-lg:0 16px 42px rgba(0,0,0,.42);--glass-bg:rgba(8,10,16,.72)}html[data-theme="dark"] body{background-color:#06070b!important;background-image:none!important}html[data-theme="dark"] body::before{opacity:0!important}html[data-theme="dark"] body::after{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;background-image:linear-gradient(rgba(0,0,0,.34),rgba(0,0,0,.34)),url(night-bg.png);background-size:cover;background-attachment:fixed;background-position:center;background-repeat:no-repeat;opacity:1!important}</style>
 <style>
 :root{--bg:#fafaf7;--card-bg:#fff;--text:#1f1f1f;--text-muted:#6e6e6e;--text-faint:#a0a0a0;--accent:#b8754c;--accent-soft:#d9b896;--accent-bg:#fdf3ea;--border:#e8e5df;--border-light:#f0ede8;--tag-bg:#f3efe9;--tag-text:#8b6f55;--shadow-sm:0 1px 2px rgba(0,0,0,.04);--shadow-md:0 4px 16px rgba(0,0,0,.06);--shadow-lg:0 8px 32px rgba(0,0,0,.08);--radius:10px;--radius-sm:6px;--max-width:720px;--nav-height:60px;--bg-img:url(bg.png);--glass-bg:rgba(255,255,255,.68)}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -72,7 +74,7 @@ body>:not(#starfield):not(script):not(#backToTop){position:relative;z-index:1}
 </style>
 <link rel="preload" as="image" href="bg.png" fetchpriority="high" data-theme-bg="light">
 <link rel="preload" as="image" href="night-bg.png" fetchpriority="high" data-theme-bg="dark">
-<link rel="stylesheet" href="theme.css?v=4">
+<link rel="stylesheet" href="theme.css?v=5">
 </head>
 <body>
 <div id="starfield"></div>
@@ -99,6 +101,6 @@ body>:not(#starfield):not(script):not(#backToTop){position:relative;z-index:1}
 <button class="back-to-top" id="backToTop" aria-label="Back to top">↑</button>
 <script>(function(){'use strict';const n=document.getElementById('navbar'),t=document.getElementById('backToTop');var e=false;function o(){if(!e){requestAnimationFrame(function(){var y=window.scrollY;if(y>8)n.classList.add('scrolled');else n.classList.remove('scrolled');if(y>500)t.classList.add('visible');else t.classList.remove('visible');e=false});e=true}}window.addEventListener('scroll',o,{passive:true});o();t.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'})})})();</script>
 <script>(function(){var f=document.getElementById('starfield');if(!f)return;for(var i=0;i<250;i++){var s=document.createElement('div');var sz=Math.random()*3.5+1;var x=Math.random()*100;var y=Math.random()*100;var op=Math.random()*0.4+0.5;var dur=Math.random()*3+2;var del=Math.random()*4;s.style.cssText=['position:absolute','left:'+x+'%','top:'+y+'%','width:'+sz+'px','height:'+sz+'px','background:rgba(255,255,255,'+op+')','border-radius:50%','animation:twinkle '+dur+'s ease-in-out '+del+'s infinite'].join(';');f.appendChild(s)}})();</script>
-<script src="theme.js?v=4"></script>
+<script src="theme.js?v=5"></script>
 </body>
 </html>
