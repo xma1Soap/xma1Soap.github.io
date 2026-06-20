@@ -29,15 +29,31 @@
     current=theme;
     root.setAttribute("data-theme",theme);
     try{localStorage.setItem(storageKey,theme)}catch(_){}
-    updateButton();
+    updateButton(true);
   }
 
-  function updateButton(){
+  function updateButton(animate){
     if(!button)return;
     var dark=current==="dark";
     button.setAttribute("aria-label",dark?"切换到白天模式":"切换到夜间模式");
     button.setAttribute("title",dark?"切换到白天模式":"切换到夜间模式");
-    button.textContent=dark?"☀":"☾";
+    var icon=button.querySelector(".toggle-icon");
+    if(!icon){
+      button.textContent="";
+      icon=document.createElement("span");
+      icon.className="toggle-icon";
+      button.appendChild(icon);
+    }
+    var next=dark?"☀":"☾";
+    if(animate&&icon.textContent!==next){
+      button.classList.add("toggling");
+      setTimeout(function(){
+        icon.textContent=next;
+        button.classList.remove("toggling");
+      },200);
+    }else{
+      icon.textContent=next;
+    }
   }
 
   var button=null;

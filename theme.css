@@ -73,6 +73,17 @@ html[data-theme="dark"] body::after{opacity:1}
   line-height:1;
   transition:background .24s,border-color .24s,color .24s,box-shadow .24s,transform .24s;
   transform:translateY(-50%);
+  overflow:hidden;
+}
+
+.theme-toggle .toggle-icon{
+  display:inline-block;
+  transition:transform .45s cubic-bezier(.4,0,.2,1),opacity .2s ease;
+  will-change:transform;
+}
+.theme-toggle.toggling .toggle-icon{
+  transform:rotate(180deg) scale(.6);
+  opacity:0;
 }
 
 .theme-toggle:hover{transform:translateY(calc(-50% - 1px));box-shadow:0 10px 26px rgba(0,0,0,.16)}
@@ -144,6 +155,39 @@ html[data-theme="dark"] .category-btn.active{
 
 html[data-theme="dark"] #starfield{opacity:.58}
 
+.card{
+  transition:transform .28s cubic-bezier(.2,.8,.2,1),box-shadow .28s,border-color .28s,opacity .28s;
+}
+.card:active{
+  transform:scale(.985);
+  transition-duration:80ms;
+}
+
+.nav-links a{
+  position:relative;
+}
+.nav-links a::after{
+  content:"";
+  position:absolute;
+  left:14px;
+  right:14px;
+  bottom:2px;
+  height:1.5px;
+  background:var(--accent);
+  border-radius:1px;
+  transform:scaleX(0);
+  transform-origin:left center;
+  transition:transform .2s cubic-bezier(.2,.8,.2,1);
+}
+.nav-links a:hover::after,
+.nav-links a.active::after{
+  transform:scaleX(1);
+}
+.nav-links a.active::after{
+  background:var(--accent);
+  opacity:.7;
+}
+
 @media(max-width:768px){
   .theme-toggle{
     top:76px;
@@ -155,6 +199,7 @@ html[data-theme="dark"] #starfield{opacity:.58}
     transform:none;
   }
   .theme-toggle:hover{transform:translateY(-1px)}
+  .nav-links a::after{display:none}
 }
 
 @media(prefers-reduced-motion:reduce){
@@ -170,5 +215,9 @@ html[data-theme="dark"] #starfield{opacity:.58}
   .toc,
   .note,
   .back-to-top,
-  .nav-links{transition:none}
+  .nav-links,
+  .nav-links a::after,
+  .theme-toggle,
+  .theme-toggle .toggle-icon{transition:none!important;animation:none!important}
+  .card:active{transform:none}
 }

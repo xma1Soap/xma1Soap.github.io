@@ -37,6 +37,11 @@ img{max-width:100%;display:block}
 .hero-avatar{width:72px;height:72px;border-radius:50%;margin:0 auto 24px;display:block;object-fit:cover;box-shadow:0 2px 12px rgba(184,117,76,.18)}
 .hero h1{font-size:2.2rem;font-weight:680;letter-spacing:-.02em;margin-bottom:12px;color:var(--text);text-shadow:0 2px 16px rgba(0,0,0,.06)}
 .hero p{font-size:1.08rem;color:var(--text-muted);line-height:1.75;max-width:480px;margin:0 auto}
+@keyframes heroIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+.hero-avatar,.hero h1,.hero p{opacity:0;animation:heroIn .6s cubic-bezier(.2,.8,.2,1) forwards}
+.hero-avatar{animation-delay:.08s}
+.hero h1{animation-delay:.18s}
+.hero p{animation-delay:.28s}
 .category-bar{max-width:var(--max-width);margin:0 auto 36px;padding:0 24px;display:flex;flex-wrap:wrap;align-items:center;gap:8px}
 .category-bar-label{font-size:.85rem;color:var(--text-faint);margin-right:4px;user-select:none}
 .category-btn{display:inline-block;padding:5px 16px;border-radius:20px;font-size:.85rem;font-weight:500;color:var(--tag-text);background:var(--tag-bg);border:1px solid transparent;cursor:pointer;transition:all .22s;user-select:none;white-space:nowrap;text-decoration:none}
@@ -66,14 +71,21 @@ img{max-width:100%;display:block}
 @media(max-width:768px){.hero{padding:52px 20px 40px}.hero h1{font-size:1.7rem}.hero p{font-size:.98rem}.category-bar{padding:0 16px}.posts{grid-template-columns:1fr;gap:16px;padding:0 16px 48px}.card{padding:20px 20px 18px}.nav-links{position:fixed;top:0;right:-100%;width:260px;height:100vh;flex-direction:column;background:rgba(255,255,255,.96);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);padding:80px 24px 32px;gap:4px;box-shadow:-4px 0 24px rgba(0,0,0,.08);transition:right .35s cubic-bezier(.4,0,.2,1);align-items:stretch}.nav-links.open{right:0}.nav-links a{font-size:1.05rem;padding:10px 16px;border-radius:var(--radius-sm)}.nav-toggle{display:flex}.nav-overlay{position:fixed;inset:0;background:rgba(0,0,0,.12);z-index:99;opacity:0;pointer-events:none;transition:opacity .35s}.nav-overlay.visible{opacity:1;pointer-events:auto}.back-to-top{bottom:20px;right:20px;width:38px;height:38px}}
 @media(max-width:480px){.hero h1{font-size:1.5rem}.hero p{font-size:.9rem}.card-title{font-size:1.05rem}.card-excerpt{font-size:.875rem}.card{padding:18px 16px 16px}}
 @keyframes fadeUpIn{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
-.card{animation:fadeUpIn .5s ease both}
+.card{opacity:0}
+.card.in-view{animation:fadeUpIn .55s cubic-bezier(.2,.8,.2,1) both;animation-delay:calc(var(--stagger,0) * 60ms)}
 @keyframes twinkle{0%,100%{opacity:.1;transform:scale(.4)}50%{opacity:1;transform:scale(1.1)}}
 #starfield{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
 body>:not(#starfield):not(script):not(#backToTop){position:relative;z-index:1}
+@media(prefers-reduced-motion:reduce){
+  .hero-avatar,.hero h1,.hero p,.card{opacity:1!important;animation:none!important}
+  .card.in-view{animation:none!important}
+  #starfield{display:none}
+  *{scroll-behavior:auto!important}
+}
 </style>
 <link rel="preload" as="image" href="bg.png" fetchpriority="high" data-theme-bg="light">
 <link rel="preload" as="image" href="night-bg.png" fetchpriority="high" data-theme-bg="dark">
-<link rel="stylesheet" href="theme.css?v=5">
+<link rel="stylesheet" href="theme.css?v=6">
 </head>
 <body>
 <div id="starfield"></div><header><nav class="nav" id="navbar"><div class="nav-inner"><a href="https://xma1soap.github.io" class="nav-brand">xma1Soap</a><button class="nav-toggle" id="navToggle"><span></span><span></span><span></span></button><ul class="nav-links" id="navLinks"><li><a href="https://xma1soap.github.io" class="active">Home</a></li><li><a href="https://github.com/xma1Soap" target="_blank" rel="noopener">GitHub</a></li></ul></div></nav><div class="nav-overlay" id="navOverlay"></div></header>
@@ -104,8 +116,8 @@ body>:not(#starfield):not(script):not(#backToTop){position:relative;z-index:1}
 </section></main>
 <footer class="footer"><div class="footer-inner"><span>&copy; 2026 xma1Soap</span><span class="footer-dot"></span><span>Built with plain HTML &amp; care</span></div></footer>
 <button class="back-to-top" id="backToTop" aria-label="Back to top">↑</button>
-<script>(function(){'use strict';const n=document.getElementById('navbar'),t=document.getElementById('navToggle'),l=document.getElementById('navLinks'),o=document.getElementById('navOverlay'),b=document.getElementById('backToTop');const c=document.querySelectorAll('.category-btn'),d=document.querySelectorAll('.card[data-category]');c.forEach(function(e){e.addEventListener('click',function(a){a.preventDefault();c.forEach(function(x){x.classList.remove('active')});e.classList.add('active');var cat=e.dataset.category;d.forEach(function(ca){if(cat==='all'||ca.dataset.category===cat){ca.style.display=''}else{ca.style.display='none'}})})});function openNav(){l.classList.add('open');t.classList.add('open');o.classList.add('visible');document.body.style.overflow='hidden'}function closeNav(){l.classList.remove('open');t.classList.remove('open');o.classList.remove('visible');document.body.style.overflow=''}t.addEventListener('click',function(){if(l.classList.contains('open'))closeNav();else openNav()});o.addEventListener('click',closeNav);document.addEventListener('keydown',function(e){if(e.key==='Escape'&&l.classList.contains('open'))closeNav()});l.querySelectorAll('a').forEach(function(x){x.addEventListener('click',function(){if(l.classList.contains('open'))closeNav()})});var tick=false;function onScroll(){if(!tick){requestAnimationFrame(function(){var y=window.scrollY;if(y>8)n.classList.add('scrolled');else n.classList.remove('scrolled');if(y>500)b.classList.add('visible');else b.classList.remove('visible');tick=false});tick=true}}window.addEventListener('scroll',onScroll,{passive:true});onScroll();b.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'})})})();</script>
+<script>(function(){'use strict';const n=document.getElementById('navbar'),t=document.getElementById('navToggle'),l=document.getElementById('navLinks'),o=document.getElementById('navOverlay'),b=document.getElementById('backToTop');const c=document.querySelectorAll('.category-btn'),d=document.querySelectorAll('.card[data-category]');c.forEach(function(e){e.addEventListener('click',function(a){a.preventDefault();c.forEach(function(x){x.classList.remove('active')});e.classList.add('active');var cat=e.dataset.category;d.forEach(function(ca){if(cat==='all'||ca.dataset.category===cat){ca.style.display=''}else{ca.style.display='none'}})})});function openNav(){l.classList.add('open');t.classList.add('open');o.classList.add('visible');document.body.style.overflow='hidden'}function closeNav(){l.classList.remove('open');t.classList.remove('open');o.classList.remove('visible');document.body.style.overflow=''}t.addEventListener('click',function(){if(l.classList.contains('open'))closeNav();else openNav()});o.addEventListener('click',closeNav);document.addEventListener('keydown',function(e){if(e.key==='Escape'&&l.classList.contains('open'))closeNav()});l.querySelectorAll('a').forEach(function(x){x.addEventListener('click',function(){if(l.classList.contains('open'))closeNav()})});var tick=false;function onScroll(){if(!tick){requestAnimationFrame(function(){var y=window.scrollY;if(y>8)n.classList.add('scrolled');else n.classList.remove('scrolled');if(y>500)b.classList.add('visible');else b.classList.remove('visible');tick=false});tick=true}}window.addEventListener('scroll',onScroll,{passive:true});onScroll();b.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'})});var cards=document.querySelectorAll('.card');cards.forEach(function(card,i){card.style.setProperty('--stagger',Math.min(i,8))});if('IntersectionObserver' in window){var io=new IntersectionObserver(function(entries){entries.forEach(function(en){if(en.isIntersecting){en.target.classList.add('in-view');io.unobserve(en.target)}})},{rootMargin:'0px 0px -8% 0px',threshold:0.08});cards.forEach(function(card){io.observe(card)})}else{cards.forEach(function(card){card.classList.add('in-view')})}})();</script>
 <script>(function(){var f=document.getElementById('starfield');if(!f)return;for(var i=0;i<250;i++){var s=document.createElement('div');var sz=Math.random()*3.5+1;var x=Math.random()*100;var y=Math.random()*100;var op=Math.random()*0.4+0.5;var dur=Math.random()*3+2;var del=Math.random()*4;s.style.cssText=['position:absolute','left:'+x+'%','top:'+y+'%','width:'+sz+'px','height:'+sz+'px','background:rgba(255,255,255,'+op+')','border-radius:50%','animation:twinkle '+dur+'s ease-in-out '+del+'s infinite'].join(';');f.appendChild(s)}})();</script>
-<script src="theme.js?v=5"></script>
+<script src="theme.js?v=6"></script>
 </body>
 </html>
