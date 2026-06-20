@@ -27,6 +27,7 @@
   preloadBackground("dark","high");
 
   var transitionKey="xma1soap-page-transition";
+  var starfieldInitialized=false;
   var reduceMotion=false;
   try{
     reduceMotion=window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -518,8 +519,27 @@
     },maxDelay+520);
   }
 
+  function initStarfield(){
+    if(starfieldInitialized)return;
+    var f=document.getElementById('starfield');
+    if(!f)return;
+    starfieldInitialized=true;
+    for(var i=0;i<250;i++){
+      var s=document.createElement('div');
+      var sz=Math.random()*3.5+1;
+      var x=Math.random()*100;
+      var y=Math.random()*100;
+      var op=Math.random()*0.4+0.5;
+      var dur=Math.random()*3+2;
+      var del=Math.random()*4;
+      s.style.cssText=['position:absolute','left:'+x+'%','top:'+y+'%','width:'+sz+'px','height:'+sz+'px','background:rgba(255,255,255,'+op+')','border-radius:50%','animation:twinkle '+dur+'s ease-in-out '+del+'s infinite'].join(';');
+      f.appendChild(s);
+    }
+  }
+
   function initDynamicPage(){
     ensureBackgroundLayer();
+    initStarfield();
     closeMobileNav();
     bindPageControls();
     initCardReveal();

@@ -196,7 +196,14 @@ html[data-theme="dark"] #starfield{opacity:.58}
 
 #starfield{
   z-index:1!important;
+  transition:filter .4s ease;
 }
+
+@keyframes twinkle{0%,100%{opacity:.1;transform:scale(.4)}50%{opacity:1;transform:scale(1.1)}}
+
+body.page-exiting #starfield{filter:brightness(.2)}
+body.page-pre-enter #starfield{filter:brightness(.2);transition:none}
+body.page-entering #starfield{filter:brightness(1)}
 
 .card{
   transition:transform .28s cubic-bezier(.2,.8,.2,1),box-shadow .28s,border-color .28s,opacity .28s;
