@@ -112,7 +112,7 @@
     var done=false;
     function run(){if(done)return;done=true;callback()}
     requestAnimationFrame(function(){requestAnimationFrame(run)});
-    window.setTimeout(run,90);
+    window.setTimeout(run,50);
   }
 
   function isLocalHostname(hostname){return hostname==="localhost"||hostname==="127.0.0.1"||hostname==="::1"}
@@ -182,7 +182,7 @@
       var distance=Math.hypot(center.x-origin.x,center.y-origin.y);
       var normalized=clamp(distance/maxDistance,0,1);
       var isOrigin=el===clicked;
-      var delay=isOrigin?0:Math.round(100+normalized*220);
+      var delay=isOrigin?0:Math.round(60+normalized*120);
       var driftX=isOrigin?0:clamp((center.x-origin.x)*0.055,-42,42);
       var driftY=isOrigin?18:Math.round(22+normalized*36);
       el.setAttribute("data-page-transition-item","");
@@ -410,7 +410,7 @@
       var center=getCenter(el);
       var distance=Math.hypot(center.x-origin.x,center.y-origin.y);
       var normalized=clamp(distance/maxDistance,0,1);
-      var delay=Math.round(40+normalized*170+Math.min(index,5)*12);
+      var delay=Math.round(20+normalized*80+Math.min(index,5)*6);
       el.setAttribute("data-page-transition-item","");
       el.style.setProperty("--page-transition-delay",delay+"ms");
       maxDelay=Math.max(maxDelay,delay);
@@ -418,11 +418,11 @@
     afterNextPaint(function(){
       document.body.classList.remove("page-pre-enter");
       document.body.classList.add("page-entering");
-      releaseFirstPaintCover(120);
+      releaseFirstPaintCover(60);
       setTimeout(function(){
         clearTransitionItems();
         document.body.classList.remove("page-transitioning","page-entering","route-enter-owned");
-      },maxDelay+760);
+      },maxDelay+480);
     });
   }
 
@@ -465,7 +465,7 @@
     document.body.classList.add("page-exiting");
     setTimeout(function(){
       routeTo(url,origin,true).finally(function(){transitionActive=false});
-    },maxDelay+520);
+    },maxDelay+280);
   }
 
   function initStarfield(){
@@ -514,7 +514,7 @@
       var center=getCenter(el);
       var distance=Math.hypot(center.x-origin.x,center.y-origin.y);
       var normalized=clamp(distance/maxDistance,0,1);
-      var delay=Math.round(40+normalized*170+Math.min(index,5)*12);
+      var delay=Math.round(20+normalized*80+Math.min(index,5)*6);
       el.setAttribute("data-page-transition-item","");
       el.style.setProperty("--page-transition-delay",delay+"ms");
       maxDelay=Math.max(maxDelay,delay);
@@ -523,11 +523,11 @@
     afterNextPaint(function(){
       document.body.classList.remove("page-pre-enter");
       document.body.classList.add("page-entering");
-      releaseFirstPaintCover(120);
+      releaseFirstPaintCover(60);
       setTimeout(function(){
         clearTransitionItems();
         document.body.classList.remove("page-transitioning","page-entering","route-enter-owned");
-      },maxDelay+760);
+      },maxDelay+480);
     });
     return true;
   }
