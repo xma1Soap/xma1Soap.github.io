@@ -418,7 +418,7 @@
     afterNextPaint(function(){
       document.body.classList.remove("page-pre-enter");
       document.body.classList.add("page-entering");
-      releaseFirstPaintCover(40);
+      releaseFirstPaintCover(120);
       setTimeout(function(){
         clearTransitionItems();
         document.body.classList.remove("page-transitioning","page-entering","route-enter-owned");
@@ -523,7 +523,7 @@
     afterNextPaint(function(){
       document.body.classList.remove("page-pre-enter");
       document.body.classList.add("page-entering");
-      releaseFirstPaintCover(40);
+      releaseFirstPaintCover(120);
       setTimeout(function(){
         clearTransitionItems();
         document.body.classList.remove("page-transitioning","page-entering","route-enter-owned");
