@@ -309,6 +309,9 @@ body.route-enter-owned .card:not([data-page-transition-item]){
 }
 
 @media(max-width:768px){
+  header{
+    z-index:200!important;
+  }
   .theme-toggle{
     top:76px;
     left:auto;
