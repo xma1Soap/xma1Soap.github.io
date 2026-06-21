@@ -421,7 +421,7 @@
       releaseFirstPaintCover(60);
       setTimeout(function(){
         clearTransitionItems();
-        document.body.classList.remove("page-transitioning","page-entering","route-enter-owned");
+        document.body.classList.remove("page-transitioning","page-entering");
       },maxDelay+480);
     });
   }
@@ -435,7 +435,7 @@
         applyRouteEnter(origin);
       }else{
         clearTransitionItems();
-        document.body.classList.remove("page-transitioning","page-exiting","page-pre-enter","page-entering","route-enter-owned");
+        document.body.classList.remove("page-transitioning","page-exiting","page-pre-enter","page-entering");
         releaseFirstPaintCover(20);
       }
     }).catch(function(error){
@@ -526,7 +526,7 @@
       releaseFirstPaintCover(60);
       setTimeout(function(){
         clearTransitionItems();
-        document.body.classList.remove("page-transitioning","page-entering","route-enter-owned");
+        document.body.classList.remove("page-transitioning","page-entering");
       },maxDelay+480);
     });
     return true;
