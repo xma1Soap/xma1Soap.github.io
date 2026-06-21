@@ -144,7 +144,7 @@ body.page-exiting .theme-toggle[data-page-transition-item],body.page-exiting .ba
 body.page-pre-enter .theme-toggle[data-page-transition-item],body.page-pre-enter .back-to-top[data-page-transition-item]{transform:translate3d(0,26px,0)!important}
 body.page-entering .theme-toggle[data-page-transition-item],body.page-entering .back-to-top[data-page-transition-item]{transform:translateY(0)!important}
 body.page-transitioning .hero,body.page-transitioning .content-wrapper,body.route-enter-owned .hero,body.route-enter-owned .content-wrapper,body.route-enter-owned .hero-avatar,body.route-enter-owned .hero h1,body.route-enter-owned .hero p,body.route-enter-owned .card,body.route-enter-owned .card.in-view{animation:none!important}
-body.route-enter-owned .hero-avatar,body.route-enter-owned .hero h1,body.route-enter-owned .hero p,body.route-enter-owned .content-wrapper,body.route-enter-owned .article,body.route-enter-owned .card:not([data-page-transition-item]){opacity:1!important}
+body.route-enter-owned .hero-avatar,body.route-enter-owned .hero h1,body.route-enter-owned .hero p,body.route-enter-owned .content-wrapper:not([data-page-transition-item]),body.route-enter-owned .article:not([data-page-transition-item]),body.route-enter-owned .card:not([data-page-transition-item]){opacity:1!important}
 
 @media(max-width:820px){
   :root{--nav-height:60px}
