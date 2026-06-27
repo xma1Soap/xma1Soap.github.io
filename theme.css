@@ -66,14 +66,14 @@ html[data-first-paint-cover="fade"] body::after{opacity:0}
 html[data-theme="dark"][data-first-paint-cover] body::after{background:#060914}
 
 .site-bg{position:fixed!important;inset:0;z-index:0!important;pointer-events:none;overflow:hidden;contain:strict;isolation:isolate;transform:translateZ(0)}
-.site-bg::before,.site-bg::after{content:"";position:absolute;inset:-1px;background-size:cover;background-position:center;background-repeat:no-repeat;transition:opacity .9s ease,transform 1.2s ease,filter .9s ease;will-change:opacity,transform,filter}
+.site-bg::before,.site-bg::after{content:"";position:absolute;inset:-1px;background-size:cover;background-position:center;background-repeat:no-repeat;transition:opacity .9s ease,transform 1.2s ease,filter .35s ease;will-change:opacity,transform,filter}/* ponytail: filter 缩到 .35s 以匹配 page-exiting class ~0.4s 寿命,避免被截断回弹;opacity/transform 保持慢过渡服务主题切换 */
 .site-bg::before{background-image:linear-gradient(180deg,rgba(255,250,242,.46),rgba(248,239,228,.72)),url(bg.png);opacity:1;filter:saturate(.98) brightness(1.03)}
 .site-bg::after{background-image:radial-gradient(circle at 50% 0,rgba(240,184,109,.12),transparent 42%),linear-gradient(180deg,rgba(4,8,18,.3),rgba(4,8,18,.7)),url(night-bg.png);opacity:0;filter:saturate(.9) brightness(.72)}
 html[data-theme="dark"] .site-bg::before{opacity:0;transform:scale(1.02)}
 html[data-theme="dark"] .site-bg::after{opacity:1;transform:scale(1)}
 body.page-exiting .site-bg::before,body.page-exiting .site-bg::after{filter:brightness(.65) saturate(.82)}
 
-#starfield{position:fixed;inset:0;z-index:1;pointer-events:none;overflow:hidden;opacity:.55;mix-blend-mode:screen;transition:opacity .6s ease,filter .6s ease}
+#starfield{position:fixed;inset:0;z-index:1;pointer-events:none;overflow:hidden;opacity:.55;mix-blend-mode:screen;transition:opacity .6s ease,filter .35s ease}/* ponytail: filter 对齐 .site-bg 的 .35s,退出时星空与主背景同步平滑变暗;opacity 不变 */
 html[data-theme="dark"] #starfield{opacity:.86;filter:drop-shadow(0 0 4px rgba(255,211,142,.26))}
 #starfield .star{position:absolute;border-radius:999px;background:rgba(255,255,255,.92);box-shadow:0 0 10px rgba(255,255,255,.38);animation:twinkle var(--twinkle-duration,4s) ease-in-out var(--twinkle-delay,0s) infinite;opacity:.7;transform:translateZ(0)}
 @keyframes twinkle{0%,100%{opacity:.18;transform:scale(.55)}50%{opacity:1;transform:scale(1.15)}}
