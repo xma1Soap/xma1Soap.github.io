@@ -71,7 +71,7 @@ html[data-theme="dark"][data-first-paint-cover] body::after{background:#060914}
 .site-bg::after{background-image:radial-gradient(circle at 50% 0,rgba(240,184,109,.12),transparent 42%),linear-gradient(180deg,rgba(4,8,18,.3),rgba(4,8,18,.7)),url(night-bg.png);opacity:0;filter:saturate(.9) brightness(.72)}
 html[data-theme="dark"] .site-bg::before{opacity:0;transform:scale(1.02)}
 html[data-theme="dark"] .site-bg::after{opacity:1;transform:scale(1)}
-body.page-exiting .site-bg::before,body.page-exiting .site-bg::after{filter:brightness(.65) saturate(.82)}
+body.page-exiting .site-bg::before,body.page-exiting .site-bg::after{filter:saturate(.82) brightness(.65)}/* ponytail: filter 函数顺序对齐正常态 [saturate,brightness] (L70/L71),否则 CSS 不插值只能离散跳变 */
 
 #starfield{position:fixed;inset:0;z-index:1;pointer-events:none;overflow:hidden;opacity:.55;mix-blend-mode:screen;transition:opacity .6s ease,filter .35s ease}/* ponytail: filter 对齐 .site-bg 的 .35s,退出时星空与主背景同步平滑变暗;opacity 不变 */
 html[data-theme="dark"] #starfield{opacity:.86;filter:drop-shadow(0 0 4px rgba(255,211,142,.26))}
