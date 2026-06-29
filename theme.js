@@ -557,14 +557,13 @@
     pill.style.width=oldActiveRect.width+"px";pill.style.height=oldActiveRect.height+"px";
     ov.appendChild(pill);
     var cloneB=oldArticle.cloneNode(true);
-    bakeVisual(cloneB,oldArticle);
-    cloneB.classList.add("morph-clone");
-    cloneB.style.transformOrigin="center center";
-    placeFixed(cloneB,artRect);
-    cloneB.style.opacity="1";
-    ov.appendChild(cloneB);
-    cloneB.querySelectorAll("*").forEach(function(n){bakeVisual(n,n)});
-    cloneB.classList.remove("article");
+    var wrap=document.createElement("div");
+    wrap.className="morph-clone";
+    wrap.style.transformOrigin="center center";
+    placeFixed(wrap,artRect);
+    wrap.style.opacity="1";
+    wrap.appendChild(cloneB);
+    ov.appendChild(wrap);
     oldArticle.style.visibility="hidden";
     document.body.classList.add("morph-active","page-transitioning");
     void ov.offsetHeight;
@@ -576,10 +575,10 @@
       var activeLink=document.querySelector(".sidebar-link.active");
       if(activeLink){var ar=rectOf(activeLink);pill.style.left=ar.left+"px";pill.style.top=ar.top+"px"}
       var newArticle=document.querySelector(".content-wrapper .article")||document.querySelector(".article");
-      if(newArticle)placeFixed(cloneB,rectOf(newArticle));
-      cloneB.style.transition="opacity .42s ease,transform .42s var(--ease)";
-      cloneB.style.transform="scale(.984)";
-      cloneB.style.opacity="0";
+      if(newArticle)placeFixed(wrap,rectOf(newArticle));
+      wrap.style.transition="opacity .42s ease,transform .42s var(--ease)";
+      wrap.style.transform="scale(.984)";
+      wrap.style.opacity="0";
       return morphDelay(440);
     });
     Promise.all([morphDelay(420),swapPromise]).then(function(){
