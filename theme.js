@@ -558,11 +558,12 @@
     var cloneB=oldArticle.cloneNode(true);
     bakeVisual(cloneB,oldArticle);
     cloneB.classList.add("morph-clone");
-    cloneB.classList.remove("article");
     cloneB.style.transformOrigin="center center";
     placeFixed(cloneB,artRect);
     cloneB.style.opacity="1";
     ov.appendChild(cloneB);
+    cloneB.querySelectorAll("*").forEach(function(n){bakeVisual(n,n)});
+    cloneB.classList.remove("article");
     oldArticle.style.visibility="hidden";
     document.body.classList.add("morph-active","page-transitioning");
     void ov.offsetHeight;
