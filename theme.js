@@ -547,6 +547,7 @@
     transitionActive=true;
     var routeUrl=normalizeRouteUrl(url,true);
     var oldActiveRect=rectOf(oldActive),newLinkRect=rectOf(link),artRect=rectOf(oldArticle);
+    oldActive.classList.remove("active");
     var ov=createMorphOverlay();
     var pill=document.createElement("div");
     pill.className="morph-pill";
