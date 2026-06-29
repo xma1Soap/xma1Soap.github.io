@@ -146,6 +146,11 @@ body.page-entering .theme-toggle[data-page-transition-item],body.page-entering .
 body.page-transitioning .hero,body.page-transitioning .content-wrapper,body.route-enter-owned .hero,body.route-enter-owned .content-wrapper,body.route-enter-owned .hero-avatar,body.route-enter-owned .hero h1,body.route-enter-owned .hero p,body.route-enter-owned .card,body.route-enter-owned .card.in-view{animation:none!important}
 body.route-enter-owned .hero-avatar,body.route-enter-owned .hero h1,body.route-enter-owned .hero p,body.route-enter-owned .content-wrapper:not([data-page-transition-item]),body.route-enter-owned .article:not([data-page-transition-item]),body.route-enter-owned .card:not([data-page-transition-item]){opacity:1!important}
 
+.morph-overlay{position:fixed;inset:0;z-index:300;pointer-events:none}
+.morph-clone{transform:translateZ(0);will-change:left,top,width,height,border-radius,font-size,opacity,padding}
+body.morph-active{pointer-events:none}
+body.morph-active [data-page-transition-item]{opacity:0!important;transform:none!important;transition:opacity .34s ease!important;transition-delay:0ms!important}
+
 @media(max-width:820px){
   :root{--nav-height:60px}
   .nav{top:10px;width:calc(100% - 24px);margin-top:10px}
