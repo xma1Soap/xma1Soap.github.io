@@ -511,7 +511,7 @@
     document.body.classList.add("morph-active","page-transitioning");
     fadeOthersForMorph(card);
     fetchRoute(url).then(function(res){
-      replaceShell(res[0],routeUrl,true);
+      replaceShell(res,routeUrl,true);
       initDynamicPage();
       var article=document.querySelector(".content-wrapper .article")||document.querySelector(".article");
       var h1=article?article.querySelector(".hero h1"):null;
@@ -601,7 +601,7 @@
     cloneB.style.opacity="0";
     var playPromise=morphDelay(480);
     var swapPromise=fetchRoute(url).then(function(res){
-      replaceShell(res[0],routeUrl,true);
+      replaceShell(res,routeUrl,true);
       initDynamicPage();
       var newArticle=document.querySelector(".content-wrapper .article")||document.querySelector(".article");
       if(newArticle)newArticle.style.visibility="hidden";
