@@ -494,7 +494,7 @@
     var frame=card.cloneNode(true);
     bakeVisual(frame,card);
     frame.classList.add("morph-clone");
-    frame.querySelectorAll(".card-date,.card-excerpt,.card-tags,.card-read").forEach(function(s){s.style.transition="opacity .22s ease";s.style.opacity="0"});
+    frame.querySelectorAll(".card-title,.card-date,.card-excerpt,.card-tags,.card-read").forEach(function(s){s.style.transition="opacity .22s ease";s.style.opacity="0"});
     placeFixed(frame,cardRect);
     ov.appendChild(frame);
     card.style.visibility="hidden";
@@ -502,6 +502,7 @@
     if(title){
       titleClone=title.cloneNode(true);
       bakeVisual(titleClone,title);
+      titleClone.style.color="var(--text)";
       titleClone.classList.add("morph-clone");
       placeFixed(titleClone,titleRect);
       ov.appendChild(titleClone);
@@ -546,7 +547,7 @@
     transitionActive=true;
     var routeUrl=normalizeRouteUrl(url,true);
     var newLink=link,newLinkRect=rectOf(newLink),newLinkCs=getComputedStyle(newLink);
-    var artRect=rectOf(oldArticle),oldActiveRect=rectOf(oldActive);
+    var artRect=rectOf(oldArticle),oldActiveRect=rectOf(oldActive),oldHref=oldActive.getAttribute("href");
     var ov=createMorphOverlay();
     var cloneA=document.createElement("div");
     cloneA.className="morph-clone";
@@ -567,8 +568,13 @@
     ov.appendChild(cloneA);
     newLink.style.visibility="hidden";
     var cloneB=oldArticle.cloneNode(true);
+    bakeVisual(cloneB,oldArticle);
     cloneB.classList.add("morph-clone");
+    cloneB.classList.remove("article");
     placeFixed(cloneB,artRect);
+    cloneB.style.opacity="1";
+    cloneB.style.overflow="hidden";
+    cloneB.style.height=Math.min(artRect.height,Math.round(window.innerHeight*0.62))+"px";
     ov.appendChild(cloneB);
     oldArticle.style.visibility="hidden";
     document.body.classList.add("morph-active","page-transitioning");
@@ -592,10 +598,13 @@
         cloneA.style.background="linear-gradient(145deg,var(--surface-strong),var(--surface-muted))";
         cloneA.style.textAlign="center";
         if(h1cs){cloneA.style.fontSize=h1cs.fontSize;cloneA.style.letterSpacing=h1cs.letterSpacing;cloneA.style.lineHeight=h1cs.lineHeight;cloneA.style.fontWeight=h1cs.fontWeight;cloneA.style.color=h1cs.color}
-        cloneB.style.transition="left .42s var(--ease),top .42s var(--ease),width .42s var(--ease),height .42s var(--ease),border-radius .42s ease";
-        cloneB.style.left=oldActiveRect.left+"px";cloneB.style.top=oldActiveRect.top+"px";
-        cloneB.style.width=oldActiveRect.width+"px";cloneB.style.height=oldActiveRect.height+"px";
+        var targetLink=document.querySelector('.sidebar-link[href="'+oldHref+'"]');
+        var tRect=targetLink?rectOf(targetLink):oldActiveRect;
+        cloneB.style.transition="left .42s var(--ease),top .42s var(--ease),width .42s var(--ease),height .42s var(--ease),border-radius .42s ease,opacity .3s ease .12s";
+        cloneB.style.left=tRect.left+"px";cloneB.style.top=tRect.top+"px";
+        cloneB.style.width=tRect.width+"px";cloneB.style.height=tRect.height+"px";
         cloneB.style.borderRadius="12px";
+        cloneB.style.opacity="0";
         return morphDelay(480);
       }).then(function(){
         if(newArticle)newArticle.style.visibility="visible";
