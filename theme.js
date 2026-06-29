@@ -546,79 +546,44 @@
     if(!oldArticle||!oldActive){beginCardTransition(link,url);return}
     transitionActive=true;
     var routeUrl=normalizeRouteUrl(url,true);
-    var newLink=link,newLinkRect=rectOf(newLink),newLinkCs=getComputedStyle(newLink);
-    var artRect=rectOf(oldArticle),oldActiveRect=rectOf(oldActive),oldHref=oldActive.getAttribute("href");
-    var oldH1=oldArticle.querySelector(".hero h1");
-    var oldH1cs=oldH1?getComputedStyle(oldH1):null;
-    var h1Offset=oldH1?(rectOf(oldH1).top-artRect.top):36;
+    var oldActiveRect=rectOf(oldActive),newLinkRect=rectOf(link),artRect=rectOf(oldArticle);
     var ov=createMorphOverlay();
-    var cloneA=document.createElement("div");
-    cloneA.className="morph-clone";
-    cloneA.textContent=newLink.textContent.trim();
-    cloneA.style.boxSizing="border-box";
-    cloneA.style.display="flex";
-    cloneA.style.alignItems="flex-start";
-    cloneA.style.justifyContent="center";
-    cloneA.style.lineHeight="1.35";
-    cloneA.style.whiteSpace="nowrap";
-    cloneA.style.background="var(--accent-soft)";
-    cloneA.style.color="var(--accent)";
-    cloneA.style.fontSize=newLinkCs.fontSize;
-    cloneA.style.fontWeight="820";
-    cloneA.style.borderRadius="12px";
-    cloneA.style.padding="7px 10px";
-    cloneA.style.setProperty("backdrop-filter","blur(var(--glass-blur)) saturate(1.25)");
-    cloneA.style.setProperty("-webkit-backdrop-filter","blur(var(--glass-blur)) saturate(1.25)");
-    placeFixed(cloneA,newLinkRect);
-    ov.appendChild(cloneA);
-    newLink.style.visibility="hidden";
+    var pill=document.createElement("div");
+    pill.className="morph-pill";
+    pill.style.position="fixed";pill.style.margin="0";pill.style.borderRadius="12px";
+    pill.style.background="var(--accent-soft)";
+    pill.style.left=oldActiveRect.left+"px";pill.style.top=oldActiveRect.top+"px";
+    pill.style.width=oldActiveRect.width+"px";pill.style.height=oldActiveRect.height+"px";
+    ov.appendChild(pill);
     var cloneB=oldArticle.cloneNode(true);
     bakeVisual(cloneB,oldArticle);
     cloneB.classList.add("morph-clone");
     cloneB.classList.remove("article");
+    cloneB.style.transformOrigin="center center";
     placeFixed(cloneB,artRect);
     cloneB.style.opacity="1";
-    cloneB.style.overflow="hidden";
-    cloneB.style.height=Math.min(artRect.height,Math.round(window.innerHeight*0.62))+"px";
     ov.appendChild(cloneB);
     oldArticle.style.visibility="hidden";
     document.body.classList.add("morph-active","page-transitioning");
     void ov.offsetHeight;
-    cloneA.style.transition="left .45s var(--ease),top .45s var(--ease),width .45s var(--ease),height .45s var(--ease),padding .45s ease,border-radius .45s ease,font-size .45s var(--ease),letter-spacing .45s ease,line-height .45s ease,font-weight .45s ease,color .45s ease,background .45s ease";
-    cloneA.style.left=artRect.left+"px";cloneA.style.top=artRect.top+"px";
-    cloneA.style.width=artRect.width+"px";cloneA.style.height=artRect.height+"px";
-    cloneA.style.borderRadius="30px";
-    cloneA.style.paddingTop=h1Offset+"px";
-    cloneA.style.paddingLeft="0";cloneA.style.paddingRight="0";
-    cloneA.style.background="linear-gradient(145deg,var(--surface-strong),var(--surface-muted))";
-    cloneA.style.textAlign="center";
-    if(oldH1cs){cloneA.style.fontSize=oldH1cs.fontSize;cloneA.style.letterSpacing=oldH1cs.letterSpacing;cloneA.style.lineHeight=oldH1cs.lineHeight;cloneA.style.fontWeight=oldH1cs.fontWeight;cloneA.style.color=oldH1cs.color}
-    Array.prototype.forEach.call(cloneB.childNodes,function(c){if(c.nodeType===1){c.style.transition="opacity .15s ease";c.style.opacity="0"}});
-    cloneB.style.transition="left .42s var(--ease),top .42s var(--ease),width .42s var(--ease),height .42s var(--ease),border-radius .42s ease,opacity .3s ease .12s";
-    cloneB.style.left=oldActiveRect.left+"px";cloneB.style.top=oldActiveRect.top+"px";
-    cloneB.style.width=oldActiveRect.width+"px";cloneB.style.height=oldActiveRect.height+"px";
-    cloneB.style.borderRadius="12px";
-    cloneB.style.opacity="0";
-    var playPromise=morphDelay(480);
+    pill.style.transition="left .4s var(--ease),top .4s var(--ease)";
+    pill.style.left=newLinkRect.left+"px";pill.style.top=newLinkRect.top+"px";
     var swapPromise=fetchRoute(url).then(function(res){
       replaceShell(res,routeUrl,true);
       initDynamicPage();
+      var activeLink=document.querySelector(".sidebar-link.active");
+      if(activeLink){var ar=rectOf(activeLink);pill.style.left=ar.left+"px";pill.style.top=ar.top+"px"}
       var newArticle=document.querySelector(".content-wrapper .article")||document.querySelector(".article");
-      if(newArticle)newArticle.style.visibility="hidden";
-      var targetLink=document.querySelector('.sidebar-link[href="'+oldHref+'"]');
-      if(targetLink){
-        var tRect=rectOf(targetLink);
-        cloneB.style.left=tRect.left+"px";cloneB.style.top=tRect.top+"px";
-        cloneB.style.width=tRect.width+"px";cloneB.style.height=tRect.height+"px";
-      }
+      if(newArticle)placeFixed(cloneB,rectOf(newArticle));
+      cloneB.style.transition="opacity .42s ease,transform .42s var(--ease)";
+      cloneB.style.transform="scale(.984)";
+      cloneB.style.opacity="0";
+      return morphDelay(440);
     });
-    Promise.all([playPromise,swapPromise]).then(function(){
-      var newArticle=document.querySelector(".content-wrapper .article")||document.querySelector(".article");
-      if(newArticle)newArticle.style.visibility="visible";
-      cloneA.style.transition="opacity .13s ease";cloneA.style.opacity="0";
-      cloneB.style.transition="opacity .13s ease";cloneB.style.opacity="0";
-      return morphDelay(150);
-    }).then(function(){cleanupMorph(ov,null)}).catch(function(){cleanupMorph(ov,[newLink,oldArticle]);window.location.href=routeUrl.href});
+    Promise.all([morphDelay(420),swapPromise]).then(function(){
+      pill.style.transition="opacity .2s ease";pill.style.opacity="0";
+      return morphDelay(220);
+    }).then(function(){cleanupMorph(ov,[oldArticle])}).catch(function(){cleanupMorph(ov,[oldArticle]);window.location.href=routeUrl.href});
   }
 
   function initStarfield(){
