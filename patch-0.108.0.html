@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="description" content="杀戮尖塔2 v0.108.0 更新日志">
+<title>0.108.0 beta更新 · xma1Soap</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%AB%A7%3C/text%3E%3C/svg%3E">
+<script id="theme-boot">(function(){var r=document.documentElement;r.setAttribute("data-first-paint-cover","");try{var t=localStorage.getItem("xma1soap-theme");if(t==="dark"||t==="light"){r.setAttribute("data-theme",t)}else if(window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches){r.setAttribute("data-theme","dark")}}catch(_){}})();</script><style id="theme-boot-css">:root{color-scheme:light;--bg:#f8efe4}html,body{min-height:100%;background:#f8efe4}html[data-theme="dark"]{color-scheme:dark;--bg:#060914}html[data-theme="dark"],html[data-theme="dark"] body{background:#060914}html[data-first-paint-cover] body::after{content:"";position:fixed;inset:0;z-index:2147483647;pointer-events:none;background:#f8efe4;opacity:1;transition:opacity .24s ease}html[data-first-paint-cover="fade"] body::after{opacity:0}html[data-theme="dark"][data-first-paint-cover] body::after{background:#060914}</style><style>
+.hero{width:100%;margin:0 0 32px;padding:0;text-align:center;position:relative}
+.hero-tag{display:inline-flex;align-items:center;justify-content:center;margin-bottom:18px;padding:6px 14px;border:1px solid var(--border);border-radius:999px;color:var(--accent);background:var(--accent-soft);font-size:.78rem;font-weight:820;letter-spacing:.1em;text-transform:uppercase}
+.hero{padding-bottom:28px;border-bottom:1px solid var(--border);margin-bottom:36px}.hero h1{max-width:780px;margin:0 auto;color:var(--text);font-size:clamp(2rem,5vw,3.75rem);line-height:1.1;letter-spacing:-.055em;font-weight:850;text-wrap:balance}
+.hero .subtitle{max-width:660px;margin:16px auto 0;color:var(--text-muted);font-size:clamp(.98rem,1.8vw,1.12rem);line-height:1.8;text-wrap:balance}
+.hero .meta{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:8px;margin-top:18px;color:var(--text-faint);font-size:.9rem}
+.hero .meta span{margin:0}
+.content-wrapper{width:min(calc(var(--article-width) + 304px),calc(100% - 36px));margin:0 auto;padding:0 0 86px;display:grid;grid-template-columns:244px minmax(0,1fr);gap:32px;align-items:start}
+.sidebar{position:sticky;top:calc(var(--nav-height) + 34px);max-height:calc(100vh - var(--nav-height) - 54px);overflow:auto;padding:18px;border:1px solid var(--border);border-radius:24px;background:linear-gradient(145deg,var(--surface-strong),var(--surface-muted));box-shadow:var(--shadow-md);backdrop-filter:blur(var(--glass-blur)) saturate(1.25);-webkit-backdrop-filter:blur(var(--glass-blur)) saturate(1.25);scrollbar-width:thin}
+.sidebar-title{margin:0 0 14px;padding-bottom:12px;border-bottom:1px solid var(--border);color:var(--text);font-size:.82rem;font-weight:850;letter-spacing:.12em;text-transform:uppercase}
+.sidebar-section{margin:0 0 18px}.sidebar-section:last-child{margin-bottom:0}
+.sidebar-section-title{margin:0 0 8px;color:var(--text-faint);font-size:.76rem;font-weight:820;letter-spacing:.08em;text-transform:uppercase}
+.sidebar-link{display:block;margin:2px 0;padding:7px 10px;border-radius:12px;color:var(--text-muted);font-size:.86rem;line-height:1.35;font-weight:640;transition:background .22s ease,color .22s ease,transform .22s var(--ease)}
+.sidebar-link:hover{color:var(--accent);background:var(--accent-soft);transform:translateX(2px)}
+.sidebar-link.active{color:var(--accent);background:var(--accent-soft);font-weight:820}
+.article{min-width:0;padding:36px clamp(22px,4vw,46px) 58px;border:1px solid var(--border);border-radius:30px;background:linear-gradient(145deg,var(--surface-strong),var(--surface-muted));box-shadow:var(--shadow-md);backdrop-filter:blur(var(--glass-blur)) saturate(1.25);-webkit-backdrop-filter:blur(var(--glass-blur)) saturate(1.25)}
+.article>*:first-child{margin-top:0!important}
+.article h2{position:relative;margin:52px 0 20px;padding-bottom:12px;border-bottom:1px solid var(--border);color:var(--text);font-size:clamp(1.35rem,2vw,1.68rem);line-height:1.32;letter-spacing:-.03em;font-weight:820;scroll-margin-top:calc(var(--nav-height) + 34px)}
+.article h2::after{content:"";position:absolute;left:0;bottom:-1px;width:68px;height:2px;border-radius:99px;background:linear-gradient(90deg,var(--accent),transparent)}
+.article h3{margin:34px 0 14px;color:var(--accent);font-size:1.12rem;line-height:1.45;font-weight:780;scroll-margin-top:calc(var(--nav-height) + 34px)}
+.article p{margin:0 0 17px;color:var(--text);line-height:1.95;font-size:1rem}
+.article ul,.article ol{margin:0 0 22px;padding-left:1.3em}.article li{margin:8px 0;color:var(--text);line-height:1.86}.article li::marker{color:var(--accent)}.article li ul,.article li ol{margin:8px 0 10px}
+.article strong{font-weight:820;color:var(--text)}
+.article a{text-decoration-thickness:1px;text-decoration-color:color-mix(in srgb,var(--accent),transparent 58%)}.article a:hover{text-decoration:underline}
+.article hr{height:1px;margin:44px 0;border:0;background:linear-gradient(90deg,transparent,var(--border-strong),transparent)}
+.article .intro,.intro{margin:0 0 28px;padding:20px 22px;border:1px solid var(--border-strong);border-left:4px solid var(--accent);border-radius:20px;background:linear-gradient(135deg,var(--accent-soft),rgba(255,255,255,.18));color:var(--text);font-size:1.04rem;line-height:1.9;box-shadow:var(--shadow-sm)}
+.note{margin:22px 0;padding:15px 16px;border:1px solid var(--border);border-radius:18px;background:rgba(255,255,255,.18);color:var(--text-muted);font-size:.94rem;line-height:1.82}
+.note::before{content:"Note";display:block;margin-bottom:4px;color:var(--accent);font-size:.72rem;font-weight:850;letter-spacing:.12em;text-transform:uppercase}
+.toc{margin:0 0 32px;padding:18px 20px;border:1px solid var(--border);border-radius:22px;background:rgba(255,255,255,.2);box-shadow:var(--shadow-sm)}
+.toc-title{margin:0 0 10px;color:var(--text);font-size:.8rem;font-weight:850;letter-spacing:.12em;text-transform:uppercase}.toc-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px 14px;margin:0;padding:0;list-style:none}.toc-list li{margin:0}.toc-list a{display:block;padding:5px 0;color:var(--text-muted);font-size:.92rem;font-weight:640}.toc-list a:hover,.toc-list a.active{color:var(--accent)}
+.article figure{margin:28px 0 34px}.article figure img{width:100%;border:1px solid var(--border);border-radius:22px;background:rgba(255,255,255,.22);box-shadow:var(--shadow-md);overflow:hidden}.article figcaption{margin-top:10px;color:var(--text-faint);font-size:.88rem;text-align:center;line-height:1.6}
+.tag-buff,.tag-nerf,.tag-change{display:inline-flex;align-items:center;margin-right:6px;padding:2px 8px;border:1px solid transparent;border-radius:999px;font-size:.74rem;font-weight:850;line-height:1.45;vertical-align:baseline}.tag-buff{background:rgba(80,168,104,.14);color:#287744;border-color:rgba(80,168,104,.24)}.tag-nerf{background:rgba(216,83,75,.13);color:#a9342e;border-color:rgba(216,83,75,.22)}.tag-change{background:rgba(211,145,65,.15);color:#9d5d25;border-color:rgba(211,145,65,.25)}
+.article table{width:100%;margin:22px 0;border-collapse:separate;border-spacing:0;border:1px solid var(--border);border-radius:18px;overflow:hidden;background:rgba(255,255,255,.16)}.article th,.article td{padding:10px 12px;border-bottom:1px solid var(--border);text-align:left}.article tr:last-child th,.article tr:last-child td{border-bottom:0}.article code{padding:.12em .38em;border-radius:7px;background:var(--accent-soft);color:var(--accent);font-family:"JetBrains Mono",ui-monospace,SFMono-Regular,Consolas,monospace;font-size:.9em}
+.content-wrapper{opacity:0;animation:articleIn .48s var(--ease) forwards}.content-wrapper{animation-delay:.05s}@keyframes articleIn{from{opacity:0;transform:translateY(22px);filter:blur(8px)}to{opacity:1;transform:translateY(0);filter:blur(0)}}
+@media(max-width:1040px){.content-wrapper{width:min(var(--article-width),calc(100% - 30px));display:block}.sidebar{display:none}.article{border-radius:26px}}
+@media(max-width:820px){.hero{width:100%;padding:0 0 20px}.hero .meta{font-size:.84rem}.content-wrapper{width:calc(100% - 26px);padding-bottom:64px}.article{padding:26px 20px 44px;border-radius:24px}.article h2{margin-top:42px}.toc-list{grid-template-columns:1fr}.article .intro,.intro{padding:17px 18px;font-size:.98rem}}
+@media(max-width:480px){.hero h1{letter-spacing:-.04em}.article{padding:22px 16px 38px}.article p,.article li{font-size:.94rem}.article h3{font-size:1.04rem}.article figure img{border-radius:16px}}
+@media(prefers-reduced-motion:reduce){.content-wrapper{opacity:1!important;animation:none!important;filter:none!important}}
+</style>
+<link rel="preload" as="image" href="bg.png" fetchpriority="high" data-theme-bg="light">
+<link rel="preload" as="image" href="night-bg.png" fetchpriority="high" data-theme-bg="dark">
+<link rel="stylesheet" href="theme.css?v=30">
+</head><body><div id="starfield"></div>
+<header><nav class="nav" id="navbar"><div class="nav-inner nav-inner-article"><a href="https://xma1soap.github.io" class="nav-back">&larr; &#36820;&#22238;&#39318;&#39029;</a><a href="https://xma1soap.github.io" class="nav-brand">xma1Soap</a><button class="nav-toggle" id="navToggle" type="button" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button><ul class="nav-links" id="navLinks"><li><a href="https://xma1soap.github.io">Home</a></li><li><a href="https://github.com/xma1Soap" target="_blank" rel="noopener">GitHub</a></li></ul></div></nav><div class="nav-overlay" id="navOverlay"></div></header><main><div class="content-wrapper"><aside class="sidebar"><div class="sidebar-title">&#20840;&#23616;&#30446;&#24405;</div><div class="sidebar-section"><a href="https://xma1soap.github.io" class="sidebar-link">&#127968; &#39318;&#39029;</a></div><div class="sidebar-section"><div class="sidebar-section-title">杀戮尖塔2</div><a href="patch-0.108.0.html" class="sidebar-link active">0.108.0 beta更新</a><a href="patch-0.107.1.html" class="sidebar-link">0.107.1重大更新</a><a href="patch-0.107.0.html" class="sidebar-link">0.107.0 beta更新</a><a href="patch-bugfix-0530.html" class="sidebar-link">5月 Bug 修复</a><a href="patch-0.106.1.html" class="sidebar-link">0.106.1小更新</a><a href="patch-0.106.html" class="sidebar-link">0.106.0 beta更新</a><a href="patch-0.105.1.html" class="sidebar-link">0.105.1 beta热修</a><a href="patch-0.105.0.html" class="sidebar-link">0.105.0 beta更新</a><a href="patch-0.104.0.html" class="sidebar-link">0.104.0 beta更新</a><a href="patch-0.103.2.html" class="sidebar-link">0.103.2重大更新</a><a href="patch-0.103.1.html" class="sidebar-link">0.103.1 beta热修</a><a href="patch-0.103.0.html" class="sidebar-link">0.103.0 beta更新</a><a href="patch-0.102.0.html" class="sidebar-link">0.102.0 beta更新</a><a href="patch-0.101.0.html" class="sidebar-link">0.101.0 beta更新</a><a href="patch-0.100.0.html" class="sidebar-link">0.100.0 beta更新</a><a href="patch-0.99.1.html" class="sidebar-link">0.99.1主线更新</a><a href="patch-0.99.1-beta-hotfix.html" class="sidebar-link">0.99.1 beta热修</a><a href="patch-0.99.html" class="sidebar-link">0.99 beta更新</a><a href="patch-0.98.3.html" class="sidebar-link">0.98.3热修</a><a href="patch-0.98.2.html" class="sidebar-link">0.98.2热修</a><a href="patch-0.98.1.html" class="sidebar-link">0.98.1热修</a><a href="patch-bugfix-0523.html" class="sidebar-link">0.106.1 Bug Fix</a></div><div class="sidebar-section"><div class="sidebar-section-title">边缘世界</div><a href="rimworld-1.6.4850.html" class="sidebar-link">边缘世界 1.6.4850 更新日志</a></div></aside>
+<article class="article"><section class="hero"><div class="hero-tag">Slay the Spire 2</div><h1>0.108.0 beta更新</h1><div class="meta"><span>2026-07-03</span><span>·</span><span>全文翻译 · 星薄荷</span></div></section>
+<div class="intro">v0.108.0 上线！这一版带来了大量修复、平衡性改动、若干体验优化，一大批全新的多人模式卡牌，以及新的美术内容——包括最新 Boss 永世沙漏的动画。</div>
+<figure><img src="https://clan.akamai.steamstatic.com/images/44971832/469e5b0ea6846f4009611dc50e8af071021b67ec.gif" alt="Aeonglass animation"><figcaption>新 Boss 永世沙漏的动画。</figcaption></figure>
+<div class="toc"><div class="toc-title">目录</div><ul class="toc-list">
+<li><a href="#content">内容与平衡性</a></li>
+<li><a href="#ui">用户界面与体验</a></li>
+<li><a href="#art">美术</a></li>
+<li><a href="#writing">文本</a></li>
+<li><a href="#bugfix">Bug 修复</a></li>
+<li><a href="#performance">性能</a></li>
+<li><a href="#modding">Mod 支持</a></li>
+</ul></div>
+
+<h2 id="content">内容与平衡性</h2>
+<h3>通用</h3>
+<ul>
+<li>回合结束时，充能球的被动效果现在会在灾厄之前触发
+<ul>
+<li>这意味着，如果玩家会因自身的灾厄而死（例如来自「精神过载」卡牌），但同时拥有一个回合结束被动能击杀最后一名敌人的充能球（例如敌人在 3 点生命时的闪电充能球），那么结束回合后玩家将赢得战斗而非落败</li>
+</ul>
+</li>
+</ul>
+<h3>敌人</h3>
+<ul>
+<li><span class="tag-buff">加强</span> <strong>火炬头聚合体</strong>：提升了进阶 9 的伤害
+<ul>
+<li>弱冲撞伤害从 14(15) 提升至 14(16)</li>
+<li>冲撞伤害从 18(19) 提升至 18(22)</li>
+</ul>
+</li>
+</ul>
+<h3>药水与遗物</h3>
+<ul>
+<li><span class="tag-change">调整</span> <strong>回复药水</strong>：其治疗效果现在会在灾厄之前触发，避免玩家在某些情况下因自身灾厄而死亡</li>
+</ul>
+<h3>铁甲战士</h3>
+<ul>
+<li><span class="tag-nerf">削弱</span> <strong>巨像</strong> 卡牌：格挡获取从 5(8) 降低至 4(7)</li>
+<li><span class="tag-nerf">削弱</span> <strong>绯红披风</strong> 卡牌：格挡获取从 8(10) 降低至 7(10)</li>
+<li><span class="tag-buff">加强</span> <strong>彼岸咆哮</strong> 卡牌：伤害从 16(21) 提升至 18(24)</li>
+<li><span class="tag-buff">加强</span> <strong>预备打击</strong> 卡牌：力量获取从 2(3) 提升至 3(4)</li>
+</ul>
+<h3>静默猎手</h3>
+<ul>
+<li><span class="tag-change">重做</span> <strong>毒性爆发</strong> 卡牌：“每施加 3 次中毒，对所有敌人造成 15 点伤害。” → “每当你施加中毒，对所有敌人造成 3(4) 点伤害。”</li>
+<li><span class="tag-buff">加强</span> <strong>预判</strong> 卡牌：敏捷获取从 2(3) 提升至 2(4)</li>
+<li><span class="tag-buff">加强</span> <strong>翻越撑击</strong> 卡牌：伤害从 6(8) 提升至 7(9)</li>
+<li><span class="tag-nerf">削弱</span> <strong>跟踪</strong> 卡牌：“虚弱的敌人受到攻击牌双倍伤害。” → “虚弱的敌人受到攻击牌的伤害增加 50%。”</li>
+</ul>
+<h3>储君</h3>
+<ul>
+<li><span class="tag-buff">加强</span> <strong>葬送</strong> 卡牌：伤害从 30(40) 提升至 35(45)</li>
+<li><span class="tag-buff">加强</span> <strong>天命所归</strong> 遗物：星辰获取从 6 提升至 7</li>
+<li><span class="tag-nerf">削弱</span> <strong>护驾！！！</strong> 卡牌的 <strong>仆从捐躯</strong> 衍生物：格挡获取从 8(11) 降低至 7(10)</li>
+<li><span class="tag-buff">加强</span> <strong>共鸣</strong> 卡牌：星辰消耗从 3 降低至 2</li>
+</ul>
+<h3>亡灵契约师</h3>
+<ul>
+<li><span class="tag-buff">加强</span> <strong>纠缠</strong> 卡牌：生命值损失从 6(8) 提升至 7(9)</li>
+<li><span class="tag-buff">加强</span> <strong>剥夺</strong> 卡牌：伤害从 9(11) 提升至 10(13)</li>
+<li><span class="tag-buff">加强</span> <strong>灵魂风暴</strong> 卡牌：额外伤害从 2(3) 提升至 4(6)</li>
+</ul>
+<h3>故障机器人</h3>
+<ul>
+<li><span class="tag-nerf">削弱</span> <strong>压缩</strong> 卡牌的 <strong>燃料</strong> 衍生物：
+<ul>
+<li>不再抽牌</li>
+<li>升级效果从增加抽牌 → 给予 1 点额外能量</li>
+</ul>
+</li>
+<li><span class="tag-buff">加强</span> <strong>趁势打击</strong> 卡牌：伤害从 10(13) 提升至 11(15)</li>
+<li><span class="tag-change">调整</span> <strong>刮削</strong> 卡牌：不再弃置那些被全局临时效果将能量消耗临时设为 0 的卡牌（例如「猛扑」卡牌的“你打出的下一张技能牌消耗 0 点能量”效果）</li>
+<li><span class="tag-change">调整</span> <strong>打碎</strong> 卡牌：现在会消耗</li>
+</ul>
+<h3>多人模式</h3>
+<ul>
+<li>新增铁甲战士多人模式卡牌：
+<ul>
+<li><strong>子夜</strong>：稀有 - 攻击 - 消耗 12 - “造成 99(120) 点伤害。本战斗中每有任意玩家消耗一张牌，此牌消耗降低 1。”</li>
+<li><strong>烈焰</strong>：罕见 - 技能 - 消耗 2 - “给予另一名玩家 5(7) 点力量。”</li>
+<li><strong>暴怒</strong>：罕见 - 攻击 - 消耗 0 - “造成 9(13) 点伤害。将一张此牌的复制加入每名玩家的弃牌堆。”</li>
+</ul>
+</li>
+<li><span class="tag-buff">加强</span>并略微重做 <strong>肉盾</strong> 卡牌：“受到敌人的伤害翻倍。友方受到敌人的伤害减半。” → “受到敌人的伤害增加 50%。友方受到敌人的伤害减少 50%。”</li>
+<li>新增静默猎手多人模式卡牌：
+<ul>
+<li><strong>刀刃交响</strong>：罕见 - 技能 - 消耗 1 - “将 2(3) 张小刀加入所有玩家的手牌。”</li>
+<li><strong>调配</strong>：罕见 - 技能 - 消耗 0 - “本回合另一名玩家的攻击牌施加 3(4) 点中毒。”</li>
+<li><strong>隐没</strong>：罕见 - 技能 - 消耗 0 - “保留。本回合另一名玩家获得 6(9) 点敏捷。”</li>
+</ul>
+</li>
+<li><span class="tag-change">调整</span> <strong>夹击</strong> 卡牌：稀有度从 罕见 → 稀有</li>
+<li>新增储君多人模式卡牌：
+<ul>
+<li><strong>谋划</strong>：罕见 - 技能 - 消耗 1 - “下回合，所有玩家抽 2(3) 张牌。”</li>
+<li><strong>星座</strong>：罕见 - 技能 - 消耗 0 - “另一名玩家抽 1 张牌，获得 1 点能量，并获得 9(12) 点格挡。”</li>
+</ul>
+</li>
+<li>新增亡灵契约师多人模式卡牌：
+<ul>
+<li><strong>冥界</strong>：罕见 - 技能 - 消耗 2 - “本回合每当其他玩家造成攻击伤害，施加等量的灾厄。消耗。（升级后失去消耗）”</li>
+<li><strong>灵魂绑定</strong>：罕见 - 能力 - 消耗 1 - “（固有。）选择一名友军。每当你生成灵魂时，将一张灵魂加入其抽牌堆。”</li>
+<li><strong>杂音</strong>：稀有 - 能力 - 消耗 2 - “所有玩家每抽 33 张牌，对一名随机敌人造成 66(99) 点伤害。”</li>
+</ul>
+</li>
+<li><span class="tag-change">调整</span> <strong>骸骨军团</strong> 卡牌：不再消耗</li>
+<li>新增故障机器人多人模式卡牌：
+<ul>
+<li><strong>冬眠</strong>：罕见 - 技能 - 消耗 2 - “引导 2(3) 颗冰霜。本回合，你的冰霜为所有友军提供格挡。”</li>
+<li><strong>我为人人</strong>：稀有 - 能力 - 消耗 1 - “所有人消耗为 0 的攻击牌额外造成 3(4) 点伤害。”</li>
+<li><strong>模仿学习</strong>：稀有 - 技能 - 消耗 1 - “选择另一名玩家。其接下来 2(3) 次打出能力牌时，你也打出一张其复制。消耗。”</li>
+</ul>
+</li>
+<li><span class="tag-change">调整</span> <strong>引火</strong> 卡牌：稀有度从 稀有 → 罕见</li>
+<li>新增无色多人模式卡牌：
+<ul>
+<li><strong>这颗球</strong>：罕见 - 攻击 - 消耗 1 - “造成 10 点伤害。本战斗中此牌伤害增加 15(25)，并将其交给一名随机友军。”</li>
+</ul>
+</li>
+<li><span class="tag-nerf">削弱</span>了 2 人多人模式中敌人的格挡成长</li>
+<li><span class="tag-nerf">削弱</span> <strong>希望灯塔</strong> 卡牌：消耗从 1 → 2</li>
+</ul>
+
+<h2 id="ui">用户界面与体验</h2>
+<h3>通用</h3>
+<ul>
+<li>在自定义开局界面添加了“随机化”按钮，会随机选择 2 个增益修饰项和 1 个减益修饰项，并随机选择角色</li>
+<li>单人模式下，暂停菜单打开时计时器会暂停</li>
+<li>为药水持有者添加了选择准星</li>
+<li>在怪物图鉴中创建了数据统计板块</li>
+<li>将事件战斗遭遇加入怪物图鉴</li>
+<li>隐藏了部分怪物在图鉴中动作重复的动画</li>
+<li>微调了怪物图鉴怪物列表中的选择箭头</li>
+<li>玩家现在可以在历史记录中看到「皮草大衣」遗物影响了哪些房间</li>
+<li>在「商人??」事件中跳过的遗物现在会记录到历史记录中</li>
+<li>「满是奶酪的房间」事件现在会在历史记录中显示被跳过的卡牌</li>
+<li>所有手柄输入的死区已设为 0.5，这意味着摇杆应该不再那么灵敏，扳机键也需按入更多才会被识别为输入</li>
+</ul>
+<h3>储君</h3>
+<ul>
+<li>「暗淡蓝点」能力现在会在其图标旁倒数下一次触发前还需打出的卡牌数</li>
+</ul>
+<h3>多人模式</h3>
+<ul>
+<li>版本不匹配错误现在包含更多信息</li>
+</ul>
+
+<h2 id="art">美术</h2>
+<ul>
+<li>为凋萎状态卡牌添加了肖像美术</li>
+<li>添加了永世沙漏动画</li>
+<li>更新了地精佣兵动画</li>
+<li>如果你击杀地精佣兵前他没偷到任何金币，肥地精生成时将不再手持一袋金币</li>
+<li>为以下纪元添加了美术：火光冲天、醒来、达弗、先子星、沉睡、生于高塔、建筑师、契约</li>
+<li>添加了充能球被动触发的视觉特效</li>
+<li>添加了移除卡牌的视觉特效</li>
+<li>添加了新的卡牌消耗视觉特效</li>
+</ul>
+
+<h2 id="writing">文本</h2>
+<ul>
+<li>「精英猎手」修饰项的悬停提示现在明确指出它会让精英掉落稀有卡牌奖励，而非仅“更好的奖励”</li>
+<li>「螺旋钻击」卡牌的措辞已更新，更清晰地表明它只计算花在其他卡牌上的能量</li>
+<li>澄清了「丝滑长鬃」遗物只对在多人模式中选择它的那名玩家生效</li>
+<li>更新了多种语言的翻译</li>
+</ul>
+
+<h2 id="bugfix">Bug 修复</h2>
+<h3>通用</h3>
+<ul>
+<li>Steam 初始化错误弹窗现在包含更多细节</li>
+<li>当杀毒软件或云同步短暂阻止存档文件时，现在会重试保存</li>
+<li>如果你开启了“始终显示计时器”，计时器不再以隐藏状态开始一局</li>
+<li>修复了卡牌选择提示打开时返回主菜单的崩溃</li>
+<li>修复了主菜单中“Mod 设置”按钮的手柄导航失效</li>
+<li>修复了在手持一张无目标卡牌时打开牌组视图导致手柄导航失效的问题</li>
+<li>修复了战斗音乐有时在地图和其他非战斗界面继续播放的问题</li>
+<li>修复了纪元翻页箭头无法点击的问题</li>
+<li>修复了在新存档/重载后从宝箱房打开怪物图鉴时的软锁</li>
+<li>修复了历史记录中的死亡语录过长时被截断的问题</li>
+<li>历史记录现在会为曾经与「门扉缔造者」战斗的旧记录显示 Boss 图标</li>
+<li>修复了数据界面显示你已发现的怪物数量超过游戏中实际存在的问题</li>
+<li>修复了每日挑战排行榜在某些日期无法加载的问题</li>
+<li>修复了许多随机行为异常的情况（再次感谢 tckmn！）</li>
+<li>修复了可以用手柄导航到「异鸟宝宝」的问题</li>
+</ul>
+<h3>先古之民</h3>
+<ul>
+<li>如果你上一局死于精英怪，精英音乐不再在涅奥房间播放</li>
+<li>「特兹卡塔拉的玩具盒」遗物耗尽后不再闪烁</li>
+</ul>
+<h3>敌人</h3>
+<ul>
+<li>不再可能连续出现两场都含有史莱姆怪物的遭遇</li>
+<li>不再可能连续出现两场都含有「闪光贾克斯果」的遭遇</li>
+<li>如果一张被重放附魔的攻击在第一次打出时就击杀了最后一名敌人，后续的重复打出现在会被跳过
+<ul>
+<li>这修复了一个问题：如果一张带有重放的卡牌被腐化附魔，即使第一次打出已击杀最后一名敌人，玩家仍会损失额外生命值</li>
+</ul>
+</li>
+<li>修复了一个视觉问题：当玩家用荆棘击杀一只死亡时会生成更多怪物的怪物（如巨斧机器人、异蛙寄生虫）时，死亡怪物的攻击要等到新怪物生成后才会视觉上发生</li>
+<li>修复了立柱构造体在切换到充能动画时若受到伤害，其意图与身体重叠的问题</li>
+<li>修复了墨宝在灾厄动画中头部被截断的问题</li>
+<li>修复了蛇行扼杀者在「重击」动作中播放受击动画的问题</li>
+<li>修复了扭动虫在 4:3 宽高比下在屏幕外生成的问题</li>
+<li>修复了火炬头聚合体缩小时其激光攻击视觉特效无法触及玩家的问题</li>
+<li>修复了怪物图鉴中同族神官「灵魂光束」动作播放命中音效的问题</li>
+<li>帝皇蟹不再在怪物图鉴中遮挡怪物名称</li>
+<li>在怪物图鉴中反复点击知识恶魔的「知识诅咒」动作不再导致其动画停止播放</li>
+<li>为怪物图鉴补充了缺失的地道虫动画</li>
+<li>地道虫的动画现在无论是否处于钻地状态都能在图鉴中播放</li>
+</ul>
+<h3>药水与遗物</h3>
+<ul>
+<li>修复了「骨茶」遗物在你同时拥有「工具箱」遗物时无法升级手牌的问题</li>
+<li>修复了一个问题：如果玩家自动打出了整副回合开始抽到的手牌（通过诸如地狱狂徒的效果），不休陀螺遗物可能尽管手牌为空却不触发</li>
+<li>修复了活动星图遗物在「战痕累累的训练假人」事件中触发两次的问题</li>
+<li>修复了花粉核心遗物在你在抽牌前结束战斗时计数超过 4 的问题</li>
+<li>「吃不完的糖」在奖励组合中没有卡牌奖励时不再触发</li>
+<li>不安油灯遗物在目标的「人工制品」抵挡了减益时不再被消耗</li>
+<li>白兽雕像遗物在保证获得药水奖励时不再降低你的普通药水掉落概率，以防止它在一局中途被移除后你再也无法掉落药水</li>
+<li>修复了几种在第一局中获得重复遗物的方式</li>
+<li>修复了弹性药水的描述在应用于角色时出现两次的问题</li>
+<li>修复了连续快速投掷多瓶污浊药水时可能出现的软锁</li>
+</ul>
+<h3>事件</h3>
+<ul>
+<li>修复了一个问题：当「疯狂科学」卡牌通过暴力选项生成时，活力只作用于其 3 次伤害中的第一次</li>
+<li>修复了死于「重拳出击」和「神秘骑士」遭遇的死亡语录</li>
+</ul>
+<h3>无色卡牌</h3>
+<ul>
+<li>修复了「熵」卡牌能够将诅咒转化为攀升者之灾的问题</li>
+</ul>
+<h3>铁甲战士</h3>
+<ul>
+<li>地狱狂徒卡牌在被迅速附魔时不再无限打出明耀打击卡牌</li>
+</ul>
+<h3>静默猎手</h3>
+<ul>
+<li>夜魇卡牌不再能在战斗中生成</li>
+</ul>
+<h3>储君</h3>
+<ul>
+<li>修复了仆从打击卡牌在打出过快时卡在屏幕上的问题</li>
+<li>修复了历史课复制的明耀打击卡牌回到抽牌堆的问题</li>
+<li>修复了超质量体卡牌不从疯狂科学卡牌生成的卡牌中获得数值成长的问题</li>
+</ul>
+<h3>亡灵契约师</h3>
+<ul>
+<li>修复了敌人死于灾厄时可能发生的崩溃</li>
+<li>重构卡牌不再能在战斗中生成</li>
+<li>修复了弱化之触 + 苦难组合导致拥有人工制品的敌人在下回合获得力量的问题</li>
+<li>禁忌魔典卡牌的移除卡牌奖励现在会在你成功完成「战痕累累的训练假人」战斗后显示</li>
+</ul>
+<h3>故障机器人</h3>
+<ul>
+<li>在其他卡牌选择界面中禁用了对充能球的手柄导航</li>
+<li>修复了子程序多于 4 个时其能力悬停提示的拼写错误</li>
+<li>野性卡牌不再将历史课复制的螺旋钻击卡牌放回你的手牌</li>
+<li>修复了镀金线缆遗物在充能球被动未触发时闪烁的问题</li>
+<li>当情感芯片遗物在你回合开始触发充能球时，镀金线缆遗物现在会触发</li>
+</ul>
+<h3>多人模式</h3>
+<ul>
+<li>修复了更多每日挑战根据玩家网络 ID 产生分歧的情况</li>
+<li>修复了在移动到新地图点时丢弃药水导致的分歧</li>
+<li>修复了可以提前两个阶段就为自己设置“已准备好进入下一阶段”的 Bug</li>
+<li>修复了在过渡到另一地图点时领取奖励导致的状态分歧</li>
+<li>修复了游戏开始时房主更改进阶导致的分歧</li>
+<li>修复了玩家拥有音乐盒遗物且在选择时战斗结束导致的分歧</li>
+<li>修复了在击杀自己时快速打出卡牌导致的分歧</li>
+<li>修复了幽灵种子遗物给其他玩家在战斗中生成的打击和防御添加虚无的问题</li>
+<li>如果你在宝箱房遗物战斗中打开某个界面，手牌现在会正常运作</li>
+<li>修复了在药水瞄准状态下游戏结束时鼠标永久隐藏的问题</li>
+<li>事件随机种子现在在所有多人每日挑战中保持一致</li>
+<li>密林迷宫冒险事件在某名玩家没有足够生命值选择单人选项时不再出现</li>
+</ul>
+
+<h2 id="performance">性能</h2>
+<ul>
+<li>压缩了各种战斗背景资源</li>
+</ul>
+
+<h2 id="modding">Mod 支持</h2>
+<p>感谢自 Steam 创意工坊上线以来所有 Mod 作者与玩家的反馈！在列出本次与 Mod 相关的改动前，有几项影响玩家的重大修复与改动需要先说明。</p>
+<p>此前，首次以启用 Mod 状态启动游戏时，进度看似被清空——这是因为无 Mod 存档与带 Mod 存档作为保护措施是分开保存的，且默认让带 Mod 存档从零开始。现在，你的无 Mod 存档会自动复制到带 Mod 存档，并弹出提示向新 Mod 用户解释这一过程。两者仍分开保存，因此启用 Mod 游玩获得的进度不会反映到无 Mod 模式，反之亦然。</p>
+<p>此外，玩家在带 Mod 的多人模式中经常遇到版本冲突错误。我们引入了一些修复来减少此类情况，并在发生时提供更详细的错误弹窗。我们仍建议与队友启用完全相同的 Mod，尤其是那些确实影响玩法而不仅是外观的 Mod。</p>
+<p>这些改动计划很快登陆主线分支。更多关于 Mod 和启用 Mod 游玩的信息，请参阅重大更新 #2 的更新日志。</p>
+<ul>
+<li>首次以启用 Mod 状态启动时，无 Mod 存档现在会复制到带 Mod 存档目录</li>
+<li>为 Mod 菜单添加了手柄支持</li>
+<li>修复了 Steam Mod 导致 <code>ReflectionHelper.ModTypes</code> 不返回任何内容的问题</li>
+<li>来自 Mod 的 SavedProperty ID 现在为多人模式正确排序</li>
+<li><code>affectsGameplay</code> 设为 false 的 Mod 内容现在被排到 ID 映射的末尾</li>
+<li>Mod 现在可以注册多个程序集</li>
+<li><code>SerializableSave.NumReloads</code> 现在对所有玩家一致</li>
+<li>如果版本更高，Steam Mod 现在优先于本地 Mod</li>
+<li>批量处理了检查分支支持的 Steam 创意工坊调用，意味着 Mod 加载应更快</li>
+<li>开始发布 <code>STS2.dll</code> 的 XML 文档</li>
+<li>修复了多人模式中拥有相同 Mod 的玩家出现“版本不匹配”的问题（感谢 RitsuLib 的 OLC 协助！）
+<ul>
+<li>从 <code>ModelDb</code> 而非通过反射构建序列化缓存</li>
+<li>按 <code>ModelId</code> 而非类型名排序内容</li>
+<li>排序时使用更多决胜规则</li>
+<li>在 <code>ModelIdSerializationCache</code> 中对纪元 ID 排序</li>
+<li>将不影响玩法的模型从 <code>ModelIdSerializationCache</code> 哈希中排除</li>
+</ul>
+</li>
+<li>现在会在非玩法 Mod 不匹配警告中记录正确的 Mod 列表</li>
+</ul>
+
+<hr>
+<p style="text-align:center;color:var(--text-faint);font-size:.9rem">全文翻译 · 星薄荷 | 数据来源 <a href="https://steamcommunity.com/games/2868840/announcements/detail/1836506165569491" target="_blank" rel="noopener">Steam 官方更新公告</a></p>
+</article></div></main>
+<footer class="footer"><div class="footer-inner"><span>&copy; 2026 xma1Soap</span><span class="footer-dot"></span><a href="https://xma1soap.github.io">Back to home</a></div></footer>
+<button class="back-to-top" id="backToTop" aria-label="Back to top">&#8593;</button>
+<script src="theme.js?v=34"></script>
+</body>
+</html>
