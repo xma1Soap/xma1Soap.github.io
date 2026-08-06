@@ -1,0 +1,9 @@
+/**
+ * Bundled by jsDelivr using Rollup v4.62.2 and esbuild v0.28.1.
+ * Original file: /npm/nostics@1.1.4/dist/index.mjs
+ *
+ * Do NOT use SRI with dynamically generated files! More information: https://www.jsdelivr.com/using-sri-with-dynamic-files
+ */
+function d(e){const s=`[${e.name}] ${e.message}`,r=[];return e.fix&&r.push(`fix: ${e.fix}`),e.sources?.length&&r.push(`sources: ${e.sources.join(", ")}`),e.docs&&r.push(`see: ${e.docs}`),r.length===0?s:[s,...r.map((n,t)=>`${t<r.length-1?"\u251C\u25B6":"\u2570\u25B6"} ${n}`)].join(`
+`)}function x(e,...s){return typeof e=="function"?e(...s):e}function l({method:e="warn",formatter:s=d}={}){return(r,{method:n=e}={})=>{console[n](s(r))}}const p=Error.captureStackTrace;var a=class w extends Error{name="Diagnostic";docs;fix;sources;get why(){return this.message}constructor(s,r=w){super(s.why,{cause:s.cause}),this.fix=s.fix,this.docs=s.docs,this.sources=s.sources,p?.(this,r)}toJSON(){return{name:this.name,why:this.why,fix:this.fix,docs:this.docs,sources:this.sources,cause:this.cause,stack:this.stack}}};function g(e,s){return typeof e=="string"?`${e}/${s.toLowerCase()}`:e?.(s)}function $(e){const s=e.reporters??[],r={},{docsBase:n}=e;for(const t of Object.keys(e.codes)){const c=e.codes[t],u=c.docs===!1?void 0:c.docs||g(n,t),f=(o={},i={})=>{const h=new a({why:x(c.why,o),fix:x(c.fix,o),docs:u,cause:o.cause,sources:o.sources},f);h.name=t;for(const y of s)y(h,i);return h};r[t]=f}return r}function m(e={}){const{docsBase:s,reporters:r=[]}=e;return new Proxy({},{get(n,t){if(typeof t!="string")return;const c=(u={},f={})=>{const o=new a({why:t,docs:g(s,t),cause:u.cause,sources:u.sources},c);o.name=t;for(const i of r)i(o,f);return o};return c}})}export{a as Diagnostic,l as createConsoleReporter,$ as defineDiagnostics,m as defineProdDiagnostics,d as formatDiagnostic};
+//# sourceMappingURL=/sm/abbfa3ec4bfb7e77089432ac9dc4bca50d6e82ba421cacdacca8be388bacc098.map
