@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="description" content="杀戮尖塔2 v0.109.0 更新日志">
+<title>0.109.0 beta更新 · xma1Soap</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%AB%A7%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap" rel="stylesheet">
+<script id="theme-boot">(function(){var r=document.documentElement;r.setAttribute("data-first-paint-cover","");try{var t=localStorage.getItem("xma1soap-theme");if(t==="dark"||t==="light"){r.setAttribute("data-theme",t)}else if(window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches){r.setAttribute("data-theme","dark")}}catch(_){}})();</script><style id="theme-boot-css">:root{color-scheme:light;--bg:#F7F6F3}html,body{min-height:100%;background:#F7F6F3}html[data-theme="dark"]{color-scheme:dark;--bg:#1C1A17}html[data-theme="dark"],html[data-theme="dark"] body{background:#1C1A17}html[data-first-paint-cover] body::after{content:"";position:fixed;inset:0;z-index:2147483647;pointer-events:none;background:#F7F6F3;opacity:1;transition:opacity .24s ease;animation:bootCoverFade .6s ease 2.2s forwards}html[data-first-paint-cover="fade"] body::after{opacity:0}@keyframes bootCoverFade{to{opacity:0}}html[data-theme="dark"][data-first-paint-cover] body::after{background:#1C1A17}</style><style>
+/* ---------- Article: editorial reading layout ---------- */
+.hero{width:100%;margin:0 0 36px;padding:0;text-align:center}
+.hero-tag{display:inline-flex;align-items:center;margin-bottom:16px;padding:0;color:var(--accent);background:none;font-family:var(--font-mono);font-size:.72rem;font-weight:500;letter-spacing:.14em;text-transform:uppercase}
+.hero{padding-bottom:32px;border-bottom:1px solid var(--border)}
+.hero h1{max-width:760px;margin:0 auto;font-family:var(--font-serif);color:var(--text);font-size:clamp(2rem,5vw,3.4rem);line-height:1.12;letter-spacing:-.025em;font-weight:500;text-wrap:balance}
+.hero .subtitle{max-width:640px;margin:16px auto 0;color:var(--text-muted);font-size:1.02rem;line-height:1.75;text-wrap:balance}
+.hero .meta{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:8px;margin-top:16px;color:var(--text-faint);font-family:var(--font-mono);font-size:.8rem}
+.hero .meta span{margin:0}
+.content-wrapper{max-width:calc(var(--article-width) + 280px);margin:0 auto;padding:0 24px 96px;display:grid;grid-template-columns:232px minmax(0,1fr);gap:40px;align-items:start}
+.sidebar{position:sticky;top:calc(var(--nav-height) + 28px);max-height:calc(100vh - var(--nav-height) - 48px);overflow:auto;scrollbar-width:thin;background:var(--bg-soft);border:1px solid var(--border);border-radius:var(--radius);padding:20px 18px}
+.sidebar-title{margin:0 0 16px;padding:0;color:var(--text);font-family:var(--font-mono);font-size:.72rem;font-weight:500;letter-spacing:.14em;text-transform:uppercase}
+.sidebar-section{margin:0 0 22px}.sidebar-section:last-child{margin-bottom:0}
+.sidebar-section-title{margin:0 0 8px;color:var(--text-faint);font-family:var(--font-mono);font-size:.68rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase}
+.sidebar-link{display:block;margin:0;padding:6px 10px;border-radius:var(--radius-sm);color:var(--text-muted);font-size:.86rem;line-height:1.4;text-decoration:none;transition:background var(--dur-1) var(--ease),color var(--dur-1) var(--ease)}
+.sidebar-link:hover{color:var(--text);background:var(--ink-soft);text-decoration:none}
+.sidebar-link.active{color:var(--accent);background:var(--accent-soft);font-weight:500}
+.article{min-width:0;padding:48px 52px;background:var(--bg-soft);border:1px solid var(--border);border-radius:var(--radius);color:var(--text)}
+.article>*:first-child{margin-top:0!important}
+.article h2{position:relative;margin:56px 0 22px;padding-bottom:14px;border-bottom:1px solid var(--border);font-family:var(--font-serif);color:var(--text);font-size:clamp(1.4rem,2.2vw,1.8rem);line-height:1.3;letter-spacing:-.02em;font-weight:600;scroll-margin-top:calc(var(--nav-height) + 28px)}
+.article h2::after{content:"";position:absolute;left:0;bottom:-1px;width:48px;height:2px;background:var(--accent)}
+.article h3{margin:36px 0 14px;color:var(--text);font-size:1.06rem;line-height:1.4;font-weight:600;scroll-margin-top:calc(var(--nav-height) + 28px)}
+.article p{margin:0 0 18px;color:var(--text);line-height:1.92;font-size:1rem}
+.article ul,.article ol{margin:0 0 22px;padding-left:1.3em}.article li{margin:8px 0;color:var(--text);line-height:1.82}.article li::marker{color:var(--accent)}.article li ul,.article li ol{margin:8px 0 10px}
+.article strong{font-weight:600;color:var(--text)}
+.article a{text-decoration-thickness:1px;text-decoration-color:color-mix(in srgb,var(--accent),transparent 40%)}.article a:hover{text-decoration-color:var(--accent)}
+.article hr{height:1px;margin:44px 0;border:0;background:var(--border)}
+.article .intro,.intro{margin:0 0 32px;padding:0 0 0 20px;border:0;border-left:2px solid var(--accent);background:none;color:var(--text);font-size:1.04rem;line-height:1.85;box-shadow:none}
+.note{margin:24px 0;padding:0 0 0 16px;color:var(--text-muted);font-size:.94rem;line-height:1.8;border-left:2px solid var(--border-strong)}
+.note::before{content:"Note";display:block;margin-bottom:4px;color:var(--text-faint);font-family:var(--font-mono);font-size:.68rem;font-weight:500;letter-spacing:.14em;text-transform:uppercase}
+.toc{margin:0 0 36px;padding:18px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);background:none;box-shadow:none;border-radius:0}
+.toc-title{margin:0 0 12px;color:var(--text);font-family:var(--font-mono);font-size:.72rem;font-weight:500;letter-spacing:.14em;text-transform:uppercase}.toc-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px 16px;margin:0;padding:0;list-style:none}.toc-list li{margin:0}.toc-list a{display:block;padding:4px 0;color:var(--text-muted);font-size:.9rem;text-decoration:none;transition:color var(--dur-1) var(--ease)}.toc-list a:hover,.toc-list a.active{color:var(--accent)}
+.article figure{margin:32px 0 36px}.article figure img{width:100%;border:1px solid var(--border);border-radius:var(--radius);background:var(--bg-soft)}.article figcaption{margin-top:10px;color:var(--text-faint);font-size:.86rem;text-align:center;line-height:1.6}
+.article table{width:100%;margin:24px 0;border-collapse:collapse;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;background:var(--bg-soft);font-size:.92rem}.article th,.article td{padding:10px 14px;border-bottom:1px solid var(--border);text-align:left}.article tr:last-child th,.article tr:last-child td{border-bottom:0}.article th{background:var(--surface-muted);font-weight:600}.article code{padding:.1em .38em;border-radius:var(--radius-sm);background:var(--accent-soft);color:var(--accent);font-family:var(--font-mono);font-size:.88em}
+.content-wrapper{animation:articleIn var(--dur-2) var(--ease) both;animation-delay:.04s}@keyframes articleIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:1040px){.content-wrapper{max-width:var(--article-width);display:block}.sidebar{display:none}.article{padding:40px 32px}}
+@media(max-width:820px){.content-wrapper{padding:0 18px 72px}.article{padding:30px 20px}.article h2{margin-top:44px}.toc-list{grid-template-columns:1fr}}
+@media(max-width:480px){.article{font-size:.96rem}.article p,.article li{font-size:.95rem}.article h3{font-size:1rem}.article figure img{border-radius:var(--radius-md)}}
+@media(prefers-reduced-motion:reduce){.content-wrapper{opacity:1!important;animation:none!important}}
+
+</style>
+<link rel="stylesheet" href="theme.css?v=33">
+</head><body><div id="starfield"></div>
+<header><nav class="nav" id="navbar"><div class="nav-inner nav-inner-article"><a href="https://xma1soap.github.io" class="nav-back">&larr; &#36820;&#22238;&#39318;&#39029;</a><a href="https://xma1soap.github.io" class="nav-brand">xma1Soap</a><button class="nav-toggle" id="navToggle" type="button" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button><ul class="nav-links" id="navLinks"><li><a href="https://xma1soap.github.io">Home</a></li><li><a href="https://github.com/xma1Soap" target="_blank" rel="noopener">GitHub</a></li></ul></div></nav><div class="nav-overlay" id="navOverlay"></div></header><main><div class="content-wrapper"><aside class="sidebar"><div class="sidebar-title">&#20840;&#23616;&#30446;&#24405;</div><div class="sidebar-section"><a href="https://xma1soap.github.io" class="sidebar-link">&#127968; &#39318;&#39029;</a></div><div class="sidebar-section"><div class="sidebar-section-title">杀戮尖塔2</div><a href="patch-0.110.0.html" class="sidebar-link">0.110.0 beta更新</a><a href="patch-0.109.1.html" class="sidebar-link">0.109.1 beta热修</a><a href="patch-0.109.0.html" class="sidebar-link active">0.109.0 beta更新</a><a href="patch-0.108.0.html" class="sidebar-link">0.108.0 beta更新</a><a href="patch-0.107.1.html" class="sidebar-link">0.107.1重大更新</a><a href="patch-0.107.0.html" class="sidebar-link">0.107.0 beta更新</a><a href="patch-bugfix-0530.html" class="sidebar-link">5月 Bug 修复</a><a href="patch-0.106.1.html" class="sidebar-link">0.106.1小更新</a><a href="patch-0.106.html" class="sidebar-link">0.106.0 beta更新</a><a href="patch-0.105.1.html" class="sidebar-link">0.105.1 beta热修</a><a href="patch-0.105.0.html" class="sidebar-link">0.105.0 beta更新</a><a href="patch-0.104.0.html" class="sidebar-link">0.104.0 beta更新</a><a href="patch-0.103.2.html" class="sidebar-link">0.103.2重大更新</a><a href="patch-0.103.1.html" class="sidebar-link">0.103.1 beta热修</a><a href="patch-0.103.0.html" class="sidebar-link">0.103.0 beta更新</a><a href="patch-0.102.0.html" class="sidebar-link">0.102.0 beta更新</a><a href="patch-0.101.0.html" class="sidebar-link">0.101.0 beta更新</a><a href="patch-0.100.0.html" class="sidebar-link">0.100.0 beta更新</a><a href="patch-0.99.1.html" class="sidebar-link">0.99.1主线更新</a><a href="patch-0.99.1-beta-hotfix.html" class="sidebar-link">0.99.1 beta热修</a><a href="patch-0.99.html" class="sidebar-link">0.99 beta更新</a><a href="patch-0.98.3.html" class="sidebar-link">0.98.3热修</a><a href="patch-0.98.2.html" class="sidebar-link">0.98.2热修</a><a href="patch-0.98.1.html" class="sidebar-link">0.98.1热修</a><a href="patch-bugfix-0523.html" class="sidebar-link">0.106.1 Bug Fix</a></div><div class="sidebar-section"><div class="sidebar-section-title">边缘世界</div><a href="rimworld-1.6.4850.html" class="sidebar-link">边缘世界 1.6.4850 更新日志</a></div></aside>
+<article class="article"><section class="hero"><div class="hero-tag">Slay the Spire 2</div><h1>0.109.0 beta更新</h1><p class="subtitle">大量平衡调整与 Bug 修复，新增两个涅奥遗物及其专属药水与任务卡，同时开始加入繁体中文翻译。</p><div class="meta"><span>2026-07-17</span><span>·</span><span>全文翻译 · 星薄荷</span></div></section>
+<div class="intro">另一个 beta 补丁来了，猎塔者们！这版带来大量平衡调整、Bug 修复和新的纪元美术。我们还开始将游戏翻译成繁体中文（其他语言的官方支持还没有时间表，但当我们寻找更多译者时会告知大家）。最值得注意的是，新增了两个涅奥遗物，其中一个会给予强力的专属药水，另一个则是全新的任务卡（配有一张可爱的 beta 卡图！）</div>
+<figure><img src="https://clan.akamai.steamstatic.com/images/44971832/807ba5b49a1a995682549a6c412c0ad4b7bed7b5.png" alt="Official update art"><figcaption>官方更新配图。</figcaption></figure>
+<div class="toc"><div class="toc-title">目录</div><ul class="toc-list">
+<li><a href="#content">内容与平衡性</a></li>
+<li><a href="#ui">用户界面与体验</a></li>
+<li><a href="#art">美术</a></li>
+<li><a href="#writing">文本</a></li>
+<li><a href="#bugfix">Bug 修复</a></li>
+<li><a href="#modding">Mod 支持</a></li>
+</ul></div>
+
+<h2 id="content">内容与平衡性</h2>
+<h3>先古之民</h3>
+<ul>
+<li>新增涅奥遗物 <strong>寻龙尺</strong>：「捡起时，将 1 张「探寻」加入你的牌组。」
+<ul>
+<li><strong>探寻</strong>：任务 - 耗能 0 - 「再进入 5 个 ? 房间后，将此牌转化为「富足」。」</li>
+<li><strong>富足</strong>：先古之民 - 技能 - 耗能 1 - 「从 3 张（升级后的）能力牌中选择 1 张加入你的手牌。本回合打出它不消耗能量。消耗。」</li>
+</ul>
+</li>
+<li>新增涅奥遗物 <strong>涅奥的牺牲</strong>：「捡起时，获得 1 瓶龙涎香并将 1 张「愧疚」加入你的牌组。」
+<ul>
+<li><strong>龙涎香</strong> 药水：「回复最大生命值的 50%。本回合后额外获得一回合。」</li>
+</ul>
+</li>
+<li><span class="tag-change">重做</span> 诺奴佩普的<strong>钻石头冠</strong> 遗物：「每回合打出不超过 2 张牌时，受到来自敌人的伤害减半。」→「以 20 点格挡开始战斗。下回合开始时格挡不会被移除。」</li>
+<li>将 欧洛巴斯的<strong>沙堡</strong> 遗物从池 1 移至池 2（作为第二选项而非第一选项）</li>
+<li>调整了 达弗 的祝福池以增加多样性（能量遗物会更常出现）</li>
+<li><span class="tag-nerf">削弱</span> 坦克斯的<strong>切肉刀</strong> 遗物：生命值获取从 9 降低至 5</li>
+<li><span class="tag-buff">加强</span> 特兹卡塔拉的<strong>玩具盒</strong> 遗物：遗物获取从 4 增加至 5</li>
+<li><span class="tag-buff">加强</span> 瓦库的<strong>小提琴</strong> 遗物：抽牌从 2 增加至 3</li>
+<li><span class="tag-change">调整</span> 瓦库的<strong>原初之爪</strong> 与<strong>卓越斗篷</strong> 遗物：互换了负面效果</li>
+</ul>
+<h3>敌人</h3>
+<ul>
+<li><span class="tag-nerf">削弱</span> <strong>永世沙漏</strong>：落潮伤害从 26(32) 降低至 22(26)，以降低其前期爆发伤害</li>
+<li><span class="tag-buff">加强</span> <strong>火炬头聚合体</strong>：现在在第 1 回合以新的强力冲撞招式开局，前期爆发伤害从 18(22) 提升至 26(32)</li>
+</ul>
+<h3>事件</h3>
+<ul>
+<li><span class="tag-nerf">削弱</span> <strong>历史课</strong> 遗物：现在只会重复攻击牌，不再影响技能牌</li>
+</ul>
+<h3>铁甲战士</h3>
+<ul>
+<li><span class="tag-buff">加强</span> <strong>恶魔形态</strong> 卡牌：力量获取从 2(3) 提升至 3(4)</li>
+<li><span class="tag-buff">加强</span> <strong>跃跃欲试</strong> 卡牌：不再显示「本回合你无法获得额外（力量）」</li>
+<li><span class="tag-buff">加强</span> <strong>原始力量</strong> 卡牌：<strong>巨石</strong> 衍生物伤害从 16(20) 提升至 20(24)</li>
+<li><span class="tag-change">调整</span> <strong>挑衅</strong> 卡牌：格挡获取从 7(8) 降低至 6(7)；稀有度从罕见降低至普通</li>
+<li><span class="tag-change">调整</span> <strong>放血</strong> 卡牌：稀有度从普通提升至罕见</li>
+<li><span class="tag-change">调整</span> <strong>残酷</strong> 卡牌：稀有度从稀有降低至罕见</li>
+<li><span class="tag-change">调整</span> <strong>主宰</strong> 卡牌：稀有度从罕见提升至稀有</li>
+</ul>
+<h3>静默猎手</h3>
+<ul>
+<li><span class="tag-change">重做</span> <strong>蜃景</strong> 卡牌：罕见 - 技能 - 1(0) - 「获得等同于所有敌人中毒层数的格挡。消耗。」→ 罕见 - 技能 - 0 - 「下回合，获得 1(2) 点能量。」</li>
+<li><span class="tag-change">重做</span> <strong>计划妥当</strong> 卡牌：罕见 - 能力 - 耗能 1 - 「回合结束时，保留最多 1(2) 张牌。」→ 稀有 - 能力 - 耗能 1(0) - 「回合结束时，你不再弃置你的手牌。」现在也可用于多人模式，此前仅限单人</li>
+<li><span class="tag-change">重做</span> <strong>独门技术</strong> 卡牌：「抽牌直到手牌有 6(7) 张。」→「抽 2(3) 张牌。它们本回合获得保留。」</li>
+<li><span class="tag-buff">加强</span> <strong>毒性爆发</strong> 卡牌：伤害从 3(4) 提升至 4(5)</li>
+<li><span class="tag-change">调整</span> <strong>触媒</strong> 卡牌：稀有度从稀有降低至罕见</li>
+</ul>
+<h3>储君</h3>
+<ul>
+<li><span class="tag-change">重做</span> <strong>创世之柱</strong> 卡牌：「每当你创造一张卡牌，获得 3 点格挡。」→「每回合你第一次创造卡牌时，获得 5(7) 点格挡。」</li>
+<li><span class="tag-nerf">削弱</span> <strong>碰撞轨迹</strong> 卡牌：伤害从 11(15) 降低至 10(14)</li>
+</ul>
+<h3>亡灵契约师</h3>
+<ul>
+<li><span class="tag-change">重做</span> <strong>幻景</strong> 卡牌：「消耗你的整个手牌。若如此消耗了 9 张牌，获得 1 层无实体。」→「打出你消耗堆中所有虚无牌。消耗。」</li>
+</ul>
+<h3>故障机器人</h3>
+<ul>
+<li><span class="tag-buff">加强</span> <strong>超能光束</strong> 卡牌：伤害从 28(36) 提升至 30(38)</li>
+<li><span class="tag-buff">加强</span> <strong>分离</strong> 卡牌：伤害从 24(32) 提升至 26(34)</li>
+<li><span class="tag-change">调整</span> <strong>化废为宝</strong> 卡牌：升级效果从获得「固有」改为耗能降低 1</li>
+</ul>
+<h3>多人模式</h3>
+<ul>
+<li>新增储君多人模式卡牌：
+<ul>
+<li><strong>指导</strong>：稀有 - 技能 - 1(0) - 「另一名玩家从其抽牌堆选择 1 张牌加入手牌。」</li>
+</ul>
+</li>
+<li><span class="tag-nerf">削弱</span> <strong>午夜</strong> 卡牌：伤害从 99(120) 降低至 60(72)</li>
+<li><span class="tag-nerf">削弱</span> <strong>魔球</strong> 卡牌：成长从 +15(25) 降低至 +10(15)</li>
+<li><span class="tag-nerf">削弱</span> <strong>刀刃交响曲</strong> 卡牌：耗能从 1 提升至 2(1)；升级不再增加小刀数量</li>
+</ul>
+
+<h2 id="ui">用户界面与体验</h2>
+<h3>通用</h3>
+<ul>
+<li>种子现在为 12 个字符，内部种子更大</li>
+<li>移除了游戏光标的淡白色描边</li>
+</ul>
+<h3>多人模式</h3>
+<ul>
+<li>现在几乎可以对另一名玩家使用任意药水</li>
+<li>地图上的墨水圈现在对所有玩家一致</li>
+</ul>
+
+<h2 id="art">美术</h2>
+<h3>通用</h3>
+<ul>
+<li>为以下纪元添加了美术：湮灭、杀戮、徒劳</li>
+</ul>
+<h3>先古之民</h3>
+<ul>
+<li>为 寻龙尺 和 涅奥的牺牲 遗物添加了素材</li>
+<li>为 龙涎香 药水添加了素材</li>
+<li>为 探寻 和 富足 卡牌添加了 beta 卡图</li>
+</ul>
+<h3>敌人</h3>
+<ul>
+<li>互换了永世沙漏的双重攻击与重击动画，并改进了双重攻击的特效</li>
+</ul>
+<h3>多人模式</h3>
+<ul>
+<li>为以下卡牌添加了卡图：魔球、筹划、创生</li>
+<li>创建了「加入失败」文本特效</li>
+</ul>
+
+<h2 id="writing">文本</h2>
+<h3>本地化</h3>
+<ul>
+<li>新增繁体中文（zht）作为可选语言，并带英文回退</li>
+<li>新增繁体中文字体（思源宋体 TC、Noto Sans Mono CJK TC）</li>
+<li>更新了多种语言的翻译</li>
+<li>修复了法语、意大利语、俄语和泰语的翻译错误</li>
+<li>移除了重做后的 计划妥当、燃料、毒性爆发、原初之爪、不谐合曲 的过时翻译</li>
+</ul>
+
+<h2 id="bugfix">Bug 修复</h2>
+<h3>通用</h3>
+<ul>
+<li>图形设置中的垂直同步设置现在在重启后显示正确的开关状态</li>
+<li>「力量消退」通知不再阻挡鼠标输入</li>
+<li>占位球体数字不再在战斗开始时短暂显示</li>
+<li>修复了低 FPS 时滚动菜单吸附不正确的问题</li>
+</ul>
+<h3>先古之民</h3>
+<ul>
+<li>修复了 坦克斯的哨子 卡牌预览和提示在悬停时吸附到左上角的问题</li>
+</ul>
+<h3>敌人</h3>
+<ul>
+<li>修复了 奥斯提 和 帝皇蟹 在战斗开始时生成时的尴尬延迟</li>
+<li>修复了 组装师 动画播放不正确的问题</li>
+<li>修复了 胖地精 有时本应带着钱袋生成却没带的问题</li>
+</ul>
+<h3>静默猎手</h3>
+<ul>
+<li><strong>暴露</strong> 卡牌现在正确触发 手钻 遗物</li>
+</ul>
+<h3>亡灵契约师</h3>
+<ul>
+<li><strong>灵魂绑定</strong> 卡牌现在将灵魂洗入抽牌堆，而非放在牌堆底部</li>
+</ul>
+<h3>多人模式</h3>
+<ul>
+<li><strong>一心化万</strong> 卡牌不再预览 X 耗能卡牌的伤害</li>
+<li>修复了 <strong>坚定不移</strong> 卡牌导致其他玩家从 <strong>恶魔护盾</strong> 卡牌获得双倍格挡的问题（当它并非打出的第一张格挡牌时）</li>
+<li><strong>模仿学习</strong> 卡牌现在在卡牌被打出之前复制而非之后，使 <strong>迅速</strong> 等附魔能作用于复制方玩家</li>
+<li><strong>幽冥之界</strong> 卡牌不再在敌人造成攻击伤害时给玩家施加灾厄</li>
+<li>修复了以下问题：若一名玩家打出 <strong>魔球</strong> 卡牌而另一名玩家拥有 <strong>历史课</strong> 遗物，历史课可能在下回合错误地打出魔球的复制</li>
+<li>修复了以 <strong>魔球</strong> 卡牌结束战斗时偶尔发生的分歧</li>
+<li><strong>休眠</strong> 卡牌不再给死亡玩家提供格挡</li>
+<li><strong>休眠</strong> 卡牌现在在其能力图标中正确显示层数</li>
+<li>如果 <strong>抱团</strong> 为另一名玩家触发选择，打出卡牌的玩家不再被阻挡出牌</li>
+<li><strong>魔球</strong> 现在触发打出它的玩家的遗物，而非接收玩家的</li>
+<li>修复了玩家在其自己的卡牌仍在结算时死亡（例如死于荆棘）导致卡牌效果中断的问题</li>
+<li>修复了一名玩家花很长时间进入战斗时发生的分歧</li>
+<li>玩家图标在地图上现在渲染在墨水圈之上</li>
+<li>修复了纪元被移除后该玩家无法加入多人游戏的问题</li>
+</ul>
+
+<h2 id="modding">Mod 支持</h2>
+<ul>
+<li>将 <code>SavedPropertySerializationCache</code> 合并进 <code>ModelIdSerializationCache</code>。SavedProperty 现在包含在其哈希中</li>
+<li>来自不影响玩法的 Mod 的模型现在被正确排除在哈希之外</li>
+</ul>
+
+<hr>
+<p style="text-align:center;color:var(--text-faint);font-size:.9rem">全文翻译 · 星薄荷 | 数据来源 <a href="https://store.steampowered.com/news/app/2868840/view/1838407329258348" target="_blank" rel="noopener">Steam 官方更新公告</a></p>
+</article></div></main>
+<footer class="footer"><div class="footer-inner"><span>&copy; 2026 xma1Soap</span><span class="footer-dot"></span><a href="https://xma1soap.github.io">Back to home</a></div></footer>
+<button class="back-to-top" id="backToTop" aria-label="Back to top">&#8593;</button>
+<script src="theme.js?v=37"></script>
+</body>
+</html>
