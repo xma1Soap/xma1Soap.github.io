@@ -67,7 +67,17 @@
         if(items.indexOf(el)===-1&&isShown(el))items.push(el);
       });
     });
-    return items;
+    /* Drop items nested inside another item (e.g. .hero inside .article) —
+       a nested item would inherit its ancestor's motion AND its own,
+       producing double translate/fade. */
+    return items.filter(function(el){
+      var parent=el.parentElement;
+      while(parent){
+        if(items.indexOf(parent)!==-1)return false;
+        parent=parent.parentElement;
+      }
+      return true;
+    });
   }
 
   function ensureBackgroundLayer(){
@@ -263,7 +273,7 @@
       if(link&&document.getElementById("navLinks")&&document.getElementById("navLinks").classList.contains("open"))closeMobileNav();
       if(link&&canRouteLink(link,event))routeLink(link,event);
     });
-    window.addEventListener("popstate",function(){routeTo(new URL(window.location.href),null,false)});
+    window.addEventListener("popstate",function(){routeTo(new URL(window.location.href),reduceMotion?null:{x:window.innerWidth/2,y:window.innerHeight*.25},false)});
   }
 
   function closeMobileNav(){
@@ -327,7 +337,7 @@
       cards.forEach(function(card){card.style.setProperty("--stagger",0);card.classList.add("in-view")});
       return;
     }
-    cards.forEach(function(card,index){card.style.setProperty("--stagger",index%4);if(!card.classList.contains("in-view"))card.classList.remove("in-view")});
+    cards.forEach(function(card,index){card.style.setProperty("--stagger",index%4)});
     if("IntersectionObserver" in window){
       revealObserver=new IntersectionObserver(function(entries){
         entries.forEach(function(entry){
@@ -462,7 +472,7 @@
     document.body.classList.add("page-transitioning");
     document.body.offsetHeight;
     document.body.classList.add("page-exiting");
-    var exitDone=new Promise(function(resolve){window.setTimeout(resolve,maxDelay+340)});
+    var exitDone=new Promise(function(resolve){window.setTimeout(resolve,maxDelay+400)});
     Promise.all([ready,exitDone]).then(function(arr){
       swapAndEnter(arr[0],routeUrl,true,origin);
       transitionActive=false;
