@@ -3,6 +3,7 @@
 > 数据来源：sts2.huijiwiki.com 的 `Data:*.tabx` 标准数据表。
 > 英文名来源：卡牌优先采用 `sts2_database` 游戏客户端静态解析数据；遗物、药水、怪物、关键词、状态/能力、附魔、苦痛、每日挑战修饰项优先按 Wiki ID 对齐 Spire Codex 英文本地化数据；未对齐项目保留 Wiki ID 规范化英文。
 > 收集时间：2026-07-03
+> 增量补充：2026-08-09（0.108-0.110 新增多人卡、寻龙尺、涅奥的牺牲、龙涎香，对齐灰机 wiki 现表）
 
 ---
 
@@ -203,6 +204,12 @@
 | 储君 | 流星雨+ | Meteor Shower+ | meteor_shower_upgrade | 先古之民 | 攻击 | 零 |
 | 储君 | 封印王座 | The Sealed Throne | the_sealed_throne | 先古之民 | 能力 | 一 |
 | 储君 | 封印王座+ | The Sealed Throne+ | the_sealed_throne_upgrade | 先古之民 | 能力 | 零 |
+| 储君 | 筹划 | Plot | plot | 罕见 | 技能 | 一 |
+| 储君 | 筹划+ | Plot+ | plot_upgrade | 罕见 | 技能 | 一 |
+| 储君 | 群星荟萃 | Constellation | constellation | 罕见 | 技能 | 零 |
+| 储君 | 群星荟萃+ | Constellation+ | constellation_upgrade | 罕见 | 技能 | 零 |
+| 储君 | 指导 | Tutor | tutor | 稀有 | 技能 | 一 |
+| 储君 | 指导+ | Tutor+ | tutor_upgrade | 稀有 | 技能 | 零 |
 | 故障机器人 | 打击 | Strike | strike_defect | 初始 | 攻击 | 一 |
 | 故障机器人 | 打击+ | Strike+ | strike_defect_upgrade | 初始 | 攻击 | 一 |
 | 故障机器人 | 电击 | Zap | zap | 初始 | 技能 | 一 |
@@ -387,6 +394,12 @@
 | 故障机器人 | 四重释放+ | Quadcast+ | quadcast_upgrade | 先古之民 | 技能 | 零 |
 | 故障机器人 | 偏差认知 | Biased Cognition | biased_cognition | 先古之民 | 能力 | 一 |
 | 故障机器人 | 偏差认知+ | Biased Cognition+ | biased_cognition_upgrade | 先古之民 | 能力 | 一 |
+| 故障机器人 | 休眠 | Hibernate | hibernate | 罕见 | 技能 | 二 |
+| 故障机器人 | 休眠+ | Hibernate+ | hibernate_upgrade | 罕见 | 技能 | 二 |
+| 故障机器人 | 一心化万 | One For All | one_for_all | 稀有 | 能力 | 一 |
+| 故障机器人 | 一心化万+ | One For All+ | one_for_all_upgrade | 稀有 | 能力 | 一 |
+| 故障机器人 | 模仿学习 | Imitation Learning | imitation_learning | 稀有 | 技能 | 一 |
+| 故障机器人 | 模仿学习+ | Imitation Learning+ | imitation_learning_upgrade | 稀有 | 技能 | 一 |
 | 静默猎手 | 中和 | Neutralize | neutralize | 初始 | 攻击 | 零 |
 | 静默猎手 | 中和+ | Neutralize+ | neutralize_upgrade | 初始 | 攻击 | 零 |
 | 静默猎手 | 打击 | Strike | strike_silent | 初始 | 攻击 | 一 |
@@ -571,9 +584,18 @@
 | 静默猎手 | 幽魂形态+ | Wraith Form+ | wraith_form_upgrade | 先古之民 | 能力 | 三 |
 | 静默猎手 | 跟进 | Follow Through | follow_through | 普通 | 攻击 | 一 |
 | 静默猎手 | 跟进+ | Follow Through+ | follow_through_upgrade | 普通 | 攻击 | 一 |
+| 静默猎手 | 刀刃交响曲 | Blade Symphony | blade_symphony | 罕见 | 技能 | 一 |
+| 静默猎手 | 刀刃交响曲+ | Blade Symphony+ | blade_symphony_upgrade | 罕见 | 技能 | 一 |
+| 静默猎手 | 调制 | Concoct | concoct | 罕见 | 技能 | 零 |
+| 静默猎手 | 调制+ | Concoct+ | concoct_upgrade | 罕见 | 技能 | 零 |
+| 静默猎手 | 消影 | Fade | fade | 罕见 | 技能 | 零 |
+| 静默猎手 | 消影+ | Fade+ | fade_upgrade | 罕见 | 技能 | 零 |
+| 静默猎手 | 侧步 | Sidestep | sidestep | 罕见 | 技能 | 零 |
+| 静默猎手 | 侧步+ | Sidestep+ | sidestep_upgrade | 罕见 | 技能 | 零 |
 | 任务 | 藏宝图 | Spoils Map | spoils_map | 任务 | 任务 | 无 |
 | 任务 | 灯火钥匙 | Lantern Key | lantern_key | 任务 | 任务 | 无 |
 | 任务 | 多尼斯异鸟蛋 | Byrdonis Egg | byrdonis_egg | 任务 | 任务 | 无 |
+| 任务 | 探寻 | Dowsing | dowsing | 任务 | 任务 | 无 |
 | 事件 | 异鸟扑击 | Byrd Swoop | byrd_swoop | 事件 | 攻击 | 零 |
 | 事件 | 异鸟扑击+ | Byrd Swoop+ | byrd_swoop_upgrade | 事件 | 攻击 | 零 |
 | 事件 | 疯狂科学 | Mad Science-Sapping | mad_science-sapping | 事件 | 攻击 | 一 |
@@ -624,6 +646,8 @@
 | 事件 | 神化+ | Apotheosis+ | apotheosis_upgrade | 先古之民 | 技能 | 一 |
 | 事件 | 放松 | Relax | relax | 先古之民 | 技能 | 三 |
 | 事件 | 放松+ | Relax+ | relax_upgrade | 先古之民 | 技能 | 三 |
+| 事件 | 富足 | Abundance | abundance | 先古之民 | 技能 | 一 |
+| 事件 | 富足+ | Abundance+ | abundance_upgrade | 先古之民 | 技能 | 一 |
 | 铁甲战士 | 打击 | Strike | strike_ironclad | 初始 | 攻击 | 一 |
 | 铁甲战士 | 打击+ | Strike+ | strike_ironclad_upgrade | 初始 | 攻击 | 一 |
 | 铁甲战士 | 痛击 | Bash | bash | 初始 | 攻击 | 二 |
@@ -804,6 +828,12 @@
 | 铁甲战士 | 破击+ | Break+ | break_upgrade | 先古之民 | 攻击 | 一 |
 | 铁甲战士 | 腐化 | Corruption | corruption | 先古之民 | 能力 | 三 |
 | 铁甲战士 | 腐化+ | Corruption+ | corruption_upgrade | 先古之民 | 能力 | 二 |
+| 铁甲战士 | 午夜 | Midnight | midnight | 稀有 | 攻击 | 十二 |
+| 铁甲战士 | 午夜+ | Midnight+ | midnight_upgrade | 稀有 | 攻击 | 十二 |
+| 铁甲战士 | 炽焰 | Blaze | blaze | 罕见 | 技能 | 二 |
+| 铁甲战士 | 炽焰+ | Blaze+ | blaze_upgrade | 罕见 | 技能 | 二 |
+| 铁甲战士 | 群情激愤 | Outrage | outrage | 罕见 | 攻击 | 零 |
+| 铁甲战士 | 群情激愤+ | Outrage+ | outrage_upgrade | 罕见 | 攻击 | 零 |
 | 亡灵契约师 | 出击 | Unleash | unleash | 初始 | 攻击 | 一 |
 | 亡灵契约师 | 出击+ | Unleash+ | unleash_upgrade | 初始 | 攻击 | 一 |
 | 亡灵契约师 | 打击 | Strike | strike_necrobinder | 初始 | 攻击 | 一 |
@@ -980,6 +1010,12 @@
 | 亡灵契约师 | 守护者+ | Protector+ | protector_upgrade | 先古之民 | 攻击 | 零 |
 | 亡灵契约师 | 禁忌魔典 | Forbidden Grimoire | forbidden_grimoire | 先古之民 | 能力 | 二 |
 | 亡灵契约师 | 禁忌魔典+ | Forbidden Grimoire+ | forbidden_grimoire_upgrade | 先古之民 | 能力 | 一 |
+| 亡灵契约师 | 幽冥之界 | Underworld | underworld | 罕见 | 技能 | 二 |
+| 亡灵契约师 | 幽冥之界+ | Underworld+ | underworld_upgrade | 罕见 | 技能 | 二 |
+| 亡灵契约师 | 灵魂绑定 | Soulbound | soulbound | 罕见 | 能力 | 一 |
+| 亡灵契约师 | 灵魂绑定+ | Soulbound+ | soulbound_upgrade | 罕见 | 能力 | 一 |
+| 亡灵契约师 | 不谐合曲 | Cacophony | cacophony | 稀有 | 能力 | 二 |
+| 亡灵契约师 | 不谐合曲+ | Cacophony+ | cacophony_upgrade | 稀有 | 能力 | 二 |
 | 无色 | 连射 | Volley | volley | 罕见 | 攻击 | X |
 | 无色 | 连射+ | Volley+ | volley_upgrade | 罕见 | 攻击 | X |
 | 无色 | 亮剑 | Flash of Steel | flash_of_steel | 罕见 | 攻击 | 零 |
@@ -1108,6 +1144,8 @@
 | 无色 | 劫难+ | Calamity+ | calamity_upgrade | 稀有 | 能力 | 二 |
 | 无色 | 永恒铠甲 | Eternal Armor | eternal_armor | 稀有 | 能力 | 三 |
 | 无色 | 永恒铠甲+ | Eternal Armor+ | eternal_armor_upgrade | 稀有 | 能力 | 三 |
+| 无色 | 魔球 | The Ball | the_ball | 罕见 | 攻击 | 一 |
+| 无色 | 魔球+ | The Ball+ | the_ball_upgrade | 罕见 | 攻击 | 一 |
 | 衍生 | 懒惰 | Sloth | sloth | 状态 | 状态 | 无 |
 | 衍生 | 衰朽 | Waste Away | waste_away | 状态 | 状态 | 无 |
 | 衍生 | 瓦解 | Disintegration | disintegration | 状态 | 状态 | 无 |
@@ -1163,7 +1201,7 @@
 | 诅咒 | 愚行 | Folly | folly | 诅咒 | 诅咒 | 无 |
 | 诅咒 | 债务 | Debt | debt | 诅咒 | 诅咒 | 无 |
 
-> 共 1135 条。
+> 共 1172 条。
 
 ---
 
@@ -1469,8 +1507,10 @@
 | 亡灵契约师 | 大帽子 | Big Hat | big_hat | 稀有 |
 | 亡灵契约师 | 书签 | Bookmark | bookmark | 稀有 |
 | 亡灵契约师 | 象牙麻将牌 | Ivory Tile | ivory_tile | 稀有 |
+| 通用 | 寻龙尺 | Dowsing Rod | dowsing_rod | 先古之民 |
+| 通用 | 涅奥的牺牲 | Neow's Sacrifice | neows_sacrifice | 先古之民 |
 
-> 共 296 条。
+> 共 298 条。
 
 ---
 
@@ -1543,8 +1583,9 @@
 | 亡灵契约师 | 骨头酿 | Bone Brew | bone_brew | 罕见 |
 | 亡灵契约师 | 灾厄药水 | Potion of Doom | potion_of_doom | 普通 |
 | 亡灵契约师 | 尸鬼瓮 | Pot of Ghouls | pot_of_ghouls | 稀有 |
+| 通用 | 龙涎香 | Ambergris | ambergris | 事件 |
 
-> 共 63 条。
+> 共 64 条。
 
 ---
 
@@ -2137,9 +2178,9 @@
 | 数据表 | 条目数 |
 |------|------|
 | 角色 | 6 |
-| 卡牌 | 1135 |
-| 遗物 | 296 |
-| 药水 | 63 |
+| 卡牌 | 1172 |
+| 遗物 | 298 |
+| 药水 | 64 |
 | 怪物 | 115 |
 | 事件 | 57 |
 | 关键词 | 8 |
