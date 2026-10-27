@@ -1,587 +1,916 @@
-(function(){
+/* ============================================================
+   xma1Soap · NOCTURNE — motion engine
+   ------------------------------------------------------------
+   与 theme.css 共用动效令牌（--t-1..4 / --ease-out）。
+   职责：
+     1. 气氛层（网格光晕 / 尘埃 / 光标热区）
+     2. 滚动进度 + 返回顶部环形进度
+     3. 揭示观察器（IntersectionObserver + 分组错峰）
+     4. 卡片 3D 倾斜与光标高光
+     5. 分类切换 FLIP
+     6. 主题切换 / 移动端菜单
+     7. 同站路由过渡（波浪退场 → 波浪入场）
+   class 名与 tema.css 的契约保持不变，改这里要一起改。
+   ============================================================ */
+(function () {
   "use strict";
-  var root=document.documentElement;
-  var storageKey="xma1soap-theme";
-  var siteOrigin="https://xma1soap.github.io";
-  var bgByTheme={light:"bg.png",dark:"night-bg.png"};
-  var saved=null;
-  try{saved=localStorage.getItem(storageKey)}catch(_){}
-  var current=saved==="dark"||saved==="light"?saved:(root.getAttribute("data-theme")==="dark"?"dark":"light");
-  root.setAttribute("data-theme",current);
 
-  function preloadBackground(theme,priority){
-    var href=bgByTheme[theme]||bgByTheme.light;
-    if(document.querySelector('link[data-theme-bg="'+theme+'"]'))return;
-    var link=document.createElement("link");
-    link.rel="preload";
-    link.as="image";
-    link.href=href;
-    link.setAttribute("fetchpriority",priority||"auto");
-    link.setAttribute("data-theme-bg",theme);
-    document.head.appendChild(link);
-    var image=new Image();
-    image.decoding="async";
-    image.src=href;
-  }
-  preloadBackground("light","high");
-  preloadBackground("dark","high");
+  var root = document.documentElement;
+  var THEME_KEY = "xma1soap-theme";
+  var ROUTE_KEY = "xma1soap-page-transition";
+  var SITE_ORIGIN = "https://xma1soap.github.io";
 
-  var transitionKey="xma1soap-page-transition";
-  var starfieldInitialized=false;
-  var reduceMotion=false;
-  try{reduceMotion=window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches}catch(_){}
-  var transitionActive=false;
-  var routeCache={};
-  var controlsBound=false;
-  var scrollTick=false;
-  var revealObserver=null;
-  var articleObserver=null;
-  var button=null;
+  /* ---------- 环境探测 ---------- */
+  var mqMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+  var mqFine = window.matchMedia("(hover: hover) and (pointer: fine)");
+  var reduceMotion = mqMotion.matches;
 
-  function releaseFirstPaintCover(delay){
-    if(!root.hasAttribute("data-first-paint-cover"))return;
-    window.setTimeout(function(){
-      root.setAttribute("data-first-paint-cover","fade");
-      window.setTimeout(function(){root.removeAttribute("data-first-paint-cover")},300);
-    },delay||0);
-  }
+  /* ---------- 主题引导（尽量早，避免闪白） ---------- */
+  var current = (function () {
+    var saved = null;
+    try { saved = localStorage.getItem(THEME_KEY); } catch (_) {}
+    if (saved === "dark" || saved === "light") return saved;
+    var attr = root.getAttribute("data-theme");
+    if (attr === "dark" || attr === "light") return attr;
+    try {
+      if (window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches) return "light";
+    } catch (_) {}
+    return "dark";
+  })();
 
-  function clamp(value,min,max){return Math.max(min,Math.min(max,value))}
+  var state = {
+    transitionActive: false,
+    starfieldReady: false,
+    controlsBound: false,
+    revealObserver: null,
+    tocObserver: null,
+    scrollRaf: 0,
+    themeButton: null,
+    revealSeed: 0
+  };
 
-  function getCenter(el){
-    var rect=el.getBoundingClientRect();
-    return {x:rect.left+rect.width/2,y:rect.top+rect.height/2,width:rect.width,height:rect.height};
+  /* ============================================================
+     小工具
+     ============================================================ */
+
+  function clamp(v, min, max) { return Math.max(min, Math.min(max, v)); }
+
+  function raf2(cb) {
+    var done = false;
+    function run() { if (done) return; done = true; cb(); }
+    requestAnimationFrame(function () { requestAnimationFrame(run); });
+    window.setTimeout(run, 60);
   }
 
-  function isShown(el){
-    var rect=el.getBoundingClientRect();
-    return rect.width>0&&rect.height>0;
+  function centerOf(el) {
+    var r = el.getBoundingClientRect();
+    return { x: r.left + r.width / 2, y: r.top + r.height / 2, w: r.width, h: r.height };
   }
 
-  function getTransitionItems(){
-    var selectors=[".hero",".category-bar",".posts .card:not([hidden])",".content-wrapper>.article",".article",".sidebar"];
-    var items=[];
-    selectors.forEach(function(selector){
-      document.querySelectorAll(selector).forEach(function(el){
-        if(el.classList&&(el.classList.contains("site-bg")||el.id==="starfield"))return;
-        if(items.indexOf(el)===-1&&isShown(el))items.push(el);
+  function isShown(el) {
+    var r = el.getBoundingClientRect();
+    return r.width > 0 && r.height > 0;
+  }
+
+  function maxRadiusFrom(o) {
+    var c = [
+      { x: 0, y: 0 },
+      { x: window.innerWidth, y: 0 },
+      { x: 0, y: window.innerHeight },
+      { x: window.innerWidth, y: window.innerHeight }
+    ];
+    return c.reduce(function (m, p) {
+      return Math.max(m, Math.hypot(p.x - o.x, p.y - o.y));
+    }, 1);
+  }
+
+  function isLocalHost(h) {
+    return h === "localhost" || h === "127.0.0.1" || h === "::1" || h === "";
+  }
+
+  function isHomePath(p) { return p === "/" || p.endsWith("/index.html"); }
+
+  /* ============================================================
+     气氛层
+     ============================================================ */
+
+  function initAtmos() {
+    if (!document.getElementById("atmos")) {
+      var atmos = document.createElement("div");
+      atmos.id = "atmos";
+      atmos.setAttribute("aria-hidden", "true");
+      var dust = document.createElement("div");
+      dust.id = "dust";
+      atmos.appendChild(dust);
+      document.body.insertBefore(atmos, document.body.firstChild);
+    }
+    if (!document.getElementById("progress")) {
+      var bar = document.createElement("div");
+      bar.id = "progress";
+      bar.setAttribute("aria-hidden", "true");
+      document.body.appendChild(bar);
+    }
+    if (!document.getElementById("cursor-glow")) {
+      var glow = document.createElement("div");
+      glow.id = "cursor-glow";
+      glow.setAttribute("aria-hidden", "true");
+      document.body.appendChild(glow);
+    }
+    var legacy = document.querySelector(".site-bg");
+    if (!legacy) {
+      legacy = document.createElement("div");
+      legacy.className = "site-bg";
+      legacy.setAttribute("aria-hidden", "true");
+      document.body.insertBefore(legacy, document.body.firstElementChild);
+    }
+  }
+
+  function initDust() {
+    if (state.starfieldReady || reduceMotion) return;
+    var host = document.getElementById("dust");
+    if (!host) return;
+    state.starfieldReady = true;
+
+    /* 粒子数：实测超过 20 个就会把滚动拖到 40fps，这里控在 8~20 */
+    var count = clamp(Math.round(window.innerWidth / 90), 8, 20);
+    var frag = document.createDocumentFragment();
+    for (var i = 0; i < count; i++) {
+      var m = document.createElement("span");
+      m.className = "mote";
+      var size = (Math.random() * 1.6 + .9).toFixed(2);
+      m.style.setProperty("--s", size + "px");
+      m.style.left = (Math.random() * 100).toFixed(2) + "%";
+      m.style.top = (Math.random() * 100).toFixed(2) + "%";
+      m.style.setProperty("--dur", (Math.random() * 26 + 24).toFixed(1) + "s");
+      m.style.setProperty("--delay", (-Math.random() * 48).toFixed(1) + "s");
+      m.style.setProperty("--dx", (Math.random() * 50 - 25).toFixed(0) + "px");
+      m.style.setProperty("--peak", (Math.random() * .3 + .18).toFixed(2));
+      frag.appendChild(m);
+    }
+    host.appendChild(frag);
+  }
+
+  /* 光标热区：用 lerp 追随，永远滞后一点点，才有重量感 */
+  function initCursorGlow() {
+    var glow = document.getElementById("cursor-glow");
+    if (!glow || !mqFine.matches || reduceMotion) return;
+    var tx = 0, ty = 0, cx = 0, cy = 0, running = false, shown = false;
+
+    function loop() {
+      cx += (tx - cx) * 0.14;
+      cy += (ty - cy) * 0.14;
+      glow.style.transform = "translate3d(" + cx.toFixed(1) + "px," + cy.toFixed(1) + "px,0)";
+      if (Math.abs(tx - cx) > .4 || Math.abs(ty - cy) > .4) {
+        requestAnimationFrame(loop);
+      } else {
+        running = false;
+      }
+    }
+
+    window.addEventListener("pointermove", function (e) {
+      if (e.pointerType !== "mouse") return;
+      tx = e.clientX;
+      ty = e.clientY;
+      if (!shown) {
+        cx = tx; cy = ty; shown = true;
+        glow.classList.add("on");
+      }
+      if (!running) { running = true; requestAnimationFrame(loop); }
+    }, { passive: true });
+
+    window.addEventListener("pointerleave", function () {
+      shown = false;
+      glow.classList.remove("on");
+    }, { passive: true });
+  }
+
+  /* ============================================================
+     滚动状态（导航收缩 / 进度 / 返回顶部）
+     ============================================================ */
+
+  function updateScrollState() {
+    var nav = document.getElementById("navbar");
+    var back = document.getElementById("backToTop");
+    var bar = document.getElementById("progress");
+    var y = window.scrollY || root.scrollTop || 0;
+    var max = Math.max(1, root.scrollHeight - window.innerHeight);
+    var p = clamp(y / max, 0, 1);
+
+    if (nav) nav.classList.toggle("scrolled", y > 10);
+    if (bar) bar.style.transform = "scaleX(" + p.toFixed(4) + ")";
+    if (back) {
+      back.classList.toggle("visible", y > 420);
+      if (window.CSS && CSS.supports && CSS.supports("--x", "0")) {
+        back.style.setProperty("--p", (p * 100).toFixed(2));
+      }
+    }
+  }
+
+  function onScroll() {
+    if (state.scrollRaf) return;
+    state.scrollRaf = requestAnimationFrame(function () {
+      updateScrollState();
+      state.scrollRaf = 0;
+    });
+  }
+
+  /* ============================================================
+     揭示观察器
+     ============================================================ */
+
+  function markSettled(el) {
+    window.setTimeout(function () { el.classList.add("is-settled"); }, 1200);
+  }
+
+  function revealNow(el) {
+    el.classList.add("is-revealed");
+    markSettled(el);
+  }
+
+  /* 给文章正文批量挂上揭示属性：
+     可视区内的元素直接显示，绝不闪。
+     其余按文档顺序错峰，滚动到才动。 */
+  function decorateArticle() {
+    var article = document.querySelector(".article");
+    if (!article) return;
+
+    var nodes = article.querySelectorAll(
+      ".article > .hero, .article > .intro, .article > .toc, .article > h2, .article > h3, .article > p, .article > ul, .article > ol, .article > figure, .article > table, .article > hr, .article > blockquote, .article > .note"
+    );
+    var vh = window.innerHeight;
+    var i = 0;
+
+    Array.prototype.forEach.call(nodes, function (el) {
+      if (el.hasAttribute("data-reveal")) return;
+      var top = el.getBoundingClientRect().top;
+      if (top < vh * 0.92) {
+        /* 已在首屏：不隐藏，直接标记完成 */
+        el.setAttribute("data-reveal", "");
+        el.classList.add("is-revealed", "is-settled");
+        return;
+      }
+      var kind = "up";
+      if (/^H2$/.test(el.tagName)) kind = "mask";
+      else if (/^HR$/.test(el.tagName)) kind = "line";
+      el.setAttribute("data-reveal", kind === "up" ? "" : kind);
+      el.style.setProperty("--ry", kind === "mask" ? "0px" : "22px");
+      el.style.setProperty("--rd", (Math.min(i, 5) * 45) + "ms");
+      i++;
+    });
+  }
+
+  function initReveal() {
+    if (state.revealObserver) {
+      try { state.revealObserver.disconnect(); } catch (_) {}
+      state.revealObserver = null;
+    }
+
+    /* 首屏卡片错峰 */
+    var cards = document.querySelectorAll(".posts .card:not([hidden])");
+    Array.prototype.forEach.call(cards, function (c, idx) {
+      if (!c.hasAttribute("data-reveal")) c.setAttribute("data-reveal", "");
+      c.style.setProperty("--ry", "26px");
+      c.style.setProperty("--rd", (idx % 4) * 70 + "ms");
+    });
+
+    decorateArticle();
+
+    var els = document.querySelectorAll("[data-reveal]:not(.is-revealed)");
+    if (!els.length) return;
+
+    if (reduceMotion || !("IntersectionObserver" in window) || document.body.classList.contains("route-enter-owned")) {
+      Array.prototype.forEach.call(els, revealNow);
+      return;
+    }
+
+    state.revealObserver = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        revealNow(entry.target);
+        state.revealObserver.unobserve(entry.target);
+      });
+    }, { rootMargin: "0px 0px -6% 0px", threshold: 0 });
+
+    Array.prototype.forEach.call(els, function (el) { state.revealObserver.observe(el); });
+  }
+
+  /* ============================================================
+     卡片 3D 倾斜 + 光标高光
+     ============================================================ */
+
+  function bindCardMotion() {
+    if (!mqFine.matches || reduceMotion) return;
+    Array.prototype.forEach.call(document.querySelectorAll(".card:not([data-motion])"), function (card) {
+      card.setAttribute("data-motion", "");
+
+      card.addEventListener("pointermove", function (e) {
+        if (e.pointerType !== "mouse") return;
+        var r = card.getBoundingClientRect();
+        var x = (e.clientX - r.left) / r.width;
+        var y = (e.clientY - r.top) / r.height;
+        card.style.setProperty("--mx", (x * 100).toFixed(1) + "%");
+        card.style.setProperty("--my", (y * 100).toFixed(1) + "%");
+        card.style.setProperty("--tilt-x", ((.5 - y) * 5).toFixed(2) + "deg");
+        card.style.setProperty("--tilt-y", ((x - .5) * 5).toFixed(2) + "deg");
+      }, { passive: true });
+
+      card.addEventListener("pointerleave", function () {
+        card.style.setProperty("--tilt-x", "0deg");
+        card.style.setProperty("--tilt-y", "0deg");
+      }, { passive: true });
+    });
+  }
+
+  /* ============================================================
+     分类筛选：FLIP
+     ============================================================ */
+
+  function filterCards(btn) {
+    var cards = Array.prototype.slice.call(document.querySelectorAll(".card[data-category]"));
+    var cat = btn.dataset.category;
+
+    Array.prototype.forEach.call(document.querySelectorAll(".category-btn[data-category]"), function (b) {
+      b.classList.toggle("active", b === btn);
+      b.setAttribute("aria-pressed", b === btn ? "true" : "false");
+    });
+
+   /* 第一帧：记录可视卡片位置 */
+    var first = new Map();
+    cards.forEach(function (c) {
+      if (!c.hidden && isShown(c)) first.set(c, c.getBoundingClientRect());
+    });
+
+    cards.forEach(function (c) {
+      c.hidden = !(cat === "all" || c.dataset.category === cat);
+    });
+
+    if (reduceMotion || !Element.prototype.animate) {
+      initReveal();
+      return;
+    }
+
+    var appearIdx = 0;
+    cards.forEach(function (c) {
+      if (c.hidden) return;
+
+      var before = first.get(c);
+      if (before) {
+        /* 已在场景里：位移回原处，FLIP 归位 */
+        var after = c.getBoundingClientRect();
+        var dx = before.left - after.left;
+        var dy = before.top - after.top;
+        if (Math.abs(dx) > .5 || Math.abs(dy) > .5) {
+          c.animate([
+            { transform: "translate3d(" + dx + "px," + dy + "px,0)" },
+            { transform: "translate3d(0,0,0)" }
+          ], { duration: 420, easing: "cubic-bezier(.16,1,.3,1)" });
+        }
+      } else {
+        /* 新出现：错峰入场 */
+        c.animate([
+          { opacity: 0, transform: "translate3d(0,16px,0) scale(.975)" },
+          { opacity: 1, transform: "translate3d(0,0,0) scale(1)" }
+        ], {
+          duration: 520,
+          easing: "cubic-bezier(.16,1,.3,1)",
+          delay: Math.min(appearIdx, 6) * 42
+        });
+        appearIdx++;
+        c.classList.add("is-revealed", "is-settled");
+      }
+    });
+
+    bindCardMotion();
+  }
+
+  /* ============================================================
+     主题
+     ============================================================ */
+
+  function setTheme(theme) {
+    current = theme;
+    root.setAttribute("data-theme", theme);
+    try { localStorage.setItem(THEME_KEY, theme); } catch (_) {}
+    updateThemeButton(true);
+  }
+
+  function updateThemeButton(animate) {
+    var btn = state.themeButton;
+    if (!btn) return;
+    var dark = current === "dark";
+    var label = dark ? "切换到日间模式" : "切换到夜间模式";
+    btn.setAttribute("aria-label", label);
+    btn.setAttribute("title", label);
+    btn.setAttribute("aria-pressed", dark ? "true" : "false");
+
+    var icon = btn.querySelector(".toggle-icon");
+    if (!icon) {
+      icon = document.createElement("span");
+      icon.className = "toggle-icon";
+      btn.appendChild(icon);
+    }
+    var next = dark ? "\u2600" : "\u263E";
+    if (animate && icon.textContent !== next) {
+      btn.classList.add("toggling");
+      window.setTimeout(function () {
+        icon.textContent = next;
+        btn.classList.remove("toggling");
+      }, 200);
+    } else {
+      icon.textContent = next;
+    }
+  }
+
+  function initThemeButton() {
+    var btn = document.querySelector(".theme-toggle");
+    if (!btn) {
+      btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "theme-toggle";
+    }
+    if (btn.parentElement !== document.body) document.body.appendChild(btn);
+    state.themeButton = btn;
+    updateThemeButton(false);
+  }
+
+  /* ============================================================
+     移动端菜单 / 返回顶部
+     ============================================================ */
+
+  function closeNav() {
+    var links = document.getElementById("navLinks");
+    var toggle = document.getElementById("navToggle");
+    var ov = document.getElementById("navOverlay");
+    if (links) links.classList.remove("open");
+    if (toggle) { toggle.classList.remove("open"); toggle.setAttribute("aria-expanded", "false"); }
+    if (ov) ov.classList.remove("visible");
+    document.body.style.overflow = "";
+  }
+
+  function toggleNav() {
+    var links = document.getElementById("navLinks");
+    var toggle = document.getElementById("navToggle");
+    var ov = document.getElementById("navOverlay");
+    if (!links || !toggle || !ov) return;
+    if (links.classList.contains("open")) { closeNav(); return; }
+    links.classList.add("open");
+    toggle.classList.add("open");
+    toggle.setAttribute("aria-expanded", "true");
+    ov.classList.add("visible");
+    document.body.style.overflow = "hidden";
+  }
+
+  /* ============================================================
+     路由过渡
+     ============================================================ */
+
+  function transitionItems() {
+    var selectors = [".hero", ".category-bar", ".posts .card:not([hidden])", ".content-wrapper>.article", ".article", ".sidebar"];
+    var out = [];
+    selectors.forEach(function (sel) {
+      Array.prototype.forEach.call(document.querySelectorAll(sel), function (el) {
+        if (el.id === "atmos" || el.id === "dust") return;
+        if (out.indexOf(el) === -1 && isShown(el)) out.push(el);
       });
     });
-    /* Drop items nested inside another item (e.g. .hero inside .article) —
-       a nested item would inherit its ancestor's motion AND its own,
-       producing double translate/fade. */
-    return items.filter(function(el){
-      var parent=el.parentElement;
-      while(parent){
-        if(items.indexOf(parent)!==-1)return false;
-        parent=parent.parentElement;
+    return out.filter(function (el) {
+      var p = el.parentElement;
+      while (p) {
+        if (out.indexOf(p) !== -1) return false;
+        p = p.parentElement;
       }
       return true;
     });
   }
 
-  function ensureBackgroundLayer(){
-    var star=document.getElementById("starfield");
-    if(!star){
-      star=document.createElement("div");
-      star.id="starfield";
-      document.body.insertBefore(star,document.body.firstChild);
-    }else if(document.body.firstElementChild!==star){
-      document.body.insertBefore(star,document.body.firstElementChild);
-    }
-    var layer=document.querySelector(".site-bg");
-    if(!layer){
-      layer=document.createElement("div");
-      layer.className="site-bg";
-      layer.setAttribute("aria-hidden","true");
-    }
-    if(layer.parentElement!==document.body||layer.previousElementSibling!==star){
-      document.body.insertBefore(layer,star.nextSibling);
-    }
-    return layer;
-  }
-
-  function maxDistanceFrom(origin){
-    var corners=[{x:0,y:0},{x:window.innerWidth,y:0},{x:0,y:window.innerHeight},{x:window.innerWidth,y:window.innerHeight}];
-    return corners.reduce(function(max,corner){return Math.max(max,Math.hypot(corner.x-origin.x,corner.y-origin.y))},1);
-  }
-
-  function clearTransitionItems(){
-    getTransitionItems().forEach(function(el){
+  function clearTransitionItems() {
+    transitionItems().forEach(function (el) {
       el.removeAttribute("data-page-transition-item");
-      el.removeAttribute("data-page-transition-origin");
-      el.style.removeProperty("--page-transition-delay");
-      el.style.removeProperty("--page-transition-x");
-      el.style.removeProperty("--page-transition-y");
+      el.style.removeProperty("--pt-delay");
+    });
+    Array.prototype.forEach.call(document.querySelectorAll("[data-page-transition-item]"), function (el) {
+      el.removeAttribute("data-page-transition-item");
+      el.style.removeProperty("--pt-delay");
     });
   }
 
-  function ownRouteEnter(){document.body.classList.add("route-enter-owned")}
-
-  function afterNextPaint(callback){
-    var done=false;
-    function run(){if(done)return;done=true;callback()}
-    requestAnimationFrame(function(){requestAnimationFrame(run)});
-    window.setTimeout(run,50);
+  function storeOrigin(o) {
+    try {
+      sessionStorage.setItem(ROUTE_KEY, JSON.stringify({
+        x: o.x / window.innerWidth,
+        y: o.y / window.innerHeight,
+        at: Date.now()
+      }));
+    } catch (_) {}
   }
 
-  function isLocalHostname(hostname){return hostname==="localhost"||hostname==="127.0.0.1"||hostname==="::1"}
-  function sameSiteUrl(url){return url.origin===window.location.origin||url.origin===siteOrigin}
-  function isHomePath(pathname){return pathname==="/"||pathname.endsWith("/index.html")}
-
-  function toRouteUrl(url){
-    var routed=new URL(url.href);
-    if(routed.origin===siteOrigin&&routed.origin!==window.location.origin&&isLocalHostname(window.location.hostname)){
-      routed=new URL(routed.pathname+routed.search+routed.hash,window.location.origin);
-    }
-    return routed;
+  function takeOrigin() {
+    var raw = null;
+    try { raw = sessionStorage.getItem(ROUTE_KEY); sessionStorage.removeItem(ROUTE_KEY); } catch (_) {}
+    if (!raw) return null;
+    try {
+      var d = JSON.parse(raw);
+      if (!d || Date.now() - d.at > 8000) return null;
+      return { x: clamp(d.x, 0, 1) * window.innerWidth, y: clamp(d.y, 0, 1) * window.innerHeight };
+    } catch (_) { return null; }
   }
 
-  function normalizeRouteUrl(url,includeHash){
-    var routed=toRouteUrl(url);
-    if(isHomePath(routed.pathname))routed.pathname=routed.pathname.replace(/index\.html$/,"");
-    if(!includeHash)routed.hash="";
-    return routed;
-  }
-
-  function normalizeHomeUrl(url){return normalizeRouteUrl(url,false).href}
-  function normalizeHistoryUrl(url){return normalizeRouteUrl(url,true).href}
-
-  function isCurrentRoute(url){
-    var currentUrl=normalizeRouteUrl(new URL(window.location.href),false);
-    var targetUrl=normalizeRouteUrl(url,false);
-    return currentUrl.href===targetUrl.href;
-  }
-
-  function getPageUrl(link){
-    try{return new URL(link.getAttribute("href"),window.location.href)}catch(_){return null}
-  }
-
-  function canRouteLink(link,event){
-    if(!link||event.defaultPrevented||event.button!==0||event.metaKey||event.ctrlKey||event.shiftKey||event.altKey)return false;
-    if(link.target&&link.target!=="_self")return false;
-    if(link.hasAttribute("download"))return false;
-    var href=link.getAttribute("href");
-    if(!href||href.charAt(0)==="#"||href.indexOf("mailto:")===0||href.indexOf("tel:")===0)return false;
-    var url=getPageUrl(link);
-    if(!url||!sameSiteUrl(url))return false;
-    return url.pathname.endsWith(".html")||isHomePath(url.pathname);
-  }
-
-  function setStoredOrigin(origin){
-    try{sessionStorage.setItem(transitionKey,JSON.stringify({x:origin.x/window.innerWidth,y:origin.y/window.innerHeight,at:Date.now()}))}catch(_){}
-  }
-
-  function takeStoredOrigin(){
-    var raw=null;
-    try{raw=sessionStorage.getItem(transitionKey);sessionStorage.removeItem(transitionKey)}catch(_){}
-    if(!raw)return null;
-    try{
-      var data=JSON.parse(raw);
-      if(!data||Date.now()-data.at>8000)return null;
-      return {x:clamp(data.x,0,1)*window.innerWidth,y:clamp(data.y,0,1)*window.innerHeight};
-    }catch(_){return null}
-  }
-
-  function prepareExit(origin,clicked){
-    var items=getTransitionItems();
-    var maxDistance=maxDistanceFrom(origin);
-    var maxDelay=0;
-    items.forEach(function(el){
-      var center=getCenter(el);
-      var distance=Math.hypot(center.x-origin.x,center.y-origin.y);
-      var normalized=clamp(distance/maxDistance,0,1);
-      var isOrigin=el===clicked;
-      var delay=isOrigin?0:Math.round(50+normalized*110);
-      el.setAttribute("data-page-transition-item","");
-      if(isOrigin)el.setAttribute("data-page-transition-origin","");
-      el.style.setProperty("--page-transition-delay",delay+"ms");
-      maxDelay=Math.max(maxDelay,delay);
+  function prepareExit(origin, clicked) {
+    var items = transitionItems();
+    var maxR = maxRadiusFrom(origin);
+    var maxDelay = 0;
+    items.forEach(function (el) {
+      var c = centerOf(el);
+      var norm = clamp(Math.hypot(c.x - origin.x, c.y - origin.y) / maxR, 0, 1);
+      var delay = el === clicked ? 0 : Math.round(30 + norm * 90);
+      el.setAttribute("data-page-transition-item", "");
+      el.style.setProperty("--pt-delay", delay + "ms");
+      maxDelay = Math.max(maxDelay, delay);
     });
     return maxDelay;
   }
 
-  function parseRouteDocument(text){
-    var doc=new DOMParser().parseFromString(text,"text/html");
-    var title=doc.querySelector("title");
-    var pageStyle=Array.prototype.find.call(doc.querySelectorAll("style"),function(style){return style.id!=="theme-boot-css"});
-    var header=doc.querySelector("header");
-    var main=doc.querySelector("main");
-    var footer=doc.querySelector("footer");
-    var backToTop=doc.querySelector("#backToTop");
-    if(!header||!main||!footer||!backToTop)throw new Error("Missing route shell");
-    return {title:title?title.textContent:document.title,pageStyle:pageStyle?pageStyle.textContent:"",header:header.innerHTML,main:main.innerHTML,footer:footer.innerHTML,backToTop:backToTop.outerHTML};
+  function toRouteUrl(url) {
+    var u = new URL(url.href);
+    if (u.origin === SITE_ORIGIN && u.origin !== window.location.origin && isLocalHost(window.location.hostname)) {
+      u = new URL(u.pathname + u.search + u.hash, window.location.origin);
+    }
+    return u;
   }
 
-  function fetchRoute(url){
-    var routeUrl=normalizeRouteUrl(url,true);
-    var key=normalizeHomeUrl(routeUrl);
-    if(routeCache[key])return Promise.resolve(routeCache[key]);
-    return fetch(routeUrl.href,{credentials:"same-origin"}).then(function(response){
-      if(!response.ok)throw new Error("Route fetch failed");
-      return response.text();
-    }).then(function(text){
-      var route=parseRouteDocument(text);
-      routeCache[key]=route;
-      return route;
+  function normalizeRouteUrl(url, keepHash) {
+    var u = toRouteUrl(url);
+    if (isHomePath(u.pathname)) u.pathname = u.pathname.replace(/index\.html$/, "");
+    if (!keepHash) u.hash = "";
+    return u;
+  }
+
+  function isCurrentRoute(url) {
+    return normalizeRouteUrl(new URL(window.location.href), false).href === normalizeRouteUrl(url, false).href;
+  }
+
+  function pageUrlOf(link) {
+    try { return new URL(link.getAttribute("href"), window.location.href); } catch (_) { return null; }
+  }
+
+  function canRoute(link, ev) {
+    if (!link || ev.defaultPrevented || ev.button !== 0 || ev.metaKey || ev.ctrlKey || ev.shiftKey || ev.altKey) return false;
+    if (link.target && link.target !== "_self") return false;
+    if (link.hasAttribute("download")) return false;
+    var href = link.getAttribute("href");
+    if (!href || href.charAt(0) === "#" || href.indexOf("mailto:") === 0 || href.indexOf("tel:") === 0) return false;
+    var u = pageUrlOf(link);
+    if (!u) return false;
+    if (u.origin !== window.location.origin && u.origin !== SITE_ORIGIN) return false;
+    return u.pathname.endsWith(".html") || isHomePath(u.pathname);
+  }
+
+  var routeCache = {};
+
+  function parseRouteDoc(text) {
+    var doc = new DOMParser().parseFromString(text, "text/html");
+    var title = doc.querySelector("title");
+    var pageStyle = Array.prototype.find.call(doc.querySelectorAll("style"), function (s) {
+      return s.id !== "theme-boot-css";
     });
+    var header = doc.querySelector("header");
+    var main = doc.querySelector("main");
+    var footer = doc.querySelector("footer");
+    var back = doc.querySelector("#backToTop");
+    if (!header || !main || !footer) throw new Error("route shell missing");
+    return {
+      title: title ? title.textContent : document.title,
+      pageStyle: pageStyle ? pageStyle.textContent : "",
+      header: header.innerHTML,
+      main: main.innerHTML,
+      footer: footer.innerHTML,
+      backToTop: back ? back.outerHTML : '<button class="back-to-top" id="backToTop" aria-label="Back to top">&#8593;</button>'
+    };
   }
 
-  function updatePageStyle(css){
-    var style=document.querySelector("style:not(#theme-boot-css)");
-    if(style)style.textContent=css;
+  function fetchRoute(url) {
+    var u = normalizeRouteUrl(url, true);
+    var key = normalizeRouteUrl(url, false).href;
+    if (routeCache[key]) return Promise.resolve(routeCache[key]);
+    return fetch(u.href, { credentials: "same-origin" })
+      .then(function (r) {
+        if (!r.ok) throw new Error("route fetch failed");
+        return r.text();
+      })
+      .then(function (text) {
+        var route = parseRouteDoc(text);
+        routeCache[key] = route;
+        return route;
+      });
   }
 
-  function replaceShell(route,url,push){
-    var header=document.querySelector("header");
-    var main=document.querySelector("main");
-    var footer=document.querySelector("footer");
-    var oldButton=document.getElementById("backToTop");
-    ownRouteEnter();
-    if(header)header.innerHTML=route.header;
-    if(main)main.innerHTML=route.main;
-    if(footer)footer.innerHTML=route.footer;
-    if(oldButton)oldButton.outerHTML=route.backToTop;
-    updatePageStyle(route.pageStyle);
-    document.title=route.title;
-    if(push!==false)history.pushState({xma1soap:true},"",normalizeHistoryUrl(url));
-    window.scrollTo({top:0,left:0,behavior:"instant"});
+  function swapShell(route, url, push) {
+    var header = document.querySelector("header");
+    var main = document.querySelector("main");
+    var footer = document.querySelector("footer");
+    var oldBack = document.getElementById("backToTop");
+
+    document.body.classList.add("route-enter-owned");
+
+    if (header) header.innerHTML = route.header;
+    if (main) main.innerHTML = route.main;
+    if (footer) footer.innerHTML = route.footer;
+    if (oldBack) oldBack.outerHTML = route.backToTop;
+
+    var style = document.querySelector("style:not(#theme-boot-css)");
+    if (style && route.pageStyle) style.textContent = route.pageStyle;
+
+    document.title = route.title;
+    if (push !== false) history.pushState({ xma1soap: true }, "", normalizeRouteUrl(url, true).href);
+    window.scrollTo({ top: 0, left: 0, behavior: "instant" });
     document.body.classList.remove("page-exiting");
   }
 
-  function bindPageControls(){
-    if(controlsBound)return;
-    controlsBound=true;
-    window.addEventListener("scroll",function(){
-      if(!scrollTick){
-        requestAnimationFrame(function(){updateScrollState();scrollTick=false});
-        scrollTick=true;
-      }
-    },{passive:true});
-    document.addEventListener("keydown",function(event){if(event.key==="Escape")closeMobileNav()});
-    document.addEventListener("click",function(event){
-      var themeButton=event.target.closest&&event.target.closest(".theme-toggle");
-      if(themeButton){event.preventDefault();setTheme(current==="dark"?"light":"dark");return}
-      var navToggle=event.target.closest&&event.target.closest("#navToggle");
-      if(navToggle){event.preventDefault();toggleMobileNav();return}
-      if(event.target.closest&&event.target.closest("#navOverlay")){event.preventDefault();closeMobileNav();return}
-      var backToTop=event.target.closest&&event.target.closest("#backToTop");
-      if(backToTop){event.preventDefault();window.scrollTo({top:0,behavior:reduceMotion?"auto":"smooth"});return}
-      var category=event.target.closest&&event.target.closest(".category-btn[data-category]");
-      if(category){event.preventDefault();filterCards(category);return}
-      var link=event.target.closest&&event.target.closest("a[href]");
-      if(link&&document.getElementById("navLinks")&&document.getElementById("navLinks").classList.contains("open"))closeMobileNav();
-      if(link&&canRouteLink(link,event))routeLink(link,event);
+  function applyEnter(origin) {
+    document.body.classList.add("page-transitioning", "page-pre-enter");
+    var items = transitionItems();
+    var maxR = maxRadiusFrom(origin);
+    var maxDelay = 0;
+
+    items.forEach(function (el, idx) {
+      var c = centerOf(el);
+      var norm = clamp(Math.hypot(c.x - origin.x, c.y - origin.y) / maxR, 0, 1);
+      var delay = Math.round(20 + norm * 110 + Math.min(idx, 6) * 8);
+      el.setAttribute("data-page-transition-item", "");
+      el.style.setProperty("--pt-delay", delay + "ms");
+      maxDelay = Math.max(maxDelay, delay);
     });
-    window.addEventListener("popstate",function(){routeTo(new URL(window.location.href),reduceMotion?null:{x:window.innerWidth/2,y:window.innerHeight*.25},false)});
-  }
 
-  function closeMobileNav(){
-    var navLinks=document.getElementById("navLinks");
-    var navToggle=document.getElementById("navToggle");
-    var navOverlay=document.getElementById("navOverlay");
-    if(navLinks)navLinks.classList.remove("open");
-    if(navToggle){navToggle.classList.remove("open");navToggle.setAttribute("aria-expanded","false")}
-    if(navOverlay)navOverlay.classList.remove("visible");
-    document.body.style.overflow="";
-  }
+    decodeFirstPaint(40);
 
-  function toggleMobileNav(){
-    var navLinks=document.getElementById("navLinks");
-    var navToggle=document.getElementById("navToggle");
-    var navOverlay=document.getElementById("navOverlay");
-    if(!navLinks||!navToggle||!navOverlay)return;
-    if(navLinks.classList.contains("open")){
-      closeMobileNav();
-    }else{
-      navLinks.classList.add("open");
-      navToggle.classList.add("open");
-      navToggle.setAttribute("aria-expanded","true");
-      navOverlay.classList.add("visible");
-      document.body.style.overflow="hidden";
-    }
-  }
-
-  function filterCards(button){
-    var buttons=document.querySelectorAll(".category-btn[data-category]");
-    var cards=document.querySelectorAll(".card[data-category]");
-    buttons.forEach(function(item){item.classList.remove("active")});
-    button.classList.add("active");
-    var category=button.dataset.category;
-    var visibleIndex=0;
-    cards.forEach(function(card){
-      var show=category==="all"||card.dataset.category===category;
-      card.hidden=!show;
-      if(show){
-        card.style.setProperty("--stagger",visibleIndex%4);
-        visibleIndex++;
-        if(reduceMotion)card.classList.add("in-view");
-      }
-    });
-    initCardReveal();
-  }
-
-  function updateScrollState(){
-    var nav=document.getElementById("navbar");
-    var back=document.getElementById("backToTop");
-    var y=window.scrollY||document.documentElement.scrollTop||0;
-    if(nav)nav.classList.toggle("scrolled",y>8);
-    if(back)back.classList.toggle("visible",y>500);
-  }
-
-  function initCardReveal(){
-    var cards=document.querySelectorAll(".card:not([hidden])");
-    if(revealObserver){try{revealObserver.disconnect()}catch(_){}revealObserver=null}
-    if(!cards.length)return;
-    if(reduceMotion||document.body.classList.contains("route-enter-owned")){
-      cards.forEach(function(card){card.style.setProperty("--stagger",0);card.classList.add("in-view")});
-      return;
-    }
-    cards.forEach(function(card,index){card.style.setProperty("--stagger",index%4)});
-    if("IntersectionObserver" in window){
-      revealObserver=new IntersectionObserver(function(entries){
-        entries.forEach(function(entry){
-          if(entry.isIntersecting){entry.target.classList.add("in-view");revealObserver.unobserve(entry.target)}
+    raf2(function () {
+      document.body.classList.remove("page-pre-enter");
+      document.body.classList.add("page-entering");
+      window.setTimeout(function () {
+        document.body.classList.remove("page-transitioning", "page-entering", "route-enter-owned");
+        clearTransitionItems();
+        /* 路由过渡已把元素带到最终态，补上标记防止观察器再藏一次 */
+        Array.prototype.forEach.call(document.querySelectorAll("[data-reveal]"), function (el) {
+          el.classList.add("is-revealed", "is-settled");
         });
-      },{rootMargin:"0px 0px -8% 0px",threshold:0});
-      cards.forEach(function(card){revealObserver.observe(card)});
-    }else{
-      cards.forEach(function(card){card.classList.add("in-view")});
+      }, maxDelay + 620);
+    });
+  }
+
+  function swapAndEnter(route, url, push, origin) {
+    swapShell(route, url, push);
+    initDynamic();
+
+    if (origin && !reduceMotion) {
+      applyEnter(origin);
+    } else {
+      clearTransitionItems();
+      document.body.classList.remove("page-transitioning", "page-exiting", "page-pre-enter", "page-entering");
+      window.setTimeout(function () { document.body.classList.remove("route-enter-owned"); }, 0);
+      decodeFirstPaint(20);
     }
   }
 
-  function ensureArticleToc(){
-    var article=document.querySelector(".article");
-    if(!article)return;
-    if(article.querySelector(".toc"))return;
-    var headings=Array.prototype.slice.call(article.querySelectorAll("h2[id],h3[id]"));
-    if(!headings.length)return;
-    var toc=document.createElement("div");
-    toc.className="toc toc-generated";
-    var title=document.createElement("div");
-    title.className="toc-title";
-    title.textContent="\u76ee\u5f55";
-    var list=document.createElement("ul");
-    list.className="toc-list";
-    headings.forEach(function(heading){
-      var li=document.createElement("li");
-      var a=document.createElement("a");
-      a.href="#"+heading.id;
-      a.textContent=heading.textContent;
+  function routeTo(url, origin, push) {
+    var target = normalizeRouteUrl(url, true);
+    return fetchRoute(url)
+      .then(function (route) { swapAndEnter(route, target, push, origin); })
+      .catch(function (err) {
+        if (push !== false) window.location.href = target.href;
+        else console.warn(err);
+      });
+  }
+
+  function beginRoute(link, url) {
+    if (state.transitionActive || reduceMotion) return;
+    var target = normalizeRouteUrl(url, true);
+    state.transitionActive = true;
+
+    var origin = centerOf(link);
+    storeOrigin(origin);
+    var ready = fetchRoute(url);
+    var maxDelay = prepareExit(origin, link);
+
+    document.body.classList.add("page-transitioning");
+    void document.body.offsetHeight;
+    document.body.classList.add("page-exiting");
+
+    var done = new Promise(function (resolve) {
+      window.setTimeout(resolve, maxDelay + 340);
+    });
+
+    Promise.all([ready, done])
+      .then(function (arr) {
+        swapAndEnter(arr[0], target, true, origin);
+        state.transitionActive = false;
+      })
+      .catch(function () {
+        state.transitionActive = false;
+        window.location.href = target.href;
+      });
+  }
+
+  function routeLink(link, ev) {
+    var url = pageUrlOf(link);
+    if (!url) return;
+    ev.preventDefault();
+    if (isCurrentRoute(url)) return;
+    if (state.transitionActive) return;
+    if (reduceMotion) { routeTo(url, null, true); return; }
+    beginRoute(link, url);
+  }
+
+  /* ============================================================
+     文章目录
+     ============================================================ */
+
+  function ensureToc() {
+    var article = document.querySelector(".article");
+    if (!article || article.querySelector(".toc")) return;
+    var heads = Array.prototype.slice.call(article.querySelectorAll("h2[id],h3[id]"));
+    if (!heads.length) return;
+
+    var toc = document.createElement("div");
+    toc.className = "toc toc-generated";
+    var title = document.createElement("div");
+    title.className = "toc-title";
+    title.textContent = "\u76EE\u5F55";
+    var list = document.createElement("ul");
+    list.className = "toc-list";
+
+    heads.forEach(function (h) {
+      var li = document.createElement("li");
+      var a = document.createElement("a");
+      a.href = "#" + h.id;
+      a.textContent = h.textContent;
       li.appendChild(a);
       list.appendChild(li);
     });
+
     toc.appendChild(title);
     toc.appendChild(list);
-    var intro=article.querySelector(".intro");
-    if(intro&&intro.nextSibling)article.insertBefore(toc,intro.nextSibling);else article.insertBefore(toc,article.firstChild);
+    var intro = article.querySelector(".intro");
+    if (intro && intro.nextSibling) article.insertBefore(toc, intro.nextSibling);
+    else article.insertBefore(toc, article.firstChild);
   }
 
-  function initArticleTocState(){
-    if(articleObserver){try{articleObserver.disconnect()}catch(_){}articleObserver=null}
-    ensureArticleToc();
-    var links=Array.prototype.slice.call(document.querySelectorAll(".toc-list a[href^='#']"));
-    if(!links.length)return;
-    var map={};
-    links.forEach(function(link){var id=decodeURIComponent(link.getAttribute("href").slice(1));if(id)map[id]=link});
-    var headings=Object.keys(map).map(function(id){return document.getElementById(id)}).filter(Boolean);
-    if(!headings.length)return;
-    function setActive(id){links.forEach(function(link){link.classList.toggle("active",link===map[id])})}
-    setActive(headings[0].id);
-    if("IntersectionObserver" in window){
-      articleObserver=new IntersectionObserver(function(entries){
-        entries.forEach(function(entry){if(entry.isIntersecting)setActive(entry.target.id)});
-      },{rootMargin:"-18% 0px -68% 0px",threshold:0});
-      headings.forEach(function(heading){articleObserver.observe(heading)});
+  function initToc() {
+    if (state.tocObserver) {
+      try { state.tocObserver.disconnect(); } catch (_) {}
+      state.tocObserver = null;
     }
+    ensureToc();
+
+    var links = Array.prototype.slice.call(document.querySelectorAll(".toc-list a[href^='#']"));
+    if (!links.length) return;
+
+    var map = {};
+    links.forEach(function (a) {
+      var id = decodeURIComponent(a.getAttribute("href").slice(1));
+      if (id) map[id] = a;
+    });
+    var heads = Object.keys(map).map(function (id) { return document.getElementById(id); }).filter(Boolean);
+    if (!heads.length) return;
+
+    function setActive(id) {
+      links.forEach(function (a) { a.classList.toggle("active", a === map[id]); });
+    }
+    setActive(heads[0].id);
+
+    if (!("IntersectionObserver" in window)) return;
+    state.tocObserver = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) { if (e.isIntersecting) setActive(e.target.id); });
+    }, { rootMargin: "-16% 0px -70% 0px", threshold: 0 });
+    heads.forEach(function (h) { state.tocObserver.observe(h); });
   }
 
-  function updateNavActive(){
-    var currentUrl=normalizeRouteUrl(new URL(window.location.href),false);
-    document.querySelectorAll(".nav-links a[href]").forEach(function(link){
-      var url=getPageUrl(link);
-      if(!url)return;
-      var isActive=false;
-      if(isHomePath(normalizeRouteUrl(url,false).pathname)&&isHomePath(currentUrl.pathname))isActive=true;
-      link.classList.toggle("active",isActive);
+  /* ============================================================
+     导航高亮
+     ============================================================ */
+
+  function updateNavActive() {
+    var here = normalizeRouteUrl(new URL(window.location.href), false);
+    Array.prototype.forEach.call(document.querySelectorAll(".nav-links a[href]"), function (a) {
+      var u = pageUrlOf(a);
+      if (!u) return;
+      var active = isHomePath(u.pathname) && isHomePath(here.pathname);
+      a.classList.toggle("active", active);
     });
   }
 
-  function applyRouteEnter(origin){
-    document.body.classList.add("page-transitioning","page-pre-enter");
-    var items=getTransitionItems();
-    var maxDistance=maxDistanceFrom(origin);
-    var maxDelay=0;
-    items.forEach(function(el,index){
-      var center=getCenter(el);
-      var distance=Math.hypot(center.x-origin.x,center.y-origin.y);
-      var normalized=clamp(distance/maxDistance,0,1);
-      var delay=Math.round(20+normalized*80+Math.min(index,5)*6);
-      el.setAttribute("data-page-transition-item","");
-      el.style.setProperty("--page-transition-delay",delay+"ms");
-      maxDelay=Math.max(maxDelay,delay);
+  /* ============================================================
+     首屏遮罩
+     ============================================================ */
+
+  function decodeFirstPaint(delay) {
+    if (!root.hasAttribute("data-first-paint-cover")) return;
+    window.setTimeout(function () {
+      root.setAttribute("data-first-paint-cover", "fade");
+      window.setTimeout(function () { root.removeAttribute("data-first-paint-cover"); }, 420);
+    }, delay || 0);
+  }
+
+  /* ============================================================
+     事件绑定
+     ============================================================ */
+
+  function bindControls() {
+    if (state.controlsBound) return;
+    state.controlsBound = true;
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", function () {
+      state.starfieldReady = false;
+      var dust = document.getElementById("dust");
+      if (dust) dust.innerHTML = "";
+      initDust();
+      updateScrollState();
+    }, { passive: true });
+
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape") closeNav();
     });
-    afterNextPaint(function(){
-      document.body.classList.remove("page-pre-enter");
-      document.body.classList.add("page-entering");
-      releaseFirstPaintCover(60);
-      setTimeout(function(){
-        clearTransitionItems();
-        document.body.classList.remove("page-transitioning","page-entering");
-      },maxDelay+480);
+
+    document.addEventListener("click", function (ev) {
+      var t = ev.target;
+
+      if (t.closest && t.closest(".theme-toggle")) {
+        ev.preventDefault();
+        setTheme(current === "dark" ? "light" : "dark");
+        return;
+      }
+      if (t.closest && t.closest("#navToggle")) {
+        ev.preventDefault();
+        toggleNav();
+        return;
+      }
+      if (t.closest && t.closest("#navOverlay")) {
+        ev.preventDefault();
+        closeNav();
+        return;
+      }
+      if (t.closest && t.closest("#backToTop")) {
+        ev.preventDefault();
+        window.scrollTo({ top: 0, behavior: reduceMotion ? "auto" : "smooth" });
+        return;
+      }
+      var cat = t.closest && t.closest(".category-btn[data-category]");
+      if (cat) {
+        ev.preventDefault();
+        filterCards(cat);
+        return;
+      }
+      var link = t.closest && t.closest("a[href]");
+      if (link) {
+        var openMenu = document.getElementById("navLinks");
+        if (openMenu && openMenu.classList.contains("open")) closeNav();
+        if (canRoute(link, ev)) routeLink(link, ev);
+      }
+    });
+
+    window.addEventListener("popstate", function () {
+      routeTo(new URL(window.location.href), reduceMotion ? null : { x: window.innerWidth / 2, y: window.innerHeight * .22 }, false);
     });
   }
 
-  function swapAndEnter(route,url,push,origin){
-    replaceShell(route,url,push);
-    initDynamicPage();
-    if(origin){
-      applyRouteEnter(origin);
-    }else{
-      clearTransitionItems();
-      document.body.classList.remove("page-transitioning","page-exiting","page-pre-enter","page-entering");
-      releaseFirstPaintCover(20);
-    }
-  }
+  /* ============================================================
+     初始化
+     ============================================================ */
 
-  function routeTo(url,origin,push){
-    var routeUrl=normalizeRouteUrl(url,true);
-    return fetchRoute(url).then(function(route){swapAndEnter(route,routeUrl,push,origin)})
-      .catch(function(error){if(push!==false)window.location.href=routeUrl.href;else console.warn(error)});
-  }
-
-  function routeLink(link,event){
-    var url=getPageUrl(link);
-    if(!url||!sameSiteUrl(url))return;
-    event.preventDefault();
-    if(isCurrentRoute(url))return;
-    if(transitionActive)return;
-    if(reduceMotion){routeTo(url,null,true);return}
-    beginCardTransition(link,url);
-  }
-
-  function beginCardTransition(link,url){
-    if(transitionActive||reduceMotion)return;
-    if(!url||!sameSiteUrl(url))return;
-    var routeUrl=normalizeRouteUrl(url,true);
-    transitionActive=true;
-    var origin=getCenter(link);
-    setStoredOrigin(origin);
-    var ready=fetchRoute(url);
-    var maxDelay=prepareExit(origin,link);
-    document.body.classList.add("page-transitioning");
-    document.body.offsetHeight;
-    document.body.classList.add("page-exiting");
-    var exitDone=new Promise(function(resolve){window.setTimeout(resolve,maxDelay+400)});
-    Promise.all([ready,exitDone]).then(function(arr){
-      swapAndEnter(arr[0],routeUrl,true,origin);
-      transitionActive=false;
-    }).catch(function(){transitionActive=false;window.location.href=routeUrl.href});
-  }
-
-  function initStarfield(){
-    var f=document.getElementById("starfield");
-    if(!f||starfieldInitialized||reduceMotion)return;
-    starfieldInitialized=true;
-    var count=Math.min(260,Math.max(140,Math.round(window.innerWidth/6)));
-    var fragment=document.createDocumentFragment();
-    for(var i=0;i<count;i++){
-      var s=document.createElement("span");
-      s.className="star";
-      var sz=Math.random()*2.4+.8;
-      s.style.left=(Math.random()*100)+"%";
-      s.style.top=(Math.random()*100)+"%";
-      s.style.width=sz+"px";
-      s.style.height=sz+"px";
-      s.style.setProperty("--twinkle-duration",(Math.random()*3.8+2.4)+"s");
-      s.style.setProperty("--twinkle-delay",(Math.random()*5)+"s");
-      s.style.opacity=(Math.random()*.45+.28).toFixed(2);
-      fragment.appendChild(s);
-    }
-    f.appendChild(fragment);
-  }
-
-  function initDynamicPage(){
-    ensureBackgroundLayer();
-    initStarfield();
-    closeMobileNav();
-    bindPageControls();
-    initCardReveal();
-    initArticleTocState();
+  function initDynamic() {
+    initAtmos();
+    initDust();
+    closeNav();
+    bindControls();
+    initReveal();
+    bindCardMotion();
+    initToc();
     updateNavActive();
     updateScrollState();
   }
 
-  function runPageEnter(){
-    if(reduceMotion)return false;
-    var origin=takeStoredOrigin();
-    if(!origin)return false;
-    ownRouteEnter();
-    initCardReveal();
-    var items=getTransitionItems();
-    var maxDistance=maxDistanceFrom(origin);
-    var maxDelay=0;
-    items.forEach(function(el,index){
-      var center=getCenter(el);
-      var distance=Math.hypot(center.x-origin.x,center.y-origin.y);
-      var normalized=clamp(distance/maxDistance,0,1);
-      var delay=Math.round(20+normalized*80+Math.min(index,5)*6);
-      el.setAttribute("data-page-transition-item","");
-      el.style.setProperty("--page-transition-delay",delay+"ms");
-      maxDelay=Math.max(maxDelay,delay);
-    });
-    document.body.classList.add("page-transitioning","page-pre-enter");
-    afterNextPaint(function(){
-      document.body.classList.remove("page-pre-enter");
-      document.body.classList.add("page-entering");
-      releaseFirstPaintCover(60);
-      setTimeout(function(){
-        clearTransitionItems();
-        document.body.classList.remove("page-transitioning","page-entering");
-      },maxDelay+480);
-    });
-    return true;
-  }
+  function init() {
+    root.setAttribute("data-theme", current);
 
-  function setTheme(theme){
-    current=theme;
-    root.setAttribute("data-theme",theme);
-    try{localStorage.setItem(storageKey,theme)}catch(_){}
-    updateButton(true);
-  }
-
-  function updateButton(animate){
-    if(!button)return;
-    var dark=current==="dark";
-    button.setAttribute("aria-label",dark?"\u5207\u6362\u5230\u767d\u5929\u6a21\u5f0f":"\u5207\u6362\u5230\u591c\u95f4\u6a21\u5f0f");
-    button.setAttribute("title",dark?"\u5207\u6362\u5230\u767d\u5929\u6a21\u5f0f":"\u5207\u6362\u5230\u591c\u95f4\u6a21\u5f0f");
-    button.setAttribute("aria-pressed",dark?"true":"false");
-    var icon=button.querySelector(".toggle-icon");
-    if(!icon){button.textContent="";icon=document.createElement("span");icon.className="toggle-icon";button.appendChild(icon)}
-    var next=dark?"\u2600":"\u263e";
-    if(animate&&icon.textContent!==next){
-      button.classList.add("toggling");
-      setTimeout(function(){icon.textContent=next;button.classList.remove("toggling")},190);
-    }else{icon.textContent=next}
-  }
-
-  function initThemeButton(){
-    button=document.querySelector(".theme-toggle");
-    if(!button){
-      button=document.createElement("button");
-      button.type="button";
-      button.className="theme-toggle";
-    }
-    if(button.parentElement!==document.body)document.body.appendChild(button);
-    updateButton(false);
-  }
-
-  function init(){
-    ensureBackgroundLayer();
     initThemeButton();
-    initDynamicPage();
-    if(!runPageEnter())releaseFirstPaintCover(30);
+
+    var origin = null;
+    if (!reduceMotion) origin = takeOrigin();
+
+    initDynamic();
+
+    if (origin) {
+      document.body.classList.add("route-enter-owned");
+      applyEnter(origin);
+    } else {
+      decodeFirstPaint(30);
+    }
+
+    initCursorGlow();
   }
 
-  if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",init);else init();
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);
+  else init();
+
+  /* 主题切换后尘埃层要重新评估显隐（CSS 已处理），无需额外逻辑 */
 })();
