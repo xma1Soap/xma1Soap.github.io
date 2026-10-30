@@ -310,6 +310,13 @@ html.vt-in.vt-reveal body { opacity: 1; transition: opacity 300ms var(--ease-sof
    特异性要高过 .card-ver 自己的 transition 声明，否则那块文字会瞬隐 */
 .vt-layer > .vt-sheet > * { transition: opacity 220ms var(--ease-soft); }
 .vt-sheet.is-fading > * { opacity: 0; }
+/* 标题和版本号多留一拍，别让纸面变成空白再铺满 */
+.vt-sheet.is-fading > .card-ver,
+.vt-sheet.is-fading > .card-title,
+.vt-sheet.is-fading > .card-edge { opacity: 1; }
+.vt-sheet.is-fading.is-fading-late > .card-ver,
+.vt-sheet.is-fading.is-fading-late > .card-title,
+.vt-sheet.is-fading.is-fading-late > .card-edge { opacity: 0; }
 .vt-sheet::after {
   content: "";
   position: absolute;

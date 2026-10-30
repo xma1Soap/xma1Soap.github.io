@@ -75,6 +75,39 @@
   var emptyReset = document.getElementById('emptyReset');
   var chips = Array.prototype.slice.call(document.querySelectorAll('.chip'));
 
+  /* 筛选胶囊：宽度和位置都跟选中的 chip 走，弹性靠 CSS 的过冲曲线 */
+  var filtersBox = document.querySelector('.filters');
+  var pill = document.querySelector('.filter-pill');
+
+  function placePill(instant) {
+    if (!filtersBox || !pill) return;
+    var on = filtersBox.querySelector('.chip.is-on');
+    if (!on) return;
+    var r = on.getBoundingClientRect();
+    var fr = filtersBox.getBoundingClientRect();
+    if (!r.width) return;
+    if (instant) pill.style.transition = 'none';
+    pill.style.width = r.width + 'px';
+    pill.style.height = r.height + 'px';
+    pill.style.transform =
+      'translate3d(' + (r.left - fr.left + filtersBox.scrollLeft).toFixed(2) + 'px,' +
+      (r.top - fr.top + filtersBox.scrollTop).toFixed(2) + 'px,0)';
+    if (instant) {
+      void pill.offsetWidth;
+      pill.style.transition = '';
+    }
+  }
+
+  if (filtersBox && pill) {
+    placePill(true);
+    requestAnimationFrame(function () { filtersBox.classList.add('is-ready'); });
+    window.addEventListener('resize', function () { placePill(true); }, { passive: true });
+    filtersBox.addEventListener('scroll', function () { placePill(true); }, { passive: true });
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(function () { placePill(true); });
+    }
+  }
+
   var state = { q: '', game: 'all', dir: 'desc' };
 
   cards.forEach(function (c) {
@@ -240,6 +273,7 @@
         c.setAttribute('aria-pressed', on ? 'true' : 'false');
       });
       render({ flash: true });
+      placePill();
     });
   });
 
@@ -265,6 +299,7 @@
         c.setAttribute('aria-pressed', on ? 'true' : 'false');
       });
       render({ flash: true });
+      placePill();
     });
   }
 

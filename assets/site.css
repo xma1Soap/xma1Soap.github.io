@@ -417,8 +417,37 @@ html[data-theme="dark"] .glow-field { opacity: 0.6; }
 .search-clear:hover { transform: scale(1.12); }
 .search-clear[hidden] { display: none; }
 
-.filters { display: flex; gap: 8px; flex-wrap: wrap; }
+/* 筛选胶囊：跟选中的 chip 平移，带一点过冲，像分段控件 */
+.filters {
+  position: relative;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.filter-pill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 38px;
+  border-radius: 999px;
+  background: var(--ink);
+  pointer-events: none;
+  z-index: 0;
+  will-change: transform, width;
+}
+.filters.is-ready .filter-pill {
+  transition:
+    transform 380ms cubic-bezier(0.36, 1.28, 0.55, 1),
+    width 380ms cubic-bezier(0.36, 1.28, 0.55, 1),
+    height 260ms var(--ease),
+    background-color var(--t) var(--ease-soft);
+}
+html[data-theme="dark"] .filter-pill { background: var(--accent); }
+
 .chip {
+  position: relative;
+  z-index: 1;
   display: inline-flex;
   align-items: center;
   gap: 6px;
@@ -442,18 +471,19 @@ html[data-theme="dark"] .glow-field { opacity: 0.6; }
 .chip:hover { background: var(--paper-3); }
 .chip:active { transform: scale(0.96); }
 .chip.is-on {
-  background: var(--ink);
+  background: transparent;
   color: var(--paper);
-  border-color: var(--ink);
+  border-color: transparent;
   animation: chip-pop 280ms var(--ease);
 }
+.chip.is-on:hover { background: transparent; }
 @keyframes chip-pop {
   0% { transform: scale(1); }
   45% { transform: scale(1.055); }
   100% { transform: scale(1); }
 }
 .chip.is-on em { color: color-mix(in srgb, var(--paper) 62%, transparent); }
-html[data-theme="dark"] .chip.is-on { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+html[data-theme="dark"] .chip.is-on { background: transparent; border-color: transparent; color: var(--accent-ink); }
 
 .sort-btn {
   display: inline-flex;
@@ -610,6 +640,15 @@ html[data-theme="dark"] .tag-hot { background: var(--honey); color: #1a1109; }
   transform: translateX(4px);
   color: var(--accent);
 }
+
+/* 回到首页时，把刚从里面出来的那张卡标一下 */
+.card.is-return {
+  border-color: var(--accent);
+  box-shadow:
+    0 12px 30px -20px color-mix(in srgb, var(--accent) 80%, transparent),
+    0 0 0 3px color-mix(in srgb, var(--accent) 16%, transparent);
+}
+.card.is-return .card-edge { transform: scaleY(1); }
 
 /* 入场：backwards 填充，动画结束后样式自然归还给 hover，不会锁住 transform */
 .card.reveal {

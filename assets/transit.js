@@ -20,6 +20,7 @@
   var isPost = !!document.getElementById('post');
   var busy = false;
   var entryScroll = 0;
+  var entryHref = '';
 
   window.__soapVTReady = true;
 
@@ -98,11 +99,21 @@
         );
       }
     }
+
+    /* 把“你刚从这张卡进去”标出来，回来时能一眼找到位置 */
+    if (entry && entry.href) {
+      var back = document.querySelector('#grid .card[href="' + entry.href + '"]');
+      if (back) {
+        setTimeout(function () { back.classList.add('is-return'); }, 340);
+        setTimeout(function () { back.classList.remove('is-return'); }, 1700);
+      }
+    }
     clearEntry();
   }
 
   function enterPost(entry) {
     entryScroll = (entry && entry.scroll) || 0;
+    entryHref = (entry && entry.href) || '';
     revealBody();
     clearEntry();
     if (reduce()) return;
@@ -115,8 +126,8 @@
         { opacity: 0, transform: 'translate3d(0,16px,0)' },
         { opacity: 1, transform: 'none' }
       ], {
-        duration: 420,
-        delay: 120 + i * 40,
+        duration: 400,
+        delay: 90 + i * 38,
         easing: EASE_SOFT,
         fill: 'backwards'
       });
@@ -125,7 +136,7 @@
     var rail = document.querySelector('.rail');
     if (rail) {
       rail.animate([{ opacity: 0 }, { opacity: 1 }], {
-        duration: 420, delay: 160, easing: 'ease-out', fill: 'backwards'
+        duration: 400, delay: 120, easing: 'ease-out', fill: 'backwards'
       });
     }
   }
@@ -219,8 +230,9 @@
       });
     });
 
-    /* 卡片内容先淡出 */
+    /* 卡片内容先淡出：标签、摘要、日期先走，标题和版本号再留一拍 */
     setTimeout(function () { sheet.classList.add('is-fading'); }, 150);
+    setTimeout(function () { sheet.classList.add('is-fading-late'); }, 380);
 
     /* 纸块铺满整屏 */
     setTimeout(function () {
@@ -245,7 +257,7 @@
 
   /* ---------------- 离开文章页：正文收拢 ---------------- */
   function leaveToHome() {
-    writeEntry({ t: Date.now(), dir: 'home', scroll: entryScroll });
+    writeEntry({ t: Date.now(), dir: 'home', scroll: entryScroll, href: entryHref });
     if (reduce()) {
       location.href = 'index.html';
       return;
