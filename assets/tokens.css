@@ -1,0 +1,340 @@
+/* ==========================================================================
+   xma1Soap · 设计令牌与基础层（首页与文章页共用）
+   ========================================================================== */
+
+:root {
+  color-scheme: light;
+
+  --paper: #f6f0e2;
+  --paper-2: #fffbf1;
+  --paper-3: #efe6d3;
+  --ink: #16120d;
+  --ink-2: #4b4237;
+  --ink-3: #6e6456;
+  --border: #16120d;
+  --border-soft: rgba(22, 18, 13, 0.14);
+
+  --accent: #e2542c;
+  --accent-ink: #fff7ec;
+  --mint: #2e9e8f;
+  --honey: #d9a520;
+  --sky: #2f6fb3;
+  --shadow-ink: rgba(22, 18, 13, 0.9);
+  --hl: color-mix(in srgb, var(--honey) 58%, transparent);
+  --deck-line: var(--border-soft);
+
+  /* 旧内页里残留的内联样式所依赖的别名 */
+  --text: var(--ink);
+  --text-muted: var(--ink-2);
+  --text-faint: var(--ink-3);
+  --line: var(--border-soft);
+
+  --font-serif: "Iowan Old Style", "Palatino Linotype", "Source Han Serif SC", "Songti SC", "Noto Serif SC", serif;
+  --font-sans: "Inter", "Segoe UI Variable Text", "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", "Cascadia Code", "SFMono-Regular", ui-monospace, Consolas, monospace;
+
+  --t-fast: 140ms;
+  --t: 240ms;
+  --t-slow: 420ms;
+  --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --ease-soft: cubic-bezier(0.4, 0, 0.2, 1);
+
+  --r-sm: 8px;
+  --r: 14px;
+  --r-lg: 20px;
+  --gutter: clamp(20px, 4.5vw, 48px);
+  --shell: 1180px;
+}
+
+html[data-theme="dark"] {
+  color-scheme: dark;
+
+  --paper: #141110;
+  --paper-2: #201c18;
+  --paper-3: #26221d;
+  --ink: #f3ebdc;
+  --ink-2: #c8bdac;
+  --ink-3: #a09484;
+  --border: rgba(243, 235, 220, 0.26);
+  --border-soft: rgba(243, 235, 220, 0.12);
+
+  --accent: #ff7a45;
+  --accent-ink: #1a1109;
+  --mint: #4fc3b0;
+  --honey: #f0c860;
+  --sky: #7aa9e0;
+  --shadow-ink: rgba(0, 0, 0, 0.75);
+  --hl: rgba(240, 200, 96, 0.24);
+  --deck-line: rgba(243, 235, 220, 0.2);
+}
+
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+  scroll-padding-top: 24px;
+  background: var(--paper);
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background-color: var(--paper);
+  background-image:
+    radial-gradient(circle at 1px 1px, var(--border-soft) 1px, transparent 0),
+    radial-gradient(circle at 50% -10%, var(--paper-3), transparent 55%);
+  background-size: 22px 22px, 100% 60vh;
+  background-repeat: repeat, no-repeat;
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+a { color: inherit; text-decoration: none; }
+button { font: inherit; color: inherit; }
+img, svg { display: block; max-width: 100%; }
+
+/* 页面离开：轻淡出，不让跳转硬切 */
+body { transition: opacity 170ms var(--ease-soft); }
+body.is-leaving { opacity: 0; }
+
+/* 点击涟漪：只在脚本可用且未开启“减少动效”时插入 */
+.ripple {
+  position: absolute;
+  border-radius: 50%;
+  background: currentColor;
+  opacity: 0;
+  transform: scale(0);
+  pointer-events: none;
+  animation: ripple-out 620ms var(--ease-soft) forwards;
+}
+@keyframes ripple-out {
+  from { transform: scale(0); opacity: 0.2; }
+  to { transform: scale(1); opacity: 0; }
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--accent-ink);
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+.skip {
+  position: fixed;
+  left: 50%;
+  top: 8px;
+  z-index: 100;
+  padding: 8px 16px;
+  border: 1.5px solid var(--border);
+  border-radius: 999px;
+  background: var(--paper-2);
+  font-size: 0.82rem;
+  transform: translate(-50%, -160%);
+  transition: transform var(--t) var(--ease);
+}
+.skip:focus-visible { transform: translate(-50%, 0); }
+
+/* 主题按钮（两页共用） */
+.theme-btn {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  border: 1.5px solid var(--border);
+  border-radius: 50%;
+  background: var(--paper-2);
+  cursor: pointer;
+  transition: background-color var(--t) var(--ease-soft), transform var(--t-fast) var(--ease);
+}
+.theme-btn:hover { transform: translateY(-1px); }
+.theme-btn:active { transform: scale(0.94); }
+.theme-btn svg {
+  grid-area: 1 / 1;
+  width: 16px;
+  height: 16px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  transition: opacity var(--t) var(--ease), transform var(--t) var(--ease);
+}
+.ico-sun { opacity: 0; transform: rotate(-70deg) scale(0.6); }
+.ico-moon { opacity: 1; transform: none; }
+html[data-theme="dark"] .ico-sun { opacity: 1; transform: none; }
+html[data-theme="dark"] .ico-moon { opacity: 0; transform: rotate(70deg) scale(0.6); }
+
+.out {
+  margin-left: 3px;
+  font-size: 0.72em;
+  color: var(--ink-3);
+  display: inline-block;
+  transition: transform var(--t) var(--ease);
+}
+a:hover .out { transform: translate(2px, -2px); }
+
+/* ---------- 点击涟漪（脚本插入 span.ripple） ---------- */
+.ripple {
+  position: absolute;
+  border-radius: 50%;
+  background: currentColor;
+  opacity: 0;
+  transform: scale(0);
+  pointer-events: none;
+  animation: ripple-out 620ms var(--ease-soft) forwards;
+}
+@keyframes ripple-out {
+  from { transform: scale(0); opacity: 0.2; }
+  to { transform: scale(1); opacity: 0; }
+}
+
+/* 需要承载涟漪的元素：定位 + 裁切 */
+.chip,
+.sort-btn,
+.theme-btn,
+.back,
+.pn,
+.card,
+.empty-reset,
+.about-links a,
+.search-clear,
+.to-top,
+.rail-link,
+.rail-toggle,
+.card-go { position: relative; }
+
+.chip,
+.sort-btn,
+.back,
+.pn,
+.card,
+.empty-reset,
+.about-links a,
+.search-clear,
+.to-top,
+.rail-link,
+.rail-toggle { overflow: hidden; }
+
+/* 统一按压反馈 */
+.pn:active,
+.about-links a:active,
+.back:active,
+.empty-reset:active,
+.rail-link:active,
+.rail-toggle:active { transform: scale(0.97); }
+
+/* ---------- 页面离开：轻淡出，不硬切 ---------- */
+body { transition: opacity 170ms var(--ease-soft); }
+body.is-leaving { opacity: 0; }
+
+/* 主题切换：圆形扩散 */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+::view-transition-new(root) {
+  animation: theme-reveal 460ms var(--ease-soft) both;
+}
+@keyframes theme-reveal {
+  from { clip-path: circle(0 at var(--tx, 50%) var(--ty, 0)); }
+  to { clip-path: circle(var(--tr, 140vmax) at var(--tx, 50%) var(--ty, 0)); }
+}
+
+/* ---------- 页面转场：首页 ↔ 文章页 ----------
+   进入页面时先把 body 压到 0，等脚本接管再淡入，避免新页面硬闪。
+   背离场由 assets/transit.js 用 WAAPI 编排，这里只给落地状态。 */
+html.vt-in body { opacity: 0; }
+html.vt-in.vt-reveal body { opacity: 1; transition: opacity 300ms var(--ease-soft); }
+
+.vt-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 900;
+  pointer-events: none;
+}
+
+/* 铺满时的保险层：卡片扩到全屏差几像素也看不出来 */
+.vt-layer::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background: var(--paper);
+  opacity: 0;
+  transition: opacity 300ms var(--ease-soft);
+  pointer-events: none;
+}
+.vt-layer.is-fill::after { opacity: 1; }
+
+/* 被点卡片的克隆：从原位等比放大，最后铺满整屏
+   边框按 1/s 反向缩，放大时纸边不会变粗 */
+.vt-layer > .vt-sheet {
+  position: fixed;
+  margin: 0;
+  min-height: 0;
+  transform-origin: 0 0;
+  pointer-events: none;
+  border-width: calc(1.5px / var(--vt-s, 1));
+  border-radius: var(--r);
+  box-shadow: 0 26px 60px -34px var(--shadow-ink), 0 6px 16px -10px var(--shadow-ink);
+  z-index: 1;
+  transition:
+    transform 420ms cubic-bezier(0.16, 0.84, 0.28, 1),
+    border-radius 420ms var(--ease),
+    border-color 260ms var(--ease);
+  will-change: transform;
+}
+.vt-layer > .vt-sheet.is-fill {
+  transition:
+    transform 300ms var(--ease),
+    border-radius 300ms var(--ease),
+    border-color 260ms var(--ease),
+    background-color 260ms var(--ease);
+  border-radius: 0;
+  border-color: transparent;
+  background: var(--paper);
+}
+/* 卡片里的文字先走，剩下一个纯色纸块去铺满
+   特异性要高过 .card-ver 自己的 transition 声明，否则那块文字会瞬隐 */
+.vt-layer > .vt-sheet > * { transition: opacity 220ms var(--ease-soft); }
+.vt-sheet.is-fading > * { opacity: 0; }
+.vt-sheet::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  border-radius: inherit;
+  background: var(--paper);
+  opacity: 0;
+  transition: opacity 320ms var(--ease-soft);
+  pointer-events: none;
+}
+.vt-sheet.is-fill::after { opacity: 1; }
+
+@media (prefers-reduced-motion: reduce) {
+  html.vt-in body { opacity: 1; }
+  .vt-layer { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-delay: 0ms !important;
+    transition-duration: 0.001ms !important;
+  }
+}

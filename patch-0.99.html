@@ -1,419 +1,165 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh-CN" class="no-js" data-theme="light">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<meta name="theme-color" content="#0C0A09">
+<title>0.99 beta更新 · xma1Soap</title>
+<meta name="description" content="杀戮尖塔2 0.99 beta更新 中文整理">
+<meta name="theme-color" content="#F6F0E2" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#141110" media="(prefers-color-scheme: dark)">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="xma1Soap">
 <meta property="og:title" content="0.99 beta更新 · xma1Soap">
 <meta property="og:description" content="杀戮尖塔2 0.99 beta更新 中文整理">
 <meta name="twitter:card" content="summary">
-<meta name="description" content="杀戮尖塔2 0.99 beta更新 中文整理">
-<title>0.99 beta更新 · xma1Soap</title>
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%230C0A09'/%3E%3Ctext x='50' y='68' font-size='54' font-family='Georgia,serif' fill='%23E0A94B' text-anchor='middle'%3Es%3C/text%3E%3C/svg%3E">
-<script id="theme-boot">(function(){var r=document.documentElement;r.setAttribute("data-first-paint-cover","");try{var t=localStorage.getItem("xma1soap-theme");if(t==="dark"||t==="light"){r.setAttribute("data-theme",t)}else{r.setAttribute("data-theme","dark")}}catch(_){}})();</script><style id="theme-boot-css">:root{color-scheme:dark;--boot-bg:#0C0A09}html,body{min-height:100%;background:#0C0A09}html[data-theme="light"]{color-scheme:light}html[data-theme="light"],html[data-theme="light"] body{background:#EDE6D8}</style><style>
-/* ============================================================
-   Nocturne · Article
-   阅读优先：正文行宽控制在 34 字左右，行高 1.95。
-   标题走裁切揭示，正文元素走位移揭示（由 theme.js 挂载）。
-   ============================================================ */
-
-.content-wrapper{
-  max-width:calc(var(--article-w) + 264px);
-  margin:0 auto;
-  padding:clamp(30px,4.6vw,60px) var(--gutter) 96px;
-  display:grid;
-  grid-template-columns:216px minmax(0,1fr);
-  gap:clamp(26px,4vw,54px);
-  align-items:start;
-}
-
-/* ---------- 侧栏：细线导航，不做卡片 ---------- */
-.sidebar{
-  position:sticky;
-  top:calc(var(--nav-h) + 22px);
-  max-height:calc(100vh - var(--nav-h) - 44px);
-  overflow:auto;
-  padding-right:12px;
-  scrollbar-width:thin;
-}
-.sidebar-title{
-  margin:0 0 18px;
-  padding-bottom:10px;
-  border-bottom:1px solid var(--line);
-  color:var(--text-faint);
-  font-family:var(--font-mono);
-  font-size:.66rem;
-  font-weight:600;
-  letter-spacing:.2em;
-  text-transform:uppercase;
-}
-.sidebar-section{margin:0 0 22px}
-.sidebar-section-title{
-  margin:0 0 7px;
-  padding-left:10px;
-  color:var(--text-faint);
-  font-family:var(--font-mono);
-  font-size:.62rem;
-  font-weight:600;
-  letter-spacing:.14em;
-  text-transform:uppercase;
-}
-.sidebar-link{
-  display:block;
-  padding:5px 10px;
-  border-left:1px solid var(--line);
-  color:var(--text-muted);
-  font-size:.81rem;
-  line-height:1.45;
-  transition:
-    color var(--t-1) var(--ease-out),
-    border-color var(--t-1) var(--ease-out),
-    background var(--t-1) var(--ease-out),
-    padding-left var(--t-1) var(--ease-out);
-}
-.sidebar-link:hover{
-  color:var(--accent);
-  border-left-color:var(--line-gold);
-  background:linear-gradient(90deg,var(--accent-soft),transparent 70%);
-  padding-left:14px;
-}
-.sidebar-link.active{
-  color:var(--accent);
-  border-left-color:var(--gold);
-  background:linear-gradient(90deg,var(--accent-soft),transparent 70%);
-  font-weight:600;
-}
-
-/* ---------- 正文容器 ---------- */
-.article{
-  min-width:0;
-  padding-bottom:32px;
-}
-
-.article > .hero{
-  margin:0 0 clamp(30px,4vw,44px);
-  padding:0 0 26px;
-  border-bottom:1px solid var(--line);
-  text-align:left;
-}
-.hero-tag{
-  display:inline-block;
-  margin-bottom:16px;
-  color:var(--accent);
-  font-family:var(--font-mono);
-  font-size:.68rem;
-  font-weight:600;
-  letter-spacing:.22em;
-  text-transform:uppercase;
-}
-.hero-tag::before{
-  content:"";
-  display:inline-block;
-  width:22px;
-  height:1px;
-  margin-right:10px;
-  vertical-align:.28em;
-  background:var(--gold-deep);
-}
-.hero h1{
-  max-width:19em;
-  margin:0;
-  font-family:var(--font-serif);
-  font-size:clamp(1.85rem,4.2vw,2.85rem);
-  font-weight:600;
-  line-height:1.16;
-  letter-spacing:-.012em;
-  text-wrap:balance;
-}
-.hero .subtitle{
-  max-width:52ch;
-  margin:18px 0 0;
-  color:var(--text-muted);
-  font-size:1.01rem;
-  line-height:1.72;
-  text-wrap:pretty;
-}
-.hero .meta{
-  display:flex;
-  align-items:center;
-  flex-wrap:wrap;
-  gap:10px;
-  margin-top:20px;
-  color:var(--text-faint);
-  font-family:var(--font-mono);
-  font-size:.72rem;
-  letter-spacing:.06em;
-}
-/* 分隔点由 HTML 里的 <span>·</span> 承载，这里不再自动加，否则会出现双点 */
-.hero .meta span{display:inline-flex;align-items:center}
-
-/* ---------- 排版 ---------- */
-.article > *:first-child{margin-top:0!important}
-
-.article h2{
-  position:relative;
-  margin:clamp(44px,5.5vw,64px) 0 20px;
-  padding:0 0 12px;
-  border-bottom:1px solid var(--line);
-  font-family:var(--font-serif);
-  font-size:clamp(1.32rem,2.1vw,1.62rem);
-  font-weight:600;
-  line-height:1.3;
-  letter-spacing:-.008em;
-  color:var(--text);
-  scroll-margin-top:calc(var(--nav-h) + 26px);
-}
-.article h2::before{
-  content:"";
-  position:absolute;
-  left:0;
-  bottom:-1px;
-  width:44px;
-  height:1px;
-  background:var(--gold);
-  box-shadow:0 0 10px var(--accent-ring);
-}
-.article h2::after{
-  content:"";
-  display:inline-block;
-  width:5px;height:5px;
-  margin-left:11px;
-  vertical-align:.18em;
-  background:var(--gold);
-  transform:rotate(45deg);
-}
-
-.article h3{
-  margin:34px 0 13px;
-  font-size:1.03rem;
-  font-weight:600;
-  line-height:1.45;
-  letter-spacing:.005em;
-  color:var(--text);
-  scroll-margin-top:calc(var(--nav-h) + 26px);
-}
-.article h3::before{
-  content:"";
-  display:inline-block;
-  width:14px;
-  height:1px;
-  margin-right:9px;
-  vertical-align:.3em;
-  background:var(--gold-deep);
-}
-
-.article p{
-  margin:0 0 18px;
-  color:var(--text);
-  font-size:1rem;
-  line-height:1.95;
-}
-.article p + p{margin-top:-2px}
-
-.article ul,.article ol{
-  margin:0 0 22px;
-  padding-left:1.35em;
-}
-.article li{
-  margin:9px 0;
-  font-size:.985rem;
-  line-height:1.86;
-}
-.article li::marker{color:var(--gold-deep)}
-.article li ul,.article li ol{margin:8px 0 10px}
-.article strong{font-weight:600;color:var(--text)}
-.article em{font-style:italic;color:var(--text)}
-
-.article a{
-  color:var(--text);
-  text-decoration:underline;
-  text-decoration-color:var(--line-strong);
-  text-decoration-thickness:1px;
-  text-underline-offset:3px;
-  transition:text-decoration-color var(--t-1) var(--ease-out),color var(--t-1) var(--ease-out);
-}
-.article a:hover{
-  color:var(--accent);
-  text-decoration-color:var(--gold);
-}
-
-.article hr{
-  height:1px;
-  margin:44px 0;
-  border:0;
-  background:linear-gradient(90deg,var(--line-strong),var(--line) 45%,transparent);
-  transform-origin:0 50%;
-}
-
-/* ---------- 导语 ---------- */
-.intro{
-  margin:0 0 32px;
-  padding:2px 0 2px 20px;
-  border-left:2px solid var(--gold);
-  color:var(--text);
-  font-size:1.04rem;
-  line-height:1.86;
-}
-
-/* ---------- 注释块 ---------- */
-.note{
-  margin:26px 0;
-  padding:14px 18px;
-  border:1px solid var(--line);
-  border-left:2px solid var(--line-strong);
-  color:var(--text-muted);
-  font-size:.93rem;
-  line-height:1.8;
-}
-.note::before{
-  content:"NOTE";
-  display:block;
-  margin-bottom:6px;
-  color:var(--text-faint);
-  font-family:var(--font-mono);
-  font-size:.62rem;
-  font-weight:600;
-  letter-spacing:.2em;
-}
-
-/* ---------- 目录 ---------- */
-.toc{
-  margin:0 0 34px;
-  padding:16px 18px;
-  border:1px solid var(--line);
-  background:var(--surface);
-}
-.toc-title{
-  margin:0 0 12px;
-  color:var(--text-faint);
-  font-family:var(--font-mono);
-  font-size:.64rem;
-  font-weight:600;
-  letter-spacing:.2em;
-  text-transform:uppercase;
-}
-.toc-list{
-  display:grid;
-  grid-template-columns:repeat(2,minmax(0,1fr));
-  gap:2px 20px;
-  margin:0;
-  padding:0;
-  list-style:none;
-}
-.toc-list li{margin:0}
-.toc-list a{
-  display:block;
-  padding:4px 0;
-  color:var(--text-muted);
-  font-size:.88rem;
-  text-decoration:none;
-  transition:color var(--t-1) var(--ease-out),padding-left var(--t-1) var(--ease-out);
-}
-.toc-list a::before{
-  content:"";
-  display:inline-block;
-  width:0;
-  height:1px;
-  margin-right:0;
-  vertical-align:.3em;
-  background:var(--gold);
-  transition:width var(--t-1) var(--ease-out),margin var(--t-1) var(--ease-out);
-}
-.toc-list a:hover,.toc-list a.active{color:var(--accent)}
-.toc-list a:hover::before,.toc-list a.active::before{width:12px;margin-right:8px}
-
-/* ---------- 图 ---------- */
-.article figure{margin:32px 0 36px}
-.article figure img{
-  width:100%;
-  border:1px solid var(--line);
-  border-radius:var(--r-sm);
-  background:var(--surface-sunken);
-}
-.article figcaption{
-  margin-top:11px;
-  color:var(--text-faint);
-  font-size:.83rem;
-  line-height:1.6;
-}
-.article figcaption::before{
-  content:"";
-  display:inline-block;
-  width:10px;
-  height:1px;
-  margin-right:8px;
-  vertical-align:.28em;
-  background:var(--gold-deep);
-}
-
-/* ---------- 表 ---------- */
-.article table{
-  width:100%;
-  margin:26px 0;
-  border-collapse:collapse;
-  font-size:.9rem;
-}
-.article th,.article td{
-  padding:10px 14px;
-  border-bottom:1px solid var(--line);
-  text-align:left;
-  vertical-align:top;
-}
-.article th{
-  background:var(--surface);
-  border-bottom-color:var(--line-mid);
-  color:var(--text-muted);
-  font-family:var(--font-mono);
-  font-size:.74rem;
-  font-weight:600;
-  letter-spacing:.08em;
-  text-transform:uppercase;
-}
-
-/* ---------- 行内代码 ---------- */
-.article code{
-  padding:.08em .36em;
-  border-radius:var(--r-xs);
-  background:var(--accent-soft);
-  color:var(--gold);
-  font-family:var(--font-mono);
-  font-size:.87em;
-}
-.article pre{
-  margin:24px 0;
-  padding:16px 18px;
-  overflow:auto;
-  border:1px solid var(--line);
-  background:var(--surface-sunken);
-  font-size:.86rem;
-  line-height:1.7;
-}
-.article pre code{background:none;color:var(--text);padding:0}
-
-/* ---------- 响应式 ---------- */
-@media(max-width:1040px){
-  .content-wrapper{max-width:var(--article-w);display:block}
-  .sidebar{display:none}
-}
-@media(max-width:820px){
-  .content-wrapper{padding:26px var(--gutter) 72px}
-  .article h2{margin-top:40px}
-  .toc-list{grid-template-columns:1fr}
-  .article > .hero{margin-bottom:28px}
-}
-@media(max-width:520px){
-  .article p{font-size:.96rem}
-  .article li{font-size:.94rem}
-  .hero h1{font-size:clamp(1.6rem,6.6vw,2rem)}
-  .article figure img{border-radius:var(--r-xs)}
-}
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23E2542C'/%3E%3Cpath d='M18 18l28 28M46 18L18 46' stroke='%23FFF6E6' stroke-width='7' stroke-linecap='round'/%3E%3C/svg%3E">
+<script>
+  (function () {
+    var d = document.documentElement;
+    d.classList.remove('no-js');
+    var t = null;
+    try { t = localStorage.getItem('soap-theme'); } catch (e) {}
+    if (t !== 'light' && t !== 'dark') {
+      t = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    }
+    d.setAttribute('data-theme', t);
+  })();
+</script>
+<script>
+  (function () {
+    var d = document.documentElement;
+    try {
+      var raw = sessionStorage.getItem('soap-vt');
+      if (!raw) return;
+      var s = JSON.parse(raw);
+      if (!s || typeof s.t !== 'number' || Date.now() - s.t > 5000) {
+        sessionStorage.removeItem('soap-vt');
+        return;
+      }
+      var path = location.pathname;
+      var home = /(^|\/)index\.html$/.test(path) || /\/$/.test(path);
+      if ((s.dir === 'home') !== home) { sessionStorage.removeItem('soap-vt'); return; }
+      d.classList.add('vt-in');
+      d.classList.add(s.dir === 'home' ? 'vt-enter-home' : 'vt-enter-post');
+    } catch (e) {}
+    setTimeout(function () {
+      if (!window.__soapVTReady) d.classList.remove('vt-in', 'vt-reveal');
+    }, 1600);
+  })();
+</script>
+<style>
+  html.vt-enter-home,html.vt-enter-post{background:#f6f0e2}
+  html[data-theme="dark"].vt-enter-home,html[data-theme="dark"].vt-enter-post{background:#141110}
+  html.vt-in.vt-enter-home body,html.vt-in.vt-enter-post body{opacity:0}
 </style>
-<link rel="stylesheet" href="theme.css?v=40">
-<noscript><style>[data-reveal]{opacity:1!important;transform:none!important;clip-path:none!important}.card{transform:none!important}#atmos,#progress,#cursor-glow,.back-to-top,.theme-toggle{display:none!important}</style></noscript>
-</head><body>
-<header><nav class="nav" id="navbar"><div class="nav-inner nav-inner-article"><a href="https://xma1soap.github.io" class="nav-back"><span class="chev" aria-hidden="true">&larr;</span><span class="back-label">返回首页</span></a><a href="https://xma1soap.github.io" class="nav-brand">xma1Soap</a><button class="nav-toggle" id="navToggle" type="button" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button><ul class="nav-links" id="navLinks"><li><a href="https://xma1soap.github.io">Home</a></li><li><a href="https://github.com/xma1Soap" target="_blank" rel="noopener">GitHub</a></li></ul></div></nav><div class="nav-overlay" id="navOverlay"></div></header><main><div class="content-wrapper"><aside class="sidebar"><div class="sidebar-title">&#20840;&#23616;&#30446;&#24405;</div><div class="sidebar-section"><a href="https://xma1soap.github.io" class="sidebar-link">&#127968; &#39318;&#39029;</a></div><div class="sidebar-section"><div class="sidebar-section-title">杀戮尖塔2</div><a href="patch-0.110.0.html" class="sidebar-link">0.110.0 beta更新</a><a href="patch-0.109.1.html" class="sidebar-link">0.109.1 beta热修</a><a href="patch-0.109.0.html" class="sidebar-link">0.109.0 beta更新</a><a href="patch-0.108.0.html" class="sidebar-link">0.108.0 beta更新</a><a href="patch-0.107.1.html" class="sidebar-link">0.107.1重大更新</a><a href="patch-0.107.0.html" class="sidebar-link">0.107.0 beta更新</a><a href="patch-bugfix-0530.html" class="sidebar-link">5月 Bug 修复</a><a href="patch-0.106.1.html" class="sidebar-link">0.106.1小更新</a><a href="patch-0.106.html" class="sidebar-link">0.106.0 beta更新</a><a href="patch-0.105.1.html" class="sidebar-link">0.105.1 beta热修</a><a href="patch-0.105.0.html" class="sidebar-link">0.105.0 beta更新</a><a href="patch-0.104.0.html" class="sidebar-link">0.104.0 beta更新</a><a href="patch-0.103.2.html" class="sidebar-link">0.103.2重大更新</a><a href="patch-0.103.1.html" class="sidebar-link">0.103.1 beta热修</a><a href="patch-0.103.0.html" class="sidebar-link">0.103.0 beta更新</a><a href="patch-0.102.0.html" class="sidebar-link">0.102.0 beta更新</a><a href="patch-0.101.0.html" class="sidebar-link">0.101.0 beta更新</a><a href="patch-0.100.0.html" class="sidebar-link">0.100.0 beta更新</a><a href="patch-0.99.1.html" class="sidebar-link">0.99.1主线更新</a><a href="patch-0.99.1-beta-hotfix.html" class="sidebar-link">0.99.1 beta热修</a><a href="patch-0.99.html" class="sidebar-link active">0.99 beta更新</a><a href="patch-0.98.3.html" class="sidebar-link">0.98.3热修</a><a href="patch-0.98.2.html" class="sidebar-link">0.98.2热修</a><a href="patch-0.98.1.html" class="sidebar-link">0.98.1热修</a><a href="patch-bugfix-0523.html" class="sidebar-link">0.106.1 Bug Fix</a></div><div class="sidebar-section"><div class="sidebar-section-title">边缘世界</div><a href="rimworld-1.6.4850.html" class="sidebar-link">边缘世界 1.6.4850 更新日志</a></div></aside>
+<link rel="stylesheet" href="assets/tokens.css">
+<link rel="stylesheet" href="assets/article.css">
+</head>
+<body>
+<a class="skip" href="#post">跳到正文</a>
+<div class="read-progress" id="readProgress" aria-hidden="true"></div>
+
+<header class="site-head">
+  <div class="head-inner">
+    <a class="back" href="index.html">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 5l-7 7 7 7"/></svg>
+      <span class="lbl">全部补丁</span>
+    </a>
+    <a class="brand" href="index.html"><i aria-hidden="true"></i>xma1Soap</a>
+    <div class="head-right">
+      <a class="gh" href="https://github.com/xma1Soap" target="_blank" rel="noopener">GitHub<span class="out" aria-hidden="true">↗</span></a>
+      <button class="theme-btn" id="themeBtn" type="button" aria-label="切换明暗主题">
+        <svg class="ico-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2v2.6M12 19.4V22M2 12h2.6M19.4 12H22M4.9 4.9l1.9 1.9M17.2 17.2l1.9 1.9M19.1 4.9l-1.9 1.9M6.8 17.2l-1.9 1.9"/></svg>
+        <svg class="ico-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.6A8.4 8.4 0 1 1 9.4 4a6.8 6.8 0 0 0 10.6 10.6Z"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main class="post-shell">
+  <div class="rail-mobile" id="railMobile">
+    <button class="rail-toggle" type="button" id="railToggle" aria-expanded="false" aria-controls="railBody">
+      <span class="rail-toggle-label">全部补丁</span>
+      <em>26 篇</em>
+      <svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+    </button>
+    <div class="rail-body" id="railBody">
+      <div class="rail-inner">
+        <div class="rail-scroll">
+<div class="rail-group">
+<p class="rail-group-title">杀戮尖塔2</p>
+<a class="rail-link" href="patch-0.110.0.html"><em>0.110.0</em><span>beta 更新</span></a>
+<a class="rail-link" href="patch-0.109.1.html"><em>0.109.1</em><span>beta 热修</span></a>
+<a class="rail-link" href="patch-0.109.0.html"><em>0.109.0</em><span>beta 更新</span></a>
+<a class="rail-link" href="patch-0.108.0.html"><em>0.108.0</em><span>beta 更新</span></a>
+<a class="rail-link" href="patch-0.107.1.html"><em>0.107.1</em><span>第二次主线大更新</span></a>
+<a class="rail-link" href="patch-0.107.0.html"><em>0.107.0</em><span>beta 更新</span></a>
+<a class="rail-link" href="patch-bugfix-0530.html"><em>5 月汇总</em><span>Bug 修复合集</span></a>
+<a class="rail-link" href="patch-0.106.1.html"><em>0.106.1</em><span>小更新</span></a>
+<a class="rail-link" href="patch-bugfix-0523.html"><em>0.106.1</em><span>Bug 修复</span></a>
+<a class="rail-link" href="patch-0.106.html"><em>0.106.0</em><span>beta 更新</span></a>
+<a class="rail-link" href="patch-0.105.1.html"><em>0.105.1</em><span>beta 热修</span></a>
+<a class="rail-link" href="patch-0.105.0.html"><em>0.105.0</em><span>beta 更新</span></a>
+<a class="rail-link" href="patch-0.104.0.html"><em>0.104.0</em><span>beta 更新</span></a>
+<a class="rail-link" href="patch-0.103.2.html"><em>0.103.2</em><span>第一次主线大更新</span></a>
+<a class="rail-link" href="patch-0.103.1.html"><em>0.103.1</em><span>beta 热修</span></a>
+<a class="rail-link" href="patch-0.103.0.html"><em>0.103.0</em><span>beta 更新</span></a>
+<a class="rail-link" href="patch-0.102.0.html"><em>0.102.0</em><span>beta 更新</span></a>
+<a class="rail-link" href="patch-0.101.0.html"><em>0.101.0</em><span>beta 更新</span></a>
+<a class="rail-link" href="patch-0.100.0.html"><em>0.100.0</em><span>beta 更新</span></a>
+<a class="rail-link" href="patch-0.99.1.html"><em>0.99.1</em><span>主线更新</span></a>
+<a class="rail-link" href="patch-0.99.1-beta-hotfix.html"><em>0.99.1 beta</em><span>beta 热修</span></a>
+<a class="rail-link is-current" href="patch-0.99.html" aria-current="page"><em>0.99</em><span>beta 更新</span></a>
+<a class="rail-link" href="patch-0.98.3.html"><em>0.98.3</em><span>热修</span></a>
+<a class="rail-link" href="patch-0.98.2.html"><em>0.98.2</em><span>热修</span></a>
+<a class="rail-link" href="patch-0.98.1.html"><em>0.98.1</em><span>热修</span></a>
+</div>
+<div class="rail-group">
+<p class="rail-group-title">边缘世界</p>
+<a class="rail-link" href="rimworld-1.6.4850.html"><em>1.6.4850</em><span>边缘世界更新</span></a>
+</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <aside class="rail">
+    <p class="rail-title">全部补丁<b>26</b></p>
+<div class="rail-group">
+<p class="rail-group-title">杀戮尖塔2</p>
+<a class="rail-link" href="patch-0.110.0.html"><em>0.110.0</em><span>beta 更新</span></a>
+<a class="rail-link" href="patch-0.109.1.html"><em>0.109.1</em><span>beta 热修</span></a>
+<a class="rail-link" href="patch-0.109.0.html"><em>0.109.0</em><span>beta 更新</span></a>
+<a class="rail-link" href="patch-0.108.0.html"><em>0.108.0</em><span>beta 更新</span></a>
+<a class="rail-link" href="patch-0.107.1.html"><em>0.107.1</em><span>第二次主线大更新</span></a>
+<a class="rail-link" href="patch-0.107.0.html"><em>0.107.0</em><span>beta 更新</span></a>
+<a class="rail-link" href="patch-bugfix-0530.html"><em>5 月汇总</em><span>Bug 修复合集</span></a>
+<a class="rail-link" href="patch-0.106.1.html"><em>0.106.1</em><span>小更新</span></a>
+<a class="rail-link" href="patch-bugfix-0523.html"><em>0.106.1</em><span>Bug 修复</span></a>
+<a class="rail-link" href="patch-0.106.html"><em>0.106.0</em><span>beta 更新</span></a>
+<a class="rail-link" href="patch-0.105.1.html"><em>0.105.1</em><span>beta 热修</span></a>
+<a class="rail-link" href="patch-0.105.0.html"><em>0.105.0</em><span>beta 更新</span></a>
+<a class="rail-link" href="patch-0.104.0.html"><em>0.104.0</em><span>beta 更新</span></a>
+<a class="rail-link" href="patch-0.103.2.html"><em>0.103.2</em><span>第一次主线大更新</span></a>
+<a class="rail-link" href="patch-0.103.1.html"><em>0.103.1</em><span>beta 热修</span></a>
+<a class="rail-link" href="patch-0.103.0.html"><em>0.103.0</em><span>beta 更新</span></a>
+<a class="rail-link" href="patch-0.102.0.html"><em>0.102.0</em><span>beta 更新</span></a>
+<a class="rail-link" href="patch-0.101.0.html"><em>0.101.0</em><span>beta 更新</span></a>
+<a class="rail-link" href="patch-0.100.0.html"><em>0.100.0</em><span>beta 更新</span></a>
+<a class="rail-link" href="patch-0.99.1.html"><em>0.99.1</em><span>主线更新</span></a>
+<a class="rail-link" href="patch-0.99.1-beta-hotfix.html"><em>0.99.1 beta</em><span>beta 热修</span></a>
+<a class="rail-link is-current" href="patch-0.99.html" aria-current="page"><em>0.99</em><span>beta 更新</span></a>
+<a class="rail-link" href="patch-0.98.3.html"><em>0.98.3</em><span>热修</span></a>
+<a class="rail-link" href="patch-0.98.2.html"><em>0.98.2</em><span>热修</span></a>
+<a class="rail-link" href="patch-0.98.1.html"><em>0.98.1</em><span>热修</span></a>
+</div>
+<div class="rail-group">
+<p class="rail-group-title">边缘世界</p>
+<a class="rail-link" href="rimworld-1.6.4850.html"><em>1.6.4850</em><span>边缘世界更新</span></a>
+</div>
+  </aside>
+
+  <article class="post" id="post">
 <article class="article"><section class="hero"><div class="hero-tag">Slay the Spire 2</div><h1>0.99 beta更新</h1><p class="subtitle">第一条公开 beta 补丁</p><div class="meta"><span>2026-03-13</span><span>·</span><span>中文整理 · 星薄荷</span></div></section>
 <div class="intro">0.99 是发售后一周的第一条公开测试分支补丁。它主要是稳定性补丁，同时加入生命值上限、美术补充、本地化修复和 Mod 结构重做。</div>
 <div class="toc"><div class="toc-title">目录</div><ul class="toc-list"><li><a href="#balance">内容与平衡</a></li><li><a href="#fixes">Bug 修复</a></li><li><a href="#localization">本地化与 Mod</a></li></ul></div>
@@ -423,11 +169,33 @@
 <ul><li>修复药水、菜单切换、云存档、自动打出卡牌、卡牌选择和设置下拉菜单相关的崩溃或软锁。</li><li>修复地狱狂徒、帝皇蟹、特兹卡塔拉、门扉缔造者和多个事件中的异常行为。</li><li>多人模式修复很多，重点是死亡、药水、回图、地图种子、藏宝图/黄金罗盘和抱团相关的状态分歧。</li></ul>
 <h2 id="localization">本地化与 Mod</h2>
 <ul><li>为多种语言补充翻译，并修复简体中文等语言的格式、字体和说明文本问题。</li><li>重做 Mod 结构，manifest 移出 PCK，并新增依赖、加载顺序和 affects_gameplay 等字段。</li></ul>
-<hr>
-<p style="text-align:center;color:var(--text-faint);font-size:.9rem">中文整理 · 星薄荷 | 数据来源 <a href="https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1826992588594229" target="_blank" rel="noopener">Steam 官方更新公告</a></p>
-</article></div></main>
-<footer class="footer"><div class="footer-inner"><span>&copy; 2026 xma1Soap</span><span class="footer-dot"></span><a href="https://xma1soap.github.io">Back to home</a></div></footer>
-<button class="back-to-top" id="backToTop" type="button" aria-label="Back to top"><span class="arrow-up">&#8593;</span></button>
-<script src="theme.js?v=41"></script>
+<hr/>
+<p style="text-align:center;color:var(--text-faint);font-size:.9rem">中文整理 · 星薄荷 | 数据来源 <a href="https://steamstore-a.akamaihd.net/news/externalpost/steam_community_announcements/1826992588594229" rel="noopener" target="_blank">Steam 官方更新公告</a></p>
+
+    <nav class="post-nav" aria-label="相邻版本">
+<a class="pn prev" href="patch-0.99.1-beta-hotfix.html"><i>更新一版</i><b>0.99.1 beta · beta 热修</b></a>
+<a class="pn next" href="patch-0.98.3.html"><i>更早一版</i><b>0.98.3 · 热修</b></a>
+    </nav>
+  </article>
+</main>
+
+<footer class="site-footer">
+  <div class="foot-inner">
+    <b>xma1Soap</b>
+    <span class="sep" aria-hidden="true">/</span>
+    <span>补丁翻译存档</span>
+    <span class="sep" aria-hidden="true">/</span>
+    <a href="index.html">返回首页</a>
+    <span class="foot-tail">译 · 星薄荷</span>
+  </div>
+</footer>
+
+<button class="to-top" id="toTop" type="button" aria-label="回到顶部">
+  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V6M6 11l6-6 6 6"/></svg>
+</button>
+
+<script src="assets/article.js" defer></script>
+<script src="assets/motion.js" defer></script>
+<script src="assets/transit.js" defer></script>
 </body>
 </html>
